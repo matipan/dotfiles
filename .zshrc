@@ -22,6 +22,7 @@ export PATH=~/Code/go_appengine:$PATH
 export PATH=$PATH:$GOROOT/bin
 
 export EDITOR="nvim"
+export GIT_EDITOR="nvim"
 source $ZSH/oh-my-zsh.sh
 
 alias emacs="/usr/local/Cellar/emacs/24.5/bin/emacs --no-window-system"
