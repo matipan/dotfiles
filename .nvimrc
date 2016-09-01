@@ -17,6 +17,7 @@
 "=========================================================
 
 " Vim-plug list of plugins - {{{
+filetype off
 call plug#begin('~/Documents/dotfiles/.nvim/plugged')
 
 Plug 'tpope/vim-fugitive'
@@ -49,10 +50,14 @@ Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 Plug 'pangloss/vim-javascript'
 Plug 'mattn/webapi-vim'
+Plug 'kchmck/vim-coffee-script'
+Plug 'scrooloose/nerdcommenter'
+Plug 'airblade/vim-gitgutter'
+Plug 'suan/vim-instant-markdown'
 function! DoRemote(arg)
   UpdateRemotePlugins
 endfunction
-Plug 'osyo-manga/vim-monster'
+"Plug 'osyo-manga/vim-monster'
 Plug 'Shougo/deoplete.nvim', { 'do': function('DoRemote') }
 
 call plug#end()
@@ -72,7 +77,7 @@ call plug#end()
   nnoremap <leader>en :vsplit $MYVIMRC<return>
 
 "Basic configs
-  set nonumber
+  set number
   set hidden
   " set relativenumber
   " Workaround for the clumsy redraw with relativenumber
@@ -94,6 +99,8 @@ call plug#end()
   set shiftwidth=2
   set expandtab
   set smarttab
+  filetype on
+  filetype plugin indent on
 
 
 " Autocmd sections for specific filetypes and buffer events -------- {{{
@@ -101,11 +108,7 @@ call plug#end()
   if has("autocmd")
     " Enable file type detection.
     syntax enable
-    filetype on
     " Also load indent files, to automatically do language-dependent indenting.
-    filetype indent on
-    filetype plugin on
-    filetype plugin indent on
     augroup filetypes
       autocmd!
       autocmd FileType text setlocal textwidth=130
@@ -151,9 +154,13 @@ call plug#end()
     set hlsearch
   endif
 
-  colorscheme hybrid
-"Use 256 color(only when terminal support it)
-  set t_Co=256
+  if (has("termguicolors"))
+    set termguicolors
+  endif
+  set background=dark
+  colorscheme deep-space
+  let g:deepspace_italics = 1
+
 " }}}
 
 "=========================================================
@@ -189,6 +196,7 @@ call plug#end()
   let g:ctrlp_clear_cache_on_exit = 0
   let g:ctrlp_max_files = 0
   let g:ctrlp_max_height =  25
+  let g:ctrlp_match_window = 'results:100' " overcome limit imposed by max height
   let g:ctrlp_custom_ignore = {
     \ 'dir':  '\v[\/]\.(git|hg|svn|log)$',
     \ 'file': '\v\.(exe|so|dll|class|png|jpg|jpeg)$',
@@ -211,7 +219,7 @@ call plug#end()
 "Airline and syntastic global variables setup ------------------ {{{
 "airline configurations
   let g:airline_powerline_fonts = 1
-  let g:airline_theme = 'base16'
+  let g:airline_theme = 'deep_space'
   let g:airline#extensions#tabline#enabled=0 "Show line of opened buffers at top of screen
   let g:airline#extensions#syntastic#enabled = 1  "Enable syntastic
   let g:airline#extensions#whitespace#enabled = 0
@@ -226,8 +234,8 @@ call plug#end()
 
 "set syntastic mode active at startup with certain fyletype
     let g:syntastic_mode_map = { "mode": "active",
-                               \ "active_filetypes": ["php","c","javascript","cpp","go","python"],
-                               \ "passive_filetypes": ["css", "scss" ,"erb", "java","html", "ruby", ] }
+                               \ "active_filetypes": ["php","c","javascript","cpp","go","python", "ruby", "scss", "coffe"],
+                               \ "passive_filetypes": ["erb", "java","html"] }
 " }}}
 
 "=========================================================
@@ -468,10 +476,10 @@ call plug#end()
   let g:deoplete#enable_at_startup = 1
   let g:deoplete#disable_auto_complete = 0
   let g:deoplete#max_list = 20
-  " let g:deoplete#max_menu_width = 10
+  "let g:deoplete#max_menu_width = 10
   "let g:deoplete#omni#input_patterns = {}
   "let g:deoplete#omni#input_patterns.ruby = ['[^. *\t]\.\w*', '[a-zA-Z_]\w*::']
-  let g:monster#completion#rcodetools#backend = "rct_complete"
+  "let g:monster#completion#rcodetools#backend = "rct_complete"
   let g:deoplete#sources#omni#input_patterns = {
         \   "ruby" : '[^. *\t]\.\w*\|\h\w*::',
         \}
@@ -515,14 +523,16 @@ call plug#end()
   let g:indentLine_fileType = [  'haml', 'html', 'css', 'yaml', 'yml' ]
 
 "Disable hunks
-"  let g:airline#extensions#hunks#enabled = 0
-"  let g:gitgutter_override_sign_column_highlight = 0
-"  let g:gitgutter_map_keys = 0
-"  let g:gitgutter_sign_added = '│'
-"  let g:gitgutter_sign_modified = '│'
-"  let g:gitgutter_sign_removed = '│'
-"  let g:gitgutter_sign_removed_first_line = '│'
-"  let g:gitgutter_sign_modified_removed = '│'
+  nmap ]h <Plug>GitGutterNextHunk
+  nmap [h <Plug>GitGutterPrevHunk
+  let g:airline#extensions#hunks#enabled = 0
+  let g:gitgutter_override_sign_column_highlight = 0
+  let g:gitgutter_map_keys = 0
+  let g:gitgutter_sign_added = '│'
+  let g:gitgutter_sign_modified = '│'
+  let g:gitgutter_sign_removed = '│'
+  let g:gitgutter_sign_removed_first_line = '│'
+  let g:gitgutter_sign_modified_removed = '│'
 
 "vim-test
   let g:test#strategy = 'neovim'
@@ -568,4 +578,6 @@ call plug#end()
   nnoremap <space>p :Unite -start-insert file_rec/neovim<cr>
   nnoremap <space>f :Unite -start-insert file<CR>
   nnoremap <space>s :Unite -quick-match buffer<cr>
+
+let g:instant_markdown_autostart = 0
 " }}}
