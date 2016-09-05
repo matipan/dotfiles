@@ -31,7 +31,6 @@ Plug 'scrooloose/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'majutsushi/tagbar'
 Plug 'mattn/gist-vim'
-Plug 'mattn/pastebin-vim'
 Plug 'tpope/vim-surround'
 Plug 'thoughtbot/vim-rspec'
 Plug 'vim-ruby/vim-ruby'
@@ -519,8 +518,9 @@ call plug#end()
   let g:sparkupMappingInsertModeOnly='1'
 
 "Indent line configs
-  let g:indentLine_color_term = 239
-  let g:indentLine_fileType = [  'haml', 'html', 'css', 'yaml', 'yml' ]
+  let g:indentLine_color_gui = '#2a3341'
+  let g:indentLine_char = '│'
+  let g:indentLine_fileType = [  'haml', 'html', 'css', 'yaml', 'yml', 'coffee' ]
 
 "Disable hunks
   nmap ]h <Plug>GitGutterNextHunk
