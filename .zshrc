@@ -8,17 +8,18 @@ plugins=(git)
 
 # User configuration
 
-export PATH=$PATH:"/Users/Matias/.rvm/gems/ruby-2.2.0/bin:/Users/Matias/.rvm/gems/ruby-2.2.0@global/bin:/Users/Matias/.rvm/rubies/ruby-2.2.0/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:/usr/local/git/bin:/Users/Matias/.rvm/bin"
- export MANPATH="/usr/local/man:$MANPATH"
-export GOPATH=$HOME/Code/GoWorkspace
-export PATH=$PATH:$GOPATH/bin
+export PATH=$PATH:"/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:/usr/local/git/bin:"
+export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+export MANPATH="/usr/local/man:$MANPATH"
 export PATH="/usr/local/sbin:$PATH"
 export PATH=~/Code/bin:$PATH
 # export PATH=~/Code/go_appengine:$PATH
 export PATH=~/Library/Android/sdk/platform-tools:$PATH
 export PATH=~/Library/Android/sdk/tools:$PATH
 export GOROOT="/usr/local/opt/go/libexec"
+export GOPATH=$HOME/Code/GoWorkspace
 export PATH=~/Code/go_appengine:$PATH
+export PATH=$PATH:$GOPATH/bin
 export PATH=$PATH:$GOROOT/bin
 
 export EDITOR="nvim"
@@ -69,36 +70,16 @@ alias emacs="/usr/local/Cellar/emacs/24.5/bin/emacs --no-window-system"
 	alias rspec='rspec --format doc'
 
 #Networking
-	alias myip='curl ip.appspot.com' 		#myip: public facing IP address
-	alias netCons='lsof -i'			 		#netCons: show all TCP/IP sockets
-	alias ipInfo0='ipconfig getpacket en0'	#ipInfo0: Get info on connections for en0
-	alias ipInfo1='ipconfig getpacket en1'	#ipInfo1: Get info on connections for en1
-	alias openPorts='sudo lsof -i | grep LISTEN'	#openPorts: All listening connections
 	alias unloadlaunchctl='sudo launchctl unload -w /System/Library/LaunchDaemons/com.apple.discoveryd.plist'
 	alias loadlaunchctl='sudo launchctl load -w /System/Library/LaunchDaemons/com.apple.discoveryd.plist'
-
-#Some for git
-	alias gstatus='git status'
-	alias gpush='git push -u origin master'
-	alias gdiff='git diff'
-
-#tmux
-	alias tmuxa='tmux attach -t'
-	alias tmuxk='tmux kill-session -t'
-	alias tls='tmux ls'
-	alias tn='tmux new -s'
 
 #hub
 	alias git=hub
 
-export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
-
 # Load zsh-syntax-highlighting.
 # source ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-
 # Load zsh-autosuggestions.
 # source ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions/autosuggestions.zsh
-
 # Enable autosuggestions automatically.
 # zle-line-init() {
     # zle autosuggest-start
