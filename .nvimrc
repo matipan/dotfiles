@@ -32,7 +32,6 @@ Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'majutsushi/tagbar'
 Plug 'mattn/gist-vim'
 Plug 'tpope/vim-surround'
-Plug 'thoughtbot/vim-rspec'
 Plug 'vim-ruby/vim-ruby'
 Plug 'tpope/vim-rails'
 Plug 'kien/ctrlp.vim'
@@ -52,12 +51,13 @@ Plug 'mattn/webapi-vim'
 Plug 'kchmck/vim-coffee-script'
 Plug 'scrooloose/nerdcommenter'
 Plug 'airblade/vim-gitgutter'
-Plug 'suan/vim-instant-markdown'
+Plug 'keith/rspec.vim'
+Plug 'vimlab/split-term.vim'
 function! DoRemote(arg)
   UpdateRemotePlugins
 endfunction
-"Plug 'osyo-manga/vim-monster'
 Plug 'Shougo/deoplete.nvim', { 'do': function('DoRemote') }
+Plug 'zchee/deoplete-go', { 'do': 'make'}
 
 call plug#end()
 " }}}
@@ -94,8 +94,8 @@ call plug#end()
   set autoindent
   set smartindent
   set softtabstop=0
-  set tabstop=2
-  set shiftwidth=2
+  set tabstop=4
+  set shiftwidth=4
   set expandtab
   set smarttab
   filetype on
@@ -110,20 +110,20 @@ call plug#end()
     " Also load indent files, to automatically do language-dependent indenting.
     augroup filetypes
       autocmd!
-      autocmd FileType text setlocal textwidth=130
+      autocmd FileType text setlocal textwidth=500
       autocmd FileType c setlocal tabstop=8|setlocal shiftwidth=8
+      autocmd FileType rb setlocal tabstop=2|setlocal shiftwidth=2
       "autocmd FileType markdown setlocal spell
       autocmd FileType vim setlocal foldmethod=marker
     augroup END
     augroup markdownb
       autocmd!
       "for changing headings when editing markdown files
-      autocmd FileType markdown onoremap <buffer> ih :<c-u>execute "normal! ?^==\\+$\r:nohlsearch\rkvg_"<cr>
-      autocmd FileType markdown onoremap <buffer> ah :<c-u>execute "normal! ?^==\\+$\r:nohlsearch\rg_vk0"<cr>
     augroup END
     augroup sourcing_and_buffers
       autocmd!
       "Source .nvimrc after writing it, reloads nvim
+      autocmd BufWritePost .nvimrc source %
       au! BufNewFile,BufRead *.applescript   setf applescript
       autocmd BufRead,BufNewFile *.scss set filetype=scss.css
       autocmd BufNewFile,BufRead *.json set ft=javascript
