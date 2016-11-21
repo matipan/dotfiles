@@ -489,8 +489,6 @@ call plug#end()
   nnoremap <leader>gc :Gcommit<return>
   nnoremap <leader>gl :Git log --oneline --abbrev-commit --graph --decorate --all<return>
   nnoremap <leader>gw :Gwrite<return>
-  nnoremap <leader>ge :Gedit<return>
-  nnoremap <leader>gd :Gvdiff<return>
 
 "Call :StripWhitespace with <leader>sw
   nnoremap <leader>sw :StripWhitespace<return>
@@ -500,7 +498,7 @@ call plug#end()
   let g:gist_detect_filetype = 1
   let g:gist_open_browser_after_post = 1
   let g:gist_update_on_write = 1
-  nnoremap <leader>gg :Gist<return>
+  nnoremap <leader>hg :Gist<return>
 
 "Maps for vim-multiple cursor
   let g:multi_cursor_next_key='<C-n>'
@@ -545,7 +543,10 @@ call plug#end()
   nnoremap <F7> :NERDTreeToggle<CR>
 
 "Go configs
+  let g:go_auto_sameids = 0
   let g:go_highlight_extra_types = 1
+  let g:go_highlight_types = 1
+  let g:go_highlight_fields = 1
   let g:go_highlight_operators = 1
   let g:go_highlight_functions = 1
   let g:go_highlight_methods = 1
@@ -555,13 +556,26 @@ call plug#end()
   let g:go_term_enabled = 0
   let g:go_test_timout = 40
   let g:syntastic_go_checkers = ['go', 'golint', 'govet', 'errcheck']
-"  au FileType go nmap gd <Plug>(go-def-split)
-"  au FileType go nmap <leader>gd <Plug>(go-doc)
-"  au FileType go nmap <leader>gs <Plug>(go-implements)
-"  au FileType go nmap <leader>gi <Plug>(go-info)
-"  au FileType go nmap <leader>gr <Plug>(go-rename)
-"  au FileType go nmap <leader>rv <Plug>(go-run-vertical)
-"  au FileType go nmap <leader>gt <Plug>(go-test)
+  let g:deoplete#sources#go#use_cache = 1
+" let g:deoplete#sources#go#json_directory = '/path/to/data_dir'
+  au FileType go nmap gd <Plug>(go-def-split)
+  au FileType go nmap <leader>gd <Plug>(go-doc)
+  au FileType go nmap <leader>gs <Plug>(go-implements)
+  au FileType go nmap <leader>gi <Plug>(go-info)
+  au FileType go nmap <leader>gr <Plug>(go-rename)
+  au FileType go nmap <leader>rv <Plug>(go-run-vertical)
+  au FileType go nmap <leader>gt <Plug>(go-test)
+  au FileType go nmap <leader>gb <Plug>(go-describe)
+  au FileType go nmap <leader>gr <Plug>(go-referrers)
+  au FileType go nmap <leader>ge <Plug>(go-whicherrs)
+  au FileType go nmap <leader>gxo <Plug>(go-sameids)
+  au FileType go nmap <Leader>gg <Plug>(go-coverage-toggle)
+  au FileType go nmap <silent> <leader>gxf :GoSameIdsClear<cr>
+  autocmd Filetype go command! -bang A call go#alternate#Switch(<bang>0, 'edit')
+autocmd Filetype go command! -bang AV call go#alternate#Switch(<bang>0, 'vsplit')
+autocmd Filetype go command! -bang AS call go#alternate#Switch(<bang>0, 'split')
+autocmd Filetype go command! -bang AT call go#alternate#Switch(<bang>0, 'tabe')
+
 
 "Tagbar stuff
   nmap <F8> :TagbarToggle<CR>
@@ -579,5 +593,16 @@ call plug#end()
   nnoremap <space>f :Unite -start-insert file<CR>
   nnoremap <space>s :Unite -quick-match buffer<cr>
 
-let g:instant_markdown_autostart = 0
+  "NERDcommenter
+  let g:NERDSpaceDelims = 1
+  let g:NERDCompactSexyComs = 1
+  nnoremap gc <plug>NERDCommenterToggle
+
+"split-term
+  set splitright
+
+"Ultisnips
+  let g:UltiSnipsExpandTrigger="<c-j>"
+  let g:UltiSnipsJumpForwardTrigger="<c-l>"
+  let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 " }}}
