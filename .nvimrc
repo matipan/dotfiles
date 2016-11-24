@@ -58,6 +58,7 @@ function! DoRemote(arg)
 endfunction
 Plug 'Shougo/deoplete.nvim', { 'do': function('DoRemote') }
 Plug 'zchee/deoplete-go', { 'do': 'make'}
+Plug 'Shougo/denite.nvim', { 'do': function('DoRemote') }
 
 call plug#end()
 " }}}
@@ -572,9 +573,9 @@ call plug#end()
   au FileType go nmap <Leader>gg <Plug>(go-coverage-toggle)
   au FileType go nmap <silent> <leader>gxf :GoSameIdsClear<cr>
   autocmd Filetype go command! -bang A call go#alternate#Switch(<bang>0, 'edit')
-autocmd Filetype go command! -bang AV call go#alternate#Switch(<bang>0, 'vsplit')
-autocmd Filetype go command! -bang AS call go#alternate#Switch(<bang>0, 'split')
-autocmd Filetype go command! -bang AT call go#alternate#Switch(<bang>0, 'tabe')
+  autocmd Filetype go command! -bang AV call go#alternate#Switch(<bang>0, 'vsplit')
+  autocmd Filetype go command! -bang AS call go#alternate#Switch(<bang>0, 'split')
+  autocmd Filetype go command! -bang AT call go#alternate#Switch(<bang>0, 'tabe')
 
 
 "Tagbar stuff
@@ -587,11 +588,10 @@ autocmd Filetype go command! -bang AT call go#alternate#Switch(<bang>0, 'tabe')
 
 "Unite
   let g:unite_source_history_yank_enable = 1
-  nnoremap <space>y :Unite history/yank<cr>
-  nnoremap <space>/ :Unite grep:.<cr>
-  nnoremap <space>p :Unite -start-insert file_rec/neovim<cr>
-  nnoremap <space>f :Unite -start-insert file<CR>
-  nnoremap <space>s :Unite -quick-match buffer<cr>
+  nnoremap <space>y :Denite neoyank<cr>
+  nnoremap <space>/ :Denite grep<cr>
+  nnoremap <space>p :Denite file_rec<cr>
+  nnoremap <space>s :Denite buffer<cr>
 
   "NERDcommenter
   let g:NERDSpaceDelims = 1
