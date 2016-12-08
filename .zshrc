@@ -4,7 +4,7 @@ export ZSH=/Users/Matias/.oh-my-zsh
 # Theme
 ZSH_THEME="kriox26"
 
-plugins=(git)
+plugins=(git docker golang colored-man-pages git-extras)
 
 # User configuration
 
@@ -19,8 +19,9 @@ export PATH=~/Library/Android/sdk/tools:$PATH
 export GOROOT="/usr/local/opt/go/libexec"
 export GOPATH=$HOME/Code/GoWorkspace
 export PATH=~/Code/go_appengine:$PATH
-export PATH=$PATH:$GOPATH/bin
+export PATH=$PATH:$GOPATH/bin/
 export PATH=$PATH:$GOROOT/bin
+export GOGITHUB=$GOPATH/src/github.com/kriox26/
 
 export EDITOR="nvim"
 export GIT_EDITOR="nvim"

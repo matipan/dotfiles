@@ -90,13 +90,14 @@ call plug#end()
   set completeopt=menuone
   set nobackup
   set noswapfile
+  set scrolljump=20
 
 "Set tab indent, 2 spaces
   set autoindent
   set smartindent
   set softtabstop=0
-  set tabstop=4
-  set shiftwidth=4
+  set tabstop=8
+  set shiftwidth=8
   set expandtab
   set smarttab
   filetype on
@@ -128,6 +129,8 @@ call plug#end()
       au! BufNewFile,BufRead *.applescript   setf applescript
       autocmd BufRead,BufNewFile *.scss set filetype=scss.css
       autocmd BufNewFile,BufRead *.json set ft=javascript
+      autocmd BufRead,BufNewFile *.html setlocal tabstop=4|setlocal shiftwidth=4
+      autocmd BufRead,BufNewFile *.tmpl setlocal tabstop=4|setlocal shiftwidth=4
       autocmd BufNewFile,BufRead *.php set norelativenumber
       autocmd BufNewFile,BufRead *.mote set syntax=html
       autocmd BufNewFile,BufRead *.pas,*.pascal set syntax=pascal|setlocal shiftwidth=4|setlocal tabstop=4
@@ -519,7 +522,7 @@ call plug#end()
 "Indent line configs
   let g:indentLine_color_gui = '#2a3341'
   let g:indentLine_char = '│'
-  let g:indentLine_fileType = [  'haml', 'html', 'css', 'yaml', 'yml', 'coffee' ]
+  let g:indentLine_fileType = [ 'tmpl', 'haml', 'html', 'css', 'yaml', 'yml', 'coffee' ]
 
 "Disable hunks
   nmap ]h <Plug>GitGutterNextHunk
