@@ -34,27 +34,26 @@ Plug 'majutsushi/tagbar'
 Plug 'mattn/gist-vim'
 Plug 'tpope/vim-surround'
 Plug 'vim-ruby/vim-ruby'
-Plug 'tpope/vim-rails'
+" Plug 'tpope/vim-rails'
 Plug 'kien/ctrlp.vim'
 Plug 'FelikZ/ctrlp-py-matcher'
 Plug 'rstacruz/sparkup', {'rtp': 'vim/'}
-Plug 'Yggdroot/indentLine'
-Plug 'janko-m/vim-test'
+" Plug 'janko-m/vim-test'
 Plug 'terryma/vim-multiple-cursors'
-Plug 'Shougo/vimproc.vim', { 'do': 'make' }
-Plug 'Shougo/unite.vim'
+" Plug 'Shougo/vimproc.vim', { 'do': 'make' }
+" Plug 'Shougo/unite.vim'
 Plug 'Shougo/neoyank.vim'
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
-Plug 'pangloss/vim-javascript'
-Plug 'mxw/vim-jsx'
-Plug 'othree/javascript-libraries-syntax.vim'
-Plug 'mattn/webapi-vim'
-Plug 'kchmck/vim-coffee-script'
+" Plug 'pangloss/vim-javascript'
+" Plug 'mxw/vim-jsx'
+" Plug 'othree/javascript-libraries-syntax.vim'
+" Plug 'mattn/webapi-vim'
+" Plug 'kchmck/vim-coffee-script'
 Plug 'scrooloose/nerdcommenter'
 Plug 'airblade/vim-gitgutter'
-Plug 'keith/rspec.vim'
+" Plug 'keith/rspec.vim'
 Plug 'vimlab/split-term.vim'
 function! DoRemote(arg)
   UpdateRemotePlugins
@@ -82,10 +81,6 @@ call plug#end()
 "Basic configs
   set number
   set hidden
-  " set relativenumber
-  " Workaround for the clumsy redraw with relativenumber
-  " set lazyredraw
-  "Reduce timeout after <ESC> is pressed
   set ttimeout
   set ttimeoutlen=20
   set notimeout
@@ -116,14 +111,7 @@ call plug#end()
     " Also load indent files, to automatically do language-dependent indenting.
     augroup filetypes
       autocmd!
-      autocmd FileType text setlocal textwidth=500
-      autocmd FileType c setlocal tabstop=8|setlocal shiftwidth=8
-      "autocmd FileType markdown setlocal spell
       autocmd FileType vim setlocal foldmethod=marker
-    augroup END
-    augroup markdownb
-      autocmd!
-      "for changing headings when editing markdown files
     augroup END
     augroup sourcing_and_buffers
       autocmd!
@@ -134,14 +122,12 @@ call plug#end()
       autocmd BufNewFile,BufRead *.json set ft=javascript
       autocmd BufRead,BufNewFile *.rb setlocal tabstop=2|setlocal shiftwidth=2
       autocmd BufRead,BufNewFile *.yml setlocal tabstop=2|setlocal shiftwidth=2
+      autocmd BufRead,BufNewFile *.tmpl set filetype=html
       autocmd BufRead,BufNewFile *.html setlocal tabstop=4|setlocal shiftwidth=4
-      autocmd BufRead,BufNewFile *.tmpl setlocal tabstop=4|setlocal shiftwidth=4
       autocmd BufRead,BufNewFile *.js,*.jsx setlocal tabstop=4|setlocal shiftwidth=4
       autocmd BufNewFile,BufRead *.mote set syntax=html
       autocmd BufNewFile,BufRead *.pas,*.pascal set syntax=pascal|setlocal shiftwidth=4|setlocal tabstop=4
-      "Change the PWD of current window to the dir of currently opened file, only if the file is not in a /tmp folder
-      " autocmd BufEnter * if expand("%:p:h") !~ '^/tmp' | silent! lcd %:p:h | endif
-	  " jump to last known position of each buf
+      " jump to last known position of each buf
       autocmd BufReadPost *
       \ if line("'\"") > 1 && line("'\"") <= line("$") |
       \   exe "normal! g`\"" |
@@ -268,34 +254,6 @@ call plug#end()
     put =strpart(uline, 0, nr_columns)
   endfunction
   command! -nargs=? Underline call s:Underline(<q-args>)
-  nnoremap <leader>u= :Underline =<return>
-  nnoremap <leader>u" :Underline "<return>
-  nnoremap <leader>u* :Underline *<return>
-  nnoremap <leader>u- :Underline -<return>
-  nnoremap <leader>u# :Underline #<return>
-
-" Command for openning a buffer with the output of a shell command, such as ls or ruby myprogram.rb" --
-  command! -complete=shellcmd -nargs=+ Shell call s:RunShellCommand(<q-args>)
-  function! s:RunShellCommand(cmdline)
-    echo a:cmdline
-    let expanded_cmdline = a:cmdline
-    for part in split(a:cmdline, ' ')
-      if part[0] =~ '\v[%#<]'
-        let expanded_part = fnameescape(expand(part))
-        let expanded_cmdline = substitute(expanded_cmdline, part, expanded_part, '')
-      endif
-    endfor
-    botright new
-    setlocal bufhidden=wipe nobuflisted noswapfile nowrap "remove the buftype=file so that you can save the buffer into a file
-    call setline(1, 'You entered:    ' . a:cmdline)
-    call setline(2, 'Expanded From:  ' .expanded_cmdline)
-    call setline(3,substitute(getline(2),'.','=','g'))
-    execute '$read !'. expanded_cmdline
-    "setlocal nomodifiable
-    1
-  endfunction
-  "Set leader + rc to run the ruby program in current buffer
-  nnoremap <leader>rc :terminal ruby %:t<return>
 
   command! -nargs=* -complete=file -bang Rename call Rename(<q-args>, '<bang>')
 
@@ -414,54 +372,27 @@ call plug#end()
 "=========================================================
 
 " Keymaps for simple things ---- {{{
-"set rlt to generate c-tags on current project, excluding .git/ - pkg - only
-"for rails directory
+
   set tags=.git/tags
-"Fire up IRB with --simple-prompt
-  nnoremap <leader>ri :term irb --simple-prompt<return>
+
 "Focus on the current pane
   nnoremap <silent> <leader>o :on<return>
-"For some rake tasks
-  nnoremap <leader>rr :terminal bundle exec rake routes<return>
-  nnoremap <leader>rtt :terminal bundle exec rake test<return>
-  nnoremap <leader>rte :terminal bundle exec rake test
-  nnoremap <leader>rdm :terminal bundle exec rake db:migrate<return>
-  nnoremap <leader>rdr :terminal bundle exec rake db:rollback<return>
-  nnoremap <leader>rrs :terminal bundle exec ruby %:t<return>
+
 "some mappings
-  nnoremap <leader>cl :set cursorline!<return>
-  nnoremap <leader>rn :set relativenumber!<return>
   nnoremap <silent> <esc>k :noh<return>
   inoremap <Down> <NOP>
   inoremap <Up> <NOP>
   inoremap <Left> <NOP>
   inoremap <Right> <NOP>
-  noremap <Down> <NOP>
-  noremap <Up> <NOP>
+  noremap <Down> ddp
+  noremap <Up> ddkP
   noremap <Left> <<<esc>
   noremap <Right> >><esc>
   inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-  nnoremap <leader>a :A<CR>
-"Mappings for sourcing and making sessions, ss for save session and so
-" session-source, now works with neovim
-  nnoremap <leader>ss :mksession! ~/.nvim/session/
-  nnoremap <leader>so :source ~/.nvim/session/
-"chat next locations
-  nnoremap <space><space> ci)
-  onoremap in( :<c-u>normal! f(vi(<cr>
-  onoremap il( :<c-u>normal! F)vi(<cr>
-  onoremap in{ :<c-u>normal! f{vi{<cr>
-  onoremap il{ :<c-u>normal! F}vi{<cr>
-  onoremap in[ :<c-u>normal! f[vi[<cr>
-  onoremap il[ :<c-u>normal! F]vi[<cr>
-"control + d(down) to move current down one line, control + a(above) to move up one line
-  noremap <c-d> ddp
-  noremap <c-a> ddkP
+
 "Upcase inner word in normal or insert mode with control + u
   inoremap <c-u> <Esc>gUiw
   nnoremap <c-u> gUiw
-"myemail = matias.pan26@gmail.com
-  iabbrev myemail matias.pan26@gmail.com
 " }}}
 
 "=========================================================
@@ -506,19 +437,16 @@ call plug#end()
   let g:multi_cursor_quit_key='<Esc>'
 
 " Indent when defining private, protected and public methods
-  let g:ruby_indent_access_modifier_style = 'indent'
-
-"For drew neils vim-textobj-rubyblock definition
-  runtime macros/matchit.vim
+  " let g:ruby_indent_access_modifier_style = 'indent'
 
 "Set control + e to sparkup completion
   let g:sparkupExecuteMapping='<C-e>'
   let g:sparkupMappingInsertModeOnly='1'
 
 "Indent line configs
-  let g:indentLine_color_gui = '#2a3341'
-  let g:indentLine_char = '│'
-  let g:indentLine_fileType = [ 'tmpl', 'haml', 'html', 'css', 'yaml', 'yml', 'coffee' ]
+  " let g:indentLine_color_gui = '#2a3341'
+  " let g:indentLine_char = '│'
+  " let g:indentLine_fileType = [ 'tmpl', 'haml', 'html', 'css', 'yaml', 'yml', 'coffee' ]
 
 "Disable hunks
   nmap ]h <Plug>GitGutterNextHunk
@@ -533,11 +461,11 @@ call plug#end()
   let g:gitgutter_sign_modified_removed = '│'
 
 "vim-test
-  let g:test#strategy = 'neovim'
-  nmap <silent> <leader>ns :TestNearest<CR>
-  nmap <silent> <leader>fs :TestFile<CR>
-  nmap <silent> <leader>as :TestSuite<CR>
-  nmap <silent> <leader>ls :TestLast<CR>
+  " let g:test#strategy = 'neovim'
+  " nmap <silent> <leader>ns :TestNearest<CR>
+  " nmap <silent> <leader>fs :TestFile<CR>
+  " nmap <silent> <leader>as :TestSuite<CR>
+  " nmap <silent> <leader>ls :TestLast<CR>
 
 "NERDTree
   nnoremap <F7> :NERDTreeToggle<CR>
@@ -558,7 +486,6 @@ call plug#end()
   let g:go_test_timout = 40
   let g:syntastic_go_checkers = ['go', 'golint', 'govet', 'errcheck']
   let g:deoplete#sources#go#use_cache = 1
-" let g:deoplete#sources#go#json_directory = '/path/to/data_dir'
   au FileType go nmap gd <Plug>(go-def-split)
   au FileType go nmap <leader>gd <Plug>(go-doc)
   au FileType go nmap <leader>gs <Plug>(go-implements)
@@ -583,12 +510,12 @@ call plug#end()
 
 "Vim-javascript
 "  let g:javascript_enable_domhtmlcss=1
-   let g:used_javascript_libs = 'react,jquery,flux'
+   " let g:used_javascript_libs = 'react,jquery,flux'
 "  let g:jsx_ext_required = 1 " Allow JSX in normal JS files
-   let g:jsx_ext_required = 0
+   " let g:jsx_ext_required = 0
 
-"Unite
-  let g:unite_source_history_yank_enable = 1
+"Denite
+  " let g:unite_source_history_yank_enable = 1
   nnoremap <space>y :Denite neoyank<cr>
   nnoremap <space>/ :Denite grep<cr>
   nnoremap <space>p :Denite file_rec<cr>
