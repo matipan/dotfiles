@@ -13,7 +13,7 @@
 " 9 -- Plugins configs
 "
 "=========================================================
-"         Vim-plug 										 "
+"         Vim-plug 					 "
 "=========================================================
 
 " Vim-plug list of plugins - {{{
@@ -21,6 +21,7 @@ filetype off
 call plug#begin('~/Documents/dotfiles/.nvim/plugged')
 
 Plug 'tpope/vim-fugitive'
+Plug 'jodosha/vim-godebug'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'ryanoasis/vim-devicons'
@@ -47,6 +48,8 @@ Plug 'ntpeters/vim-better-whitespace'
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 Plug 'pangloss/vim-javascript'
+Plug 'mxw/vim-jsx'
+Plug 'othree/javascript-libraries-syntax.vim'
 Plug 'mattn/webapi-vim'
 Plug 'kchmck/vim-coffee-script'
 Plug 'scrooloose/nerdcommenter'
@@ -102,6 +105,7 @@ call plug#end()
   set smarttab
   filetype on
   filetype plugin indent on
+  set inccommand=split
 
 
 " Autocmd sections for specific filetypes and buffer events -------- {{{
@@ -114,7 +118,6 @@ call plug#end()
       autocmd!
       autocmd FileType text setlocal textwidth=500
       autocmd FileType c setlocal tabstop=8|setlocal shiftwidth=8
-      autocmd FileType rb setlocal tabstop=2|setlocal shiftwidth=2
       "autocmd FileType markdown setlocal spell
       autocmd FileType vim setlocal foldmethod=marker
     augroup END
@@ -129,9 +132,11 @@ call plug#end()
       au! BufNewFile,BufRead *.applescript   setf applescript
       autocmd BufRead,BufNewFile *.scss set filetype=scss.css
       autocmd BufNewFile,BufRead *.json set ft=javascript
+      autocmd BufRead,BufNewFile *.rb setlocal tabstop=2|setlocal shiftwidth=2
+      autocmd BufRead,BufNewFile *.yml setlocal tabstop=2|setlocal shiftwidth=2
       autocmd BufRead,BufNewFile *.html setlocal tabstop=4|setlocal shiftwidth=4
       autocmd BufRead,BufNewFile *.tmpl setlocal tabstop=4|setlocal shiftwidth=4
-      autocmd BufNewFile,BufRead *.php set norelativenumber
+      autocmd BufRead,BufNewFile *.js,*.jsx setlocal tabstop=4|setlocal shiftwidth=4
       autocmd BufNewFile,BufRead *.mote set syntax=html
       autocmd BufNewFile,BufRead *.pas,*.pascal set syntax=pascal|setlocal shiftwidth=4|setlocal tabstop=4
       "Change the PWD of current window to the dir of currently opened file, only if the file is not in a /tmp folder
@@ -412,13 +417,10 @@ call plug#end()
 "set rlt to generate c-tags on current project, excluding .git/ - pkg - only
 "for rails directory
   set tags=.git/tags
-
 "Fire up IRB with --simple-prompt
   nnoremap <leader>ri :term irb --simple-prompt<return>
-
 "Focus on the current pane
   nnoremap <silent> <leader>o :on<return>
-
 "For some rake tasks
   nnoremap <leader>rr :terminal bundle exec rake routes<return>
   nnoremap <leader>rtt :terminal bundle exec rake test<return>
@@ -426,7 +428,6 @@ call plug#end()
   nnoremap <leader>rdm :terminal bundle exec rake db:migrate<return>
   nnoremap <leader>rdr :terminal bundle exec rake db:rollback<return>
   nnoremap <leader>rrs :terminal bundle exec ruby %:t<return>
-
 "some mappings
   nnoremap <leader>cl :set cursorline!<return>
   nnoremap <leader>rn :set relativenumber!<return>
@@ -441,12 +442,10 @@ call plug#end()
   noremap <Right> >><esc>
   inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
   nnoremap <leader>a :A<CR>
-
 "Mappings for sourcing and making sessions, ss for save session and so
 " session-source, now works with neovim
   nnoremap <leader>ss :mksession! ~/.nvim/session/
   nnoremap <leader>so :source ~/.nvim/session/
-
 "chat next locations
   nnoremap <space><space> ci)
   onoremap in( :<c-u>normal! f(vi(<cr>
@@ -455,15 +454,12 @@ call plug#end()
   onoremap il{ :<c-u>normal! F}vi{<cr>
   onoremap in[ :<c-u>normal! f[vi[<cr>
   onoremap il[ :<c-u>normal! F]vi[<cr>
-
 "control + d(down) to move current down one line, control + a(above) to move up one line
   noremap <c-d> ddp
   noremap <c-a> ddkP
-
 "Upcase inner word in normal or insert mode with control + u
   inoremap <c-u> <Esc>gUiw
   nnoremap <c-u> gUiw
-
 "myemail = matias.pan26@gmail.com
   iabbrev myemail matias.pan26@gmail.com
 " }}}
@@ -557,7 +553,8 @@ call plug#end()
   let g:go_highlight_structs = 1
   let g:go_highlight_build_constraints = 1
   let g:go_fmt_command = "goimports"
-  let g:go_term_enabled = 0
+  let g:go_term_mode = "split"
+  let g:go_term_enabled = 1
   let g:go_test_timout = 40
   let g:syntastic_go_checkers = ['go', 'golint', 'govet', 'errcheck']
   let g:deoplete#sources#go#use_cache = 1
@@ -586,8 +583,9 @@ call plug#end()
 
 "Vim-javascript
 "  let g:javascript_enable_domhtmlcss=1
-"  let g:used_javascript_libs = 'angularjs, react, jquery'
+   let g:used_javascript_libs = 'react,jquery,flux'
 "  let g:jsx_ext_required = 1 " Allow JSX in normal JS files
+   let g:jsx_ext_required = 0
 
 "Unite
   let g:unite_source_history_yank_enable = 1

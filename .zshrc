@@ -21,7 +21,7 @@ export GOPATH=$HOME/Code/GoWorkspace
 export PATH=~/Code/go_appengine:$PATH
 export PATH=$PATH:$GOPATH/bin/
 export PATH=$PATH:$GOROOT/bin
-export GOGITHUB=$GOPATH/src/github.com/kriox26/
+export GOGITHUB=$GOPATH/src/github.com/matipan/
 
 export EDITOR="nvim"
 export GIT_EDITOR="nvim"
