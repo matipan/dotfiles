@@ -20,6 +20,7 @@
 filetype off
 call plug#begin('~/Documents/dotfiles/.nvim/plugged')
 
+Plug 'KeitaNakamura/neodark.vim'
 Plug 'tpope/vim-fugitive'
 Plug 'jodosha/vim-godebug'
 Plug 'vim-airline/vim-airline'
@@ -34,7 +35,7 @@ Plug 'majutsushi/tagbar'
 Plug 'mattn/gist-vim'
 Plug 'tpope/vim-surround'
 Plug 'vim-ruby/vim-ruby'
-" Plug 'tpope/vim-rails'
+Plug 'tpope/vim-rails'
 Plug 'kien/ctrlp.vim'
 Plug 'FelikZ/ctrlp-py-matcher'
 Plug 'rstacruz/sparkup', {'rtp': 'vim/'}
@@ -46,10 +47,10 @@ Plug 'Shougo/neoyank.vim'
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
-" Plug 'pangloss/vim-javascript'
-" Plug 'mxw/vim-jsx'
-" Plug 'othree/javascript-libraries-syntax.vim'
-" Plug 'mattn/webapi-vim'
+Plug 'pangloss/vim-javascript'
+Plug 'mxw/vim-jsx'
+Plug 'othree/javascript-libraries-syntax.vim'
+Plug 'mattn/webapi-vim'
 " Plug 'kchmck/vim-coffee-script'
 Plug 'scrooloose/nerdcommenter'
 Plug 'airblade/vim-gitgutter'
@@ -70,10 +71,11 @@ call plug#end()
 "=========================================================
 
 " Enable pipe shape cursor when in insert mode
-  let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
+  set guicursor=n-v-c:block-Cursor/lCursor-blinkon0,i-ci:ver25-Cursor/lCursor,r-cr:hor20-Cursor/lCursor
 
-"Map leader key to -
-  let mapleader = "-"
+
+"Map leader key to ,
+  let mapleader = ","
 
 "Open your .nvimrc with this key map
   nnoremap <leader>en :vsplit $MYVIMRC<return>
@@ -85,10 +87,11 @@ call plug#end()
   set ttimeoutlen=20
   set notimeout
   set backspace=indent,eol,start
-  set completeopt=menuone
+  set completeopt=menu,menuone,noinsert,noselect
   set nobackup
   set noswapfile
   set scrolljump=20
+  set autoread
 
 "Set tab indent, 2 spaces
   set autoindent
@@ -96,7 +99,7 @@ call plug#end()
   set softtabstop=0
   set tabstop=8
   set shiftwidth=8
-  set expandtab
+  set noexpandtab
   set smarttab
   filetype on
   filetype plugin indent on
@@ -213,23 +216,24 @@ call plug#end()
 "Airline and syntastic global variables setup ------------------ {{{
 "airline configurations
   let g:airline_powerline_fonts = 1
-  let g:airline_theme = 'deep_space'
+  " let g:airline_theme = 'deep_space'
+  let g:airline_theme= 'neodark'
   let g:airline#extensions#tabline#enabled=0 "Show line of opened buffers at top of screen
   let g:airline#extensions#syntastic#enabled = 1  "Enable syntastic
   let g:airline#extensions#whitespace#enabled = 0
   let g:airline_detect_syntastic=1  "set the syntastic error message on statusline
   let g:syntastic_enable_signs=1      "Enable signs for syntastic
   let g:syntastic_always_populate_loc_list=1 "For using :lopen or :lwindow
+  let g:syntastic_auto_loc_list=1
   let g:syntastic_auto_jump=1
+  let g:syntastic_check_on_wq=1
   let g:syntastic_error_symbol = "✗"
   let g:syntastic_warning_symbol = "⚠ "
-  nnoremap <leader>slc :lclose<return>
-  nnoremap <leader>sll :lopen<return>
 
 "set syntastic mode active at startup with certain fyletype
     let g:syntastic_mode_map = { "mode": "active",
-                               \ "active_filetypes": ["php","c","javascript","cpp","go","python", "ruby", "scss", "coffe"],
-                               \ "passive_filetypes": ["erb", "java","html"] }
+                               \ "active_filetypes": ["php","javascript","cpp","go","python", "ruby", "scss", "coffe"],
+                               \ "passive_filetypes": ["erb", "go", "java","html", "c"] }
 " }}}
 
 "=========================================================
@@ -356,10 +360,10 @@ call plug#end()
 "Tabs and buffer manipulation
   nnoremap <leader>tn :tabnew<return>
   nnoremap <leader>tc :close!<return>
-  nnoremap ]t :tabn<return>
-  nnoremap [t :tabp<return>
-  nnoremap ]b :bn<return>
-  nnoremap [b :bp<return>
+  nnoremap }t :tabn<return>
+  nnoremap {t :tabp<return>
+  nnoremap }b :bn<return>
+  nnoremap {b :bp<return>
   nnoremap <leader>v :b#<CR><return>
   nnoremap <leader>bc :bd!<return>
   nnoremap <leader>eb :enew<return>
@@ -379,6 +383,7 @@ call plug#end()
   nnoremap <silent> <leader>o :on<return>
 
 "some mappings
+  inoremap jk <esc>
   nnoremap <silent> <esc>k :noh<return>
   inoremap <Down> <NOP>
   inoremap <Up> <NOP>
@@ -470,6 +475,8 @@ call plug#end()
 "NERDTree
   nnoremap <F7> :NERDTreeToggle<CR>
 
+  nnoremap <leader>sc :SyntasticCheck<CR>
+
 "Go configs
   let g:go_auto_sameids = 0
   let g:go_highlight_extra_types = 1
@@ -510,9 +517,8 @@ call plug#end()
 
 "Vim-javascript
 "  let g:javascript_enable_domhtmlcss=1
-   " let g:used_javascript_libs = 'react,jquery,flux'
-"  let g:jsx_ext_required = 1 " Allow JSX in normal JS files
-   " let g:jsx_ext_required = 0
+   let g:used_javascript_libs = 'react'
+   let g:jsx_ext_required = 0 " Allow JSX in normal JS files
 
 "Denite
   " let g:unite_source_history_yank_enable = 1

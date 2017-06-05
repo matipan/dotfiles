@@ -14,6 +14,7 @@ export MANPATH="/usr/local/man:$MANPATH"
 export PATH="/usr/local/sbin:$PATH"
 export PATH=~/Code/bin:$PATH
 # export PATH=~/Code/go_appengine:$PATH
+export ANDROID_HOME=~/Library/Android/sdk
 export PATH=~/Library/Android/sdk/platform-tools:$PATH
 export PATH=~/Library/Android/sdk/tools:$PATH
 export GOROOT="/usr/local/opt/go/libexec"
@@ -26,6 +27,18 @@ export GOGITHUB=$GOPATH/src/github.com/matipan/
 export EDITOR="nvim"
 export GIT_EDITOR="nvim"
 source $ZSH/oh-my-zsh.sh
+
+# tiny-care-terminal env variables
+export TTC_BOTS='golang_cls,golangweekly,selfcare_bot'
+# export TTC_REPOS=''
+export TTC_WEATHER='La Plata'
+export TTC_CELSIUS=true
+export TTC_APIKEYS=true
+export TTC_UPDATE_INTERVAL=20
+export CONSUMER_KEY='WrnDRX1jzOND0PbMcl5UJ8Muw'
+export CONSUMER_SECRET='as45QxZ9Y6NtT6UPdXmjECqTcgu6D2dWYcwyQYolwrVqfbg28p'
+export ACCESS_TOKEN='3311202838-VBucy03RKyeiGVBBkDNu0Rr9nyVxt7TNtJoiXBw'
+export ACCESS_TOKEN_SECRET='pPvT7L6iIJ2zW95swIxyAcKALGSr1sblhkO39VJ5ObTip'
 
 alias emacs="/usr/local/Cellar/emacs/24.5/bin/emacs --no-window-system"
 # You may need to manually set your language environment
@@ -61,18 +74,9 @@ alias emacs="/usr/local/Cellar/emacs/24.5/bin/emacs --no-window-system"
 	alias resetlog='sudo defaults delete /Library/Preferences/com.apple.loginwindow'
 	alias msqlstart='sudo /usr/local/Cellar/mysql/5.6.25/support-files/mysql.server start'
 
-#Brew
-	alias bupd='sudo brew update'  			#bupd = brew update
-	alias bdtr='brew doctor'				#bdtr = brew doctor
+  alias swagger-editor="docker run -p 6060:8080 swaggerapi/swagger-editor"
+  alias swagger-ui="docker run -p 3030:8080 swaggerapi/swagger-ui"
 
-#For developing
-	alias irbs='irb --simple-prompt'
-	alias irbsc='irb --simple-prompt -rrbconfig'
-	alias rspec='rspec --format doc'
-
-#Networking
-	alias unloadlaunchctl='sudo launchctl unload -w /System/Library/LaunchDaemons/com.apple.discoveryd.plist'
-	alias loadlaunchctl='sudo launchctl load -w /System/Library/LaunchDaemons/com.apple.discoveryd.plist'
 
 #hub
 	alias git=hub
@@ -86,6 +90,5 @@ alias emacs="/usr/local/Cellar/emacs/24.5/bin/emacs --no-window-system"
     # zle autosuggest-start
 # }
 # zle -N zle-line-init
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # test -e ${HOME}/.iterm2_shell_integration.zsh && source ${HOME}/.iterm2_shell_integration.zsh
