@@ -18,7 +18,7 @@
 
 " Vim-plug list of plugins - {{{
 filetype off
-call plug#begin('~/Documents/dotfiles/.nvim/plugged')
+call plug#begin('~/.local/share/nvim/plugged')
 
 Plug 'KeitaNakamura/neodark.vim'
 Plug 'tpope/vim-fugitive'
@@ -28,6 +28,7 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'ryanoasis/vim-devicons'
 Plug 'scrooloose/syntastic'
 Plug 'fatih/vim-go'
+Plug 'tyrannicaltoucan/vim-deep-space'
 Plug 'jiangmiao/auto-pairs'
 Plug 'scrooloose/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
