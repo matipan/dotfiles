@@ -26,7 +26,8 @@ Plug 'jodosha/vim-godebug'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'ryanoasis/vim-devicons'
-Plug 'scrooloose/syntastic'
+" Plug 'scrooloose/syntastic'
+Plug 'neomake/neomake'
 Plug 'fatih/vim-go'
 Plug 'tyrannicaltoucan/vim-deep-space'
 Plug 'jiangmiao/auto-pairs'
@@ -113,6 +114,7 @@ call plug#end()
     " Enable file type detection.
     syntax enable
     " Also load indent files, to automatically do language-dependent indenting.
+    autocmd BufWritePost * Neomake
     augroup filetypes
       autocmd!
       autocmd FileType vim setlocal foldmethod=marker
@@ -214,27 +216,44 @@ call plug#end()
 "Always show statusline
   set laststatus=2
 
-"Airline and syntastic global variables setup ------------------ {{{
+"Airline and neomake global variables setup ------------------ {{{
 "airline configurations
   let g:airline_powerline_fonts = 1
   " let g:airline_theme = 'deep_space'
   let g:airline_theme= 'neodark'
   let g:airline#extensions#tabline#enabled=0 "Show line of opened buffers at top of screen
-  let g:airline#extensions#syntastic#enabled = 1  "Enable syntastic
+  let g:airline#extensions#neomake#enabled = 1  "Enable syntastic
   let g:airline#extensions#whitespace#enabled = 0
-  let g:airline_detect_syntastic=1  "set the syntastic error message on statusline
-  let g:syntastic_enable_signs=1      "Enable signs for syntastic
-  let g:syntastic_always_populate_loc_list=1 "For using :lopen or :lwindow
-  let g:syntastic_auto_loc_list=1
-  let g:syntastic_auto_jump=1
-  let g:syntastic_check_on_wq=1
-  let g:syntastic_error_symbol = "✗"
-  let g:syntastic_warning_symbol = "⚠ "
-
-"set syntastic mode active at startup with certain fyletype
-    let g:syntastic_mode_map = { "mode": "active",
-                               \ "active_filetypes": ["php","javascript","cpp","go","python", "ruby", "scss", "coffe"],
-                               \ "passive_filetypes": ["erb", "go", "java","html", "c"] }
+  let g:airline#extensions#neomake#error_symbol='✖ '
+  let g:airline#extensions#neomake#warning_symbol="⚠ "
+  " let g:syntastic_error_symbol = "✗"
+  let g:neomake_error_sign   = {'text': '✖', 'texthl': 'NeomakeErrorSign'}
+  let g:neomake_warning_sign = {'text': '⚠ ', 'texthl': 'NeomakeWarningSign'}
+  let g:neomake_message_sign = {'text': '➤', 'texthl': 'NeomakeMessageSign'}
+  let g:neomake_info_sign    = {'text': 'ℹ', 'texthl': 'NeomakeInfoSign'}
+  " let g:syntastic_go_checkers = ['go', 'golint', 'govet', 'errcheck']
+  let g:neomake_go_enabled_makers = [ 'go', 'gometalinter' ]
+  let g:neomake_go_gometalinter_maker = {
+    \ 'args': [
+    \   '--enable-gc',
+    \   '--concurrency=3',
+    \   '-D', 'aligncheck',
+    \   '-D', 'test',
+    \   '-D', 'dupl',
+    \   '-D', 'gocyclo',
+    \   '-D', 'gotype',
+    \   '-E', 'errcheck',
+    \   '-E', 'misspell',
+    \   '-E', 'unused',
+    \   '-E', 'vet',
+    \   '%:p:h',
+    \ ],
+    \ 'errorformat':
+    \   '%E%f:%l:%c:%trror: %m,' .
+    \   '%W%f:%l:%c:%tarning: %m,' .
+    \   '%E%f:%l::%trror: %m,' .
+    \   '%W%f:%l::%tarning: %m'
+    \ }
 " }}}
 
 "=========================================================
@@ -492,7 +511,7 @@ call plug#end()
   let g:go_term_mode = "split"
   let g:go_term_enabled = 1
   let g:go_test_timout = 40
-  let g:syntastic_go_checkers = ['go', 'golint', 'govet', 'errcheck']
+  " let g:syntastic_go_checkers = ['go', 'golint', 'govet', 'errcheck']
   let g:deoplete#sources#go#use_cache = 1
   au FileType go nmap gd <Plug>(go-def-split)
   au FileType go nmap <leader>gd <Plug>(go-doc)
