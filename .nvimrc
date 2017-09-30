@@ -22,12 +22,11 @@ call plug#begin('~/.local/share/nvim/plugged')
 
 Plug 'KeitaNakamura/neodark.vim'
 Plug 'tpope/vim-fugitive'
-Plug 'jodosha/vim-godebug'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'ryanoasis/vim-devicons'
-" Plug 'scrooloose/syntastic'
 Plug 'neomake/neomake'
+Plug 'kassio/neoterm'
 Plug 'fatih/vim-go'
 Plug 'tyrannicaltoucan/vim-deep-space'
 Plug 'jiangmiao/auto-pairs'
@@ -41,10 +40,9 @@ Plug 'tpope/vim-rails'
 Plug 'kien/ctrlp.vim'
 Plug 'FelikZ/ctrlp-py-matcher'
 Plug 'rstacruz/sparkup', {'rtp': 'vim/'}
-" Plug 'janko-m/vim-test'
+Plug 'sebdah/vim-delve'
+Plug 'janko-m/vim-test'
 Plug 'terryma/vim-multiple-cursors'
-" Plug 'Shougo/vimproc.vim', { 'do': 'make' }
-" Plug 'Shougo/unite.vim'
 Plug 'Shougo/neoyank.vim'
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'SirVer/ultisnips'
@@ -63,6 +61,7 @@ function! DoRemote(arg)
 endfunction
 Plug 'Shougo/deoplete.nvim', { 'do': function('DoRemote') }
 Plug 'zchee/deoplete-go', { 'do': 'make'}
+Plug 'fishbullet/deoplete-ruby'
 Plug 'Shougo/denite.nvim', { 'do': function('DoRemote') }
 
 call plug#end()
@@ -114,7 +113,7 @@ call plug#end()
     " Enable file type detection.
     syntax enable
     " Also load indent files, to automatically do language-dependent indenting.
-    autocmd BufWritePost * Neomake
+    autocmd BufWritePost,BufNewFile * Neomake
     augroup filetypes
       autocmd!
       autocmd FileType vim setlocal foldmethod=marker
@@ -122,6 +121,8 @@ call plug#end()
     augroup sourcing_and_buffers
       autocmd!
       "Source .nvimrc after writing it, reloads nvim
+      autocmd FileType java setlocal omnifunc=javacomplete#Complete
+      autocmd FileType html set ft=eruby
       autocmd BufWritePost .nvimrc source %
       au! BufNewFile,BufRead *.applescript   setf applescript
       autocmd BufRead,BufNewFile *.scss set filetype=scss.css
@@ -129,9 +130,8 @@ call plug#end()
       autocmd BufRead,BufNewFile *.rb setlocal tabstop=2|setlocal shiftwidth=2
       autocmd BufRead,BufNewFile *.yml setlocal tabstop=2|setlocal shiftwidth=2
       autocmd BufRead,BufNewFile *.tmpl set filetype=html
-      autocmd BufRead,BufNewFile *.html setlocal tabstop=4|setlocal shiftwidth=4
+      autocmd BufRead,BufNewFile *.html setlocal tabstop=2|setlocal shiftwidth=2
       autocmd BufRead,BufNewFile *.js,*.jsx setlocal tabstop=4|setlocal shiftwidth=4
-      autocmd BufNewFile,BufRead *.mote set syntax=html
       autocmd BufNewFile,BufRead *.pas,*.pascal set syntax=pascal|setlocal shiftwidth=4|setlocal tabstop=4
       " jump to last known position of each buf
       autocmd BufReadPost *
@@ -198,7 +198,7 @@ call plug#end()
   let g:ctrlp_max_height =  25
   let g:ctrlp_match_window = 'results:100' " overcome limit imposed by max height
   let g:ctrlp_custom_ignore = {
-    \ 'dir':  '\v[\/]\.(git|hg|svn|log)$',
+    \ 'dir':  '\v[\/](node_modules)|(\.(git|hg|svn|log))$',
     \ 'file': '\v\.(exe|so|dll|class|png|jpg|jpeg)$',
      \}
   " Use the nearest .git directory as the cwd
@@ -219,41 +219,12 @@ call plug#end()
 "Airline and neomake global variables setup ------------------ {{{
 "airline configurations
   let g:airline_powerline_fonts = 1
-  " let g:airline_theme = 'deep_space'
   let g:airline_theme= 'neodark'
   let g:airline#extensions#tabline#enabled=0 "Show line of opened buffers at top of screen
   let g:airline#extensions#neomake#enabled = 1  "Enable syntastic
   let g:airline#extensions#whitespace#enabled = 0
   let g:airline#extensions#neomake#error_symbol='✖ '
   let g:airline#extensions#neomake#warning_symbol="⚠ "
-  " let g:syntastic_error_symbol = "✗"
-  let g:neomake_error_sign   = {'text': '✖', 'texthl': 'NeomakeErrorSign'}
-  let g:neomake_warning_sign = {'text': '⚠ ', 'texthl': 'NeomakeWarningSign'}
-  let g:neomake_message_sign = {'text': '➤', 'texthl': 'NeomakeMessageSign'}
-  let g:neomake_info_sign    = {'text': 'ℹ', 'texthl': 'NeomakeInfoSign'}
-  " let g:syntastic_go_checkers = ['go', 'golint', 'govet', 'errcheck']
-  let g:neomake_go_enabled_makers = [ 'go', 'gometalinter' ]
-  let g:neomake_go_gometalinter_maker = {
-    \ 'args': [
-    \   '--enable-gc',
-    \   '--concurrency=3',
-    \   '-D', 'aligncheck',
-    \   '-D', 'test',
-    \   '-D', 'dupl',
-    \   '-D', 'gocyclo',
-    \   '-D', 'gotype',
-    \   '-E', 'errcheck',
-    \   '-E', 'misspell',
-    \   '-E', 'unused',
-    \   '-E', 'vet',
-    \   '%:p:h',
-    \ ],
-    \ 'errorformat':
-    \   '%E%f:%l:%c:%trror: %m,' .
-    \   '%W%f:%l:%c:%tarning: %m,' .
-    \   '%E%f:%l::%trror: %m,' .
-    \   '%W%f:%l::%tarning: %m'
-    \ }
 " }}}
 
 "=========================================================
@@ -378,8 +349,6 @@ call plug#end()
   nnoremap th :split +terminal<return>
 
 "Tabs and buffer manipulation
-  nnoremap <leader>tn :tabnew<return>
-  nnoremap <leader>tc :close!<return>
   nnoremap }t :tabn<return>
   nnoremap {t :tabp<return>
   nnoremap }b :bn<return>
@@ -426,18 +395,52 @@ call plug#end()
 
 "keymaps, global variables definition for plugins(Fugitive, ultisnips, CtrlP, gist, multicursor, startify, etc) -- {{{
 
+  let g:neomake_error_sign   = {'text': '✖', 'texthl': 'NeomakeErrorSign'}
+  let g:neomake_warning_sign = {'text': '⚠ ', 'texthl': 'NeomakeWarningSign'}
+  let g:neomake_message_sign = {'text': '➤', 'texthl': 'NeomakeMessageSign'}
+  let g:neomake_info_sign    = {'text': 'ℹ', 'texthl': 'NeomakeInfoSign'}
+  let g:neomake_go_enabled_makers = [ 'go', 'gometalinter' ]
+  let g:neomake_go_gometalinter_maker = {
+    \ 'args': [
+    \   '--enable-gc',
+    \   '--concurrency=3',
+    \   '--fast',
+    \   '-D', 'aligncheck',
+    \   '-D', 'test',
+    \   '-D', 'dupl',
+    \   '-D', 'gocyclo',
+    \   '-D', 'gotype',
+    \   '-E', 'errcheck',
+    \   '-E', 'unused',
+    \   '-E', 'vet',
+    \   '%:p:h',
+    \ ],
+    \ 'append_file': 0,
+    \ 'errorformat':
+    \   '%E%f:%l:%c:%trror: %m,' .
+    \   '%W%f:%l:%c:%tarning: %m,' .
+    \   '%E%f:%l::%trror: %m,' .
+    \   '%W%f:%l::%tarning: %m'
+    \ }
+
 "Deoplete stuff
-  set runtimepath+=~/Documents/dotfiles/.nvim/plugged/deoplete.nvim/
+  set runtimepath+=~/.local/share/nvim/plugged/deoplete.nvim
   let g:deoplete#enable_at_startup = 1
   let g:deoplete#disable_auto_complete = 0
-  let g:deoplete#max_list = 20
-  "let g:deoplete#max_menu_width = 10
-  "let g:deoplete#omni#input_patterns = {}
-  "let g:deoplete#omni#input_patterns.ruby = ['[^. *\t]\.\w*', '[a-zA-Z_]\w*::']
-  "let g:monster#completion#rcodetools#backend = "rct_complete"
-  let g:deoplete#sources#omni#input_patterns = {
-        \   "ruby" : '[^. *\t]\.\w*\|\h\w*::',
-        \}
+  let g:deoplete#max_list = 100
+  let g:deoplete#max_menu_width = 20
+  " let g:deoplete#omni#functions = {}
+  " let g:deoplete#omni#functions.ruby = 'rubycomplete#Complete'
+  " let g:deoplete#omni#input_patterns = {}
+  " let g:deoplete#omni#input_patterns.ruby =
+			  " \ ['[^. *\t]\.\w*', '[a-zA-Z_]\w*::']
+  " Disable deoplete when in multi cursor mode
+  function! Multiple_cursors_before()
+      let b:deoplete_disable_auto_complete = 1
+  endfunction
+  function! Multiple_cursors_after()
+      let b:deoplete_disable_auto_complete = 0
+  endfunction
 
 
 "Fugitive plugin keymaps for basic git operations:
@@ -461,9 +464,6 @@ call plug#end()
   let g:multi_cursor_skip_key='<C-x>'
   let g:multi_cursor_quit_key='<Esc>'
 
-" Indent when defining private, protected and public methods
-  " let g:ruby_indent_access_modifier_style = 'indent'
-
 "Set control + e to sparkup completion
   let g:sparkupExecuteMapping='<C-e>'
   let g:sparkupMappingInsertModeOnly='1'
@@ -485,19 +485,22 @@ call plug#end()
   let g:gitgutter_sign_removed_first_line = '│'
   let g:gitgutter_sign_modified_removed = '│'
 
+"neoterm
+  nnoremap <leader>nt :Ttoggle<CR>
+  nnoremap <leader>no :Topen<CR>
+
 "vim-test
-  " let g:test#strategy = 'neovim'
-  " nmap <silent> <leader>ns :TestNearest<CR>
-  " nmap <silent> <leader>fs :TestFile<CR>
-  " nmap <silent> <leader>as :TestSuite<CR>
-  " nmap <silent> <leader>ls :TestLast<CR>
+  let g:test#strategy = 'neovim'
+  nmap <silent> <leader>tn :TestNearest<CR>
+  nmap <silent> <leader>tf :TestFile<CR>
+  nmap <silent> <leader>ts :TestSuite<CR>
+  nmap <silent> <leader>tl :TestLast<CR>
 
 "NERDTree
   nnoremap <F7> :NERDTreeToggle<CR>
 
-  nnoremap <leader>sc :SyntasticCheck<CR>
-
 "Go configs
+  let g:go_addtags_transform = "snakecase"
   let g:go_auto_sameids = 0
   let g:go_highlight_extra_types = 1
   let g:go_highlight_types = 1
@@ -511,7 +514,8 @@ call plug#end()
   let g:go_term_mode = "split"
   let g:go_term_enabled = 1
   let g:go_test_timout = 40
-  " let g:syntastic_go_checkers = ['go', 'golint', 'govet', 'errcheck']
+  let g:go_auto_type_info = 1
+  let g:go_info_mode = 'gocode'
   let g:deoplete#sources#go#use_cache = 1
   au FileType go nmap gd <Plug>(go-def-split)
   au FileType go nmap <leader>gd <Plug>(go-doc)
@@ -541,7 +545,6 @@ call plug#end()
    let g:jsx_ext_required = 0 " Allow JSX in normal JS files
 
 "Denite
-  " let g:unite_source_history_yank_enable = 1
   nnoremap <space>y :Denite neoyank<cr>
   nnoremap <space>/ :Denite grep<cr>
   nnoremap <space>p :Denite file_rec<cr>
