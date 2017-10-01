@@ -11,7 +11,7 @@ export PATH=$PATH:$ANDROID_TOOLS_BIN
 
 source ~/.iterm2_shell_integration.zsh
 
-ZSH_THEME="kriox26"
+ZSH_THEME="matipanv2"
 
 # Uncomment the following line to display red dots whilst waiting for completion.
 COMPLETION_WAITING_DOTS="true"

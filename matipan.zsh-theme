@@ -1,25 +1,28 @@
-ZSH_THEME_GIT_PROMPT_PREFIX="%{$fg_bold[green]%}git:(%{$fg[red]%}"
-ZSH_THEME_GIT_PROMPT_SUFFIX="%{$reset_color%} "
-ZSH_THEME_GIT_PROMPT_DIRTY="%{$fg[green]%}) %{$fg[yellow]%}✗"
-ZSH_THEME_GIT_PROMPT_CLEAN="%{$fg[blue]%})"
-ZSH_THEME_GIT_PROMPT_ADDED="%{$fg[green]%} ✚"
-ZSH_THEME_GIT_PROMPT_MODIFIED="%{$fg[blue]%} ✹"
-ZSH_THEME_GIT_PROMPT_DELETED="%{$fg[red]%} ✖"
-ZSH_THEME_GIT_PROMPT_RENAMED="%{$fg[magenta]%} ➜"
-ZSH_THEME_GIT_PROMPT_UNMERGED="%{$fg[yellow]%} ═"
+# make some aliases for the colors: (could use normal escape sequences too)
+for color in RED GREEN YELLOW BLUE MAGENTA CYAN WHITE; do
+  eval PR_$color='%{$fg[${(L)color}]%}'
+done
+eval PR_NO_COLOR="%{$terminfo[sgr0]%}"
+eval PR_BOLD="%{$terminfo[bold]%}"
+
+PR_PROMPT='➤'
+
+local ret_status="%(?:%{$fg_bold[green]%}➜ :%{$fg_bold[red]%}➜ %s)"
+
+PROMPT='%{$fg_bold[white]%}╭─ %{$fg[yellow]%}%~ %{$fg_bold[cyan]%}❯%{$fg_bold[green]%}❯%{$fg_bold[gray]%}❯ %{$fg_bold[cyan]%}$(git_prompt_info)%{$fg_bold[blue]%} % %{$reset_color%}
+%{$fg_bold[white]%}╰─%{$fg_bold[white]%}$PR_PROMPT %{$fg[red]%}\$ % %{$reset_color%}'
+RPROMPT=''
+
+#${ret_status}%{$fg_bold[green]%}%p
+
+ZSH_THEME_GIT_PROMPT_PREFIX="git:(%{$fg[gray]%}"
+ZSH_THEME_GIT_PROMPT_SUFFIX="%{$reset_color%}"
+ZSH_THEME_GIT_PROMPT_DIRTY="%{$fg[cyan]%}) %{$fg[yellow]%}✗ %{$reset_color%}"
+ZSH_THEME_GIT_PROMPT_CLEAN="%{$fg[cyan]%})"
+ZSH_THEME_GIT_PROMPT_CLEAN="%{$fg[cyan]%})"
+ZSH_THEME_GIT_PROMPT_ADDED="%{$fg[cyan]%} ✚"
+ZSH_THEME_GIT_PROMPT_MODIFIED="%{$fg[cyan]%} ✹"
+ZSH_THEME_GIT_PROMPT_DELETED="%{$fg[cyan]%} ✖"
+ZSH_THEME_GIT_PROMPT_RENAMED="%{$fg[cyan]%} ➜"
+ZSH_THEME_GIT_PROMPT_UNMERGED="%{$fg[cyan]%} ═"
 ZSH_THEME_GIT_PROMPT_UNTRACKED="%{$fg[cyan]%} ✭"
-
-local current_dir="%B%F{yellow}%~%f%b"
-PR_PROMPT='%{$fb_bold[white]%}➤'
-
-PROMPT="╭─ ${current_dir} %{$fg[red]%}❯❯❯ $(git_prompt_info) %{$reset_color%}
-╰─$PR_PROMPT %{$fg_bold[red]%}$ %{$reset_color%}"
-
-# MODE_INDICATOR="❮❮❮"
-
-# local ret_status="%(?:%{$fg_bold[green]%}➜ :%{$fg_bold[red]%}➜ )"
-# PROMPT='${ret_status} %{$fg[cyan]%}%c%{$reset_color%} $(git_prompt_info)'
-# ZSH_THEME_GIT_PROMPT_PREFIX="%{$fg_bold[blue]%}git:(%{$fg[red]%}"
-# ZSH_THEME_GIT_PROMPT_SUFFIX="%{$reset_color%} "
-# ZSH_THEME_GIT_PROMPT_DIRTY="%{$fg[blue]%}) %{$fg[yellow]%}✗"
-# ZSH_THEME_GIT_PROMPT_CLEAN="%{$fg[blue]%})"
