@@ -7,7 +7,7 @@ eval PR_BOLD="%{$terminfo[bold]%}"
 
 PR_PROMPT='➤'
 
-PROMPT='%{$fg_bold[white]%}%{$FG[255]%}╭─ %{$FG[073]%}%~ %{$FG[012]%}❯%{$FG[081]%}❯%{$FG[073]%}❯ %{$FG[012]%}$(git_prompt_info)%{$fg_bold[blue]%} % %{$reset_color%}
+PROMPT='%{$fg_bold[white]%}%{$FG[255]%}╭─ %{$FG[073]%}%~ %{$FG[012]%}❯%{$FG[208]%}❯%{$FG[081]%}❯ %{$FG[012]%}$(git_prompt_info)%{$fg_bold[blue]%} % %{$reset_color%}
 %{$fg_bold[white]%}%{$FG[255]%}╰─%{$fg_bold[white]%}%{$FG[255]%}$PR_PROMPT %{$FG[012]%}\$ % %{$reset_color%}'
 RPROMPT=''
 

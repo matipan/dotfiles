@@ -51,10 +51,10 @@ Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
 Plug 'othree/javascript-libraries-syntax.vim'
 Plug 'mattn/webapi-vim'
-" Plug 'kchmck/vim-coffee-script'
+Plug 'kchmck/vim-coffee-script'
 Plug 'scrooloose/nerdcommenter'
 Plug 'airblade/vim-gitgutter'
-" Plug 'keith/rspec.vim'
+Plug 'keith/rspec.vim'
 Plug 'vimlab/split-term.vim'
 function! DoRemote(arg)
   UpdateRemotePlugins
@@ -521,7 +521,7 @@ call plug#end()
   au FileType go nmap <leader>gd <Plug>(go-doc)
   au FileType go nmap <leader>gs <Plug>(go-implements)
   au FileType go nmap <leader>gi <Plug>(go-info)
-  au FileType go nmap <leader>gr <Plug>(go-rename)
+  au FileType go nmap <leader>gn <Plug>(go-rename)
   au FileType go nmap <leader>rv <Plug>(go-run-vertical)
   au FileType go nmap <leader>gt <Plug>(go-test)
   au FileType go nmap <leader>gb <Plug>(go-describe)
