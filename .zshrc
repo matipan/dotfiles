@@ -16,7 +16,7 @@ ZSH_THEME="matipanv2"
 # Uncomment the following line to display red dots whilst waiting for completion.
 COMPLETION_WAITING_DOTS="true"
 
-plugins=(git brew colored-man-pages docker golang git-extras)
+plugins=(git brew colored-man-pages docker golang git-extras heroku aws)
 
 source $ZSH/oh-my-zsh.sh
 

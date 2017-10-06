@@ -198,7 +198,7 @@ call plug#end()
   let g:ctrlp_max_height =  25
   let g:ctrlp_match_window = 'results:100' " overcome limit imposed by max height
   let g:ctrlp_custom_ignore = {
-    \ 'dir':  '\v[\/](node_modules)|(\.(git|hg|svn|log))$',
+    \ 'dir':  '\v[\/](node_modules|vendor)|(\.(git|hg|svn|log))$',
     \ 'file': '\v\.(exe|so|dll|class|png|jpg|jpeg)$',
      \}
   " Use the nearest .git directory as the cwd
