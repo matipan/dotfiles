@@ -486,7 +486,7 @@ call plug#end()
   let g:gitgutter_sign_modified_removed = '│'
 
 "neoterm
-  nnoremap <leader>nt :Ttoggle<CR>
+  nnoremap <leader>nt :TtoggleAll<CR>
   nnoremap <leader>no :Topen<CR>
 
 "vim-test
@@ -534,7 +534,7 @@ call plug#end()
   autocmd Filetype go command! -bang AV call go#alternate#Switch(<bang>0, 'vsplit')
   autocmd Filetype go command! -bang AS call go#alternate#Switch(<bang>0, 'split')
   autocmd Filetype go command! -bang AT call go#alternate#Switch(<bang>0, 'tabe')
-
+  nnoremap <leader>d :GoDeclsDir<CR>
 
 "Tagbar stuff
   nmap <F8> :TagbarToggle<CR>

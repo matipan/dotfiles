@@ -1,6 +1,11 @@
-export PATH=$HOME/Code/bin:/usr/local/bin:$PATH
-export PATH="/usr/local/sbin:$PATH"
+ZSH_THEME="matipanv3"
+COMPLETION_WAITING_DOTS="false"
+
+plugins=(git brew colored-man-pages docker golang git-extras)
+
 export ZSH=/Users/matipan/.oh-my-zsh
+export PATH="/usr/local/sbin:$PATH"
+export PATH=$HOME/Code/bin:/usr/local/bin:$PATH
 export ANDROID_TOOLS=/Users/matipan/Library/Android/sdk/platform-tools/
 export ANDROID_TOOLS_BIN=/Users/matipan/Library/Android/sdk/tools/bin/
 export ANDROID_SDK=/Users/matipan/Library/Android/sdk/tools/
@@ -12,16 +17,6 @@ export PATH=$PATH:$ANDROID_TOOLS_BIN
 
 source ~/.iterm2_shell_integration.zsh
 
-ZSH_THEME="matipanv2"
-
-# Uncomment the following line to display red dots whilst waiting for completion.
-COMPLETION_WAITING_DOTS="true"
-
-plugins=(git brew colored-man-pages docker golang git-extras heroku aws)
-
-source $ZSH/oh-my-zsh.sh
-
-# Preferred editor for local and remote sessions
 if [[ -n $SSH_CONNECTION ]]; then
   export EDITOR='vim'
 else
@@ -49,6 +44,7 @@ alias o1='open .'
 alias n='nvim'
 alias trash='rmtrash' #del / trash are shorter than rmtrash
 alias git=hub
+alias go14="docker run -v $(pwd):/src/app -w /src/app golang:1.4 go"
 alias go18="docker run -v $(pwd):/src/app -w /src/app golang:1.8 go"
 
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
@@ -56,5 +52,6 @@ export PATH="$PATH:$HOME/.rvm/bin"
 
 export MY_IP="192.168.0.16"
 
-source '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc'
-source '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc'
+# source '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc'
+# source '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc'
+source $ZSH/oh-my-zsh.sh
