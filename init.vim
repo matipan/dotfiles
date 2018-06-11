@@ -127,11 +127,9 @@ call plug#end()
       au! BufNewFile,BufRead *.applescript   setf applescript
       autocmd BufRead,BufNewFile *.scss set filetype=scss.css
       autocmd BufNewFile,BufRead *.json set ft=javascript
-      autocmd BufRead,BufNewFile *.rb setlocal tabstop=2|setlocal shiftwidth=2
-      autocmd BufRead,BufNewFile *.yml setlocal tabstop=2|setlocal shiftwidth=2
+      autocmd BufRead,BufNewFile *.rb,*.json,*.yml,*.html setlocal tabstop=2|setlocal shiftwidth=2
       autocmd BufRead,BufNewFile *.tmpl set filetype=html
-      autocmd BufRead,BufNewFile *.html setlocal tabstop=2|setlocal shiftwidth=2
-      autocmd BufRead,BufNewFile *.js,*.jsx setlocal tabstop=4|setlocal shiftwidth=4
+      autocmd BufRead,BufNewFile *.js,*.jsx,*.sh setlocal tabstop=4|setlocal shiftwidth=4
       autocmd BufNewFile,BufRead *.pas,*.pascal set syntax=pascal|setlocal shiftwidth=4|setlocal tabstop=4
       " jump to last known position of each buf
       autocmd BufReadPost *
@@ -382,7 +380,6 @@ call plug#end()
   noremap <Up> ddkP
   noremap <Left> <<<esc>
   noremap <Right> >><esc>
-  inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 
 "Upcase inner word in normal or insert mode with control + u
   inoremap <c-u> <Esc>gUiw
@@ -394,11 +391,12 @@ call plug#end()
 "=========================================================
 
 "keymaps, global variables definition for plugins(Fugitive, ultisnips, CtrlP, gist, multicursor, startify, etc) -- {{{
-
-  let g:neomake_error_sign   = {'text': '✖', 'texthl': 'NeomakeErrorSign'}
-  let g:neomake_warning_sign = {'text': '⚠ ', 'texthl': 'NeomakeWarningSign'}
-  let g:neomake_message_sign = {'text': '➤', 'texthl': 'NeomakeMessageSign'}
-  let g:neomake_info_sign    = {'text': 'ℹ', 'texthl': 'NeomakeInfoSign'}
+"✖
+  let g:neomake_error_sign   = {'text': '✖', 'texthl': 'airline_x_red'}
+  let g:neomake_warning_sign = {'text': '⚠ ', 'texthl': 'GitGutterChange'}
+  let g:neomake_message_sign = {'text': '➤', 'texthl': 'airline_c_bold'}
+  let g:neomake_info_sign    = {'text': 'ℹ', 'texthl': 'VisualNC'}
+  let g:neomake_open_list=2
   let g:neomake_go_enabled_makers = [ 'go', 'gometalinter' ]
   let g:neomake_go_gometalinter_maker = {
     \ 'args': [
@@ -429,11 +427,6 @@ call plug#end()
   let g:deoplete#disable_auto_complete = 0
   let g:deoplete#max_list = 100
   let g:deoplete#max_menu_width = 20
-  " let g:deoplete#omni#functions = {}
-  " let g:deoplete#omni#functions.ruby = 'rubycomplete#Complete'
-  " let g:deoplete#omni#input_patterns = {}
-  " let g:deoplete#omni#input_patterns.ruby =
-			  " \ ['[^. *\t]\.\w*', '[a-zA-Z_]\w*::']
   " Disable deoplete when in multi cursor mode
   function! Multiple_cursors_before()
       let b:deoplete_disable_auto_complete = 1
@@ -463,15 +456,11 @@ call plug#end()
   let g:multi_cursor_next_key='<C-n>'
   let g:multi_cursor_skip_key='<C-x>'
   let g:multi_cursor_quit_key='<Esc>'
+  let g:multi_cursor_select_all_word_key='<C-w><C-n>'
 
 "Set control + e to sparkup completion
   let g:sparkupExecuteMapping='<C-e>'
   let g:sparkupMappingInsertModeOnly='1'
-
-"Indent line configs
-  " let g:indentLine_color_gui = '#2a3341'
-  " let g:indentLine_char = '│'
-  " let g:indentLine_fileType = [ 'tmpl', 'haml', 'html', 'css', 'yaml', 'yml', 'coffee' ]
 
 "Disable hunks
   nmap ]h <Plug>GitGutterNextHunk
@@ -487,7 +476,7 @@ call plug#end()
 
 "neoterm
   nnoremap <leader>nt :TtoggleAll<CR>
-  nnoremap <leader>no :Topen<CR>
+  nnoremap <leader>no :Term<CR>
 
 "vim-test
   let g:test#strategy = 'neovim'
@@ -510,6 +499,7 @@ call plug#end()
   let g:go_highlight_methods = 1
   let g:go_highlight_structs = 1
   let g:go_highlight_build_constraints = 1
+  let g:go_highlight_function_calls = 1
   let g:go_fmt_command = "goimports"
   let g:go_term_mode = "split"
   let g:go_term_enabled = 1
@@ -527,7 +517,6 @@ call plug#end()
   au FileType go nmap <leader>gb <Plug>(go-describe)
   au FileType go nmap <leader>gr <Plug>(go-referrers)
   au FileType go nmap <leader>ge <Plug>(go-whicherrs)
-  au FileType go nmap <leader>gxo <Plug>(go-sameids)
   au FileType go nmap <Leader>gg <Plug>(go-coverage-toggle)
   au FileType go nmap <silent> <leader>gxf :GoSameIdsClear<cr>
   autocmd Filetype go command! -bang A call go#alternate#Switch(<bang>0, 'edit')
