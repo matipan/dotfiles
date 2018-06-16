@@ -299,12 +299,7 @@ call plug#end()
   nnoremap <silent> <leader>o :on<return>
 
 "some mappings
-  inoremap jk <esc>
   nnoremap <silent> <esc>k :noh<return>
-  inoremap <Down> <NOP>
-  inoremap <Up> <NOP>
-  inoremap <Left> <NOP>
-  inoremap <Right> <NOP>
   noremap <Down> ddp
   noremap <Up> ddkP
   noremap <Left> <<<esc>

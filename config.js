@@ -19,9 +19,9 @@ module.exports = {
 	"editor.fontLigatures": false,
 	"editor.renderer": "webgl",
 
-	"language.go.languageServer.rootFiles": [".git"],
-	"language.go.languageServer.command": "go-langserver",
-	"language.go.languageServer.arguments": ["--freeosmemory", "false"],
+	// "language.go.languageServer.rootFiles": [".git"],
+	// "language.go.languageServer.command": "go-langserver",
+	// "language.go.languageServer.arguments": ["--freeosmemory", "false"],
 
 	"tabs.mode": "buffers",
 	"sidebar.default.open": false,

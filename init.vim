@@ -420,6 +420,8 @@ call plug#end()
     \   '%E%f:%l::%trror: %m,' .
     \   '%W%f:%l::%tarning: %m'
     \ }
+  nnoremap <leader>lo :lopen<CR>
+  nnoremap <leader>lc :lclose<CR>
 
 "Deoplete stuff
   set runtimepath+=~/.local/share/nvim/plugged/deoplete.nvim
