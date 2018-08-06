@@ -20,23 +20,22 @@
 filetype off
 call plug#begin('~/.local/share/nvim/plugged')
 
+Plug 'Valloric/ListToggle'
 Plug 'KeitaNakamura/neodark.vim'
 Plug 'tpope/vim-fugitive'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+Plug 'arcticicestudio/nord-vim'
 Plug 'ryanoasis/vim-devicons'
+Plug 'jiangmiao/auto-pairs'
 Plug 'neomake/neomake'
-Plug 'kassio/neoterm'
 Plug 'fatih/vim-go'
 Plug 'tyrannicaltoucan/vim-deep-space'
-Plug 'jiangmiao/auto-pairs'
 Plug 'scrooloose/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
-Plug 'majutsushi/tagbar'
 Plug 'mattn/gist-vim'
 Plug 'tpope/vim-surround'
 Plug 'vim-ruby/vim-ruby'
-Plug 'tpope/vim-rails'
 Plug 'kien/ctrlp.vim'
 Plug 'FelikZ/ctrlp-py-matcher'
 Plug 'rstacruz/sparkup', {'rtp': 'vim/'}
@@ -49,19 +48,15 @@ Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
-Plug 'othree/javascript-libraries-syntax.vim'
 Plug 'mattn/webapi-vim'
-Plug 'kchmck/vim-coffee-script'
 Plug 'scrooloose/nerdcommenter'
 Plug 'airblade/vim-gitgutter'
-Plug 'keith/rspec.vim'
 Plug 'vimlab/split-term.vim'
 function! DoRemote(arg)
   UpdateRemotePlugins
 endfunction
 Plug 'Shougo/deoplete.nvim', { 'do': function('DoRemote') }
 Plug 'zchee/deoplete-go', { 'do': 'make'}
-Plug 'fishbullet/deoplete-ruby'
 Plug 'Shougo/denite.nvim', { 'do': function('DoRemote') }
 
 call plug#end()
@@ -93,6 +88,7 @@ call plug#end()
   set noswapfile
   set scrolljump=20
   set autoread
+  set mouse=a
 
 "Set tab indent, 2 spaces
   set autoindent
@@ -155,8 +151,7 @@ call plug#end()
   if (has("termguicolors"))
     set termguicolors
   endif
-  set background=dark
-  colorscheme deep-space
+  colorscheme nord
   let g:deepspace_italics = 1
 
 " }}}
@@ -313,10 +308,6 @@ call plug#end()
   vnoremap <silent> *:call VisualSelection('f')<CR>
   vnoremap <silent> #:call VisualSelection('b')<CR>
 
-"Set LEADER + q to quit by closing all windows, if there are unsaved changes,
-"it'll warn you about it
-  nnoremap <leader>q :qall<return>
-
 "; instead of : for command mode
   nnoremap ; :
 
@@ -343,8 +334,8 @@ call plug#end()
 "set tt for entering Terminal mode, tv for vertical split, and th for
 "horizontal split
   nnoremap tt :terminal<return>
-  nnoremap tv :vsplit +terminal<return>
-  nnoremap th :split +terminal<return>
+  nnoremap tv :VTerm<return>
+  nnoremap th :Term<return>
 
 "Tabs and buffer manipulation
   nnoremap }t :tabn<return>
@@ -352,9 +343,8 @@ call plug#end()
   nnoremap }b :bn<return>
   nnoremap {b :bp<return>
   nnoremap <leader>v :b#<CR><return>
-  nnoremap <leader>bc :bd!<return>
-  nnoremap <leader>eb :enew<return>
-  nnoremap <leader>bl :ls<return>
+  nnoremap <leader>bd :bd!<return>
+  nnoremap <leader>bc :close<return>
 
 " }}}
 
@@ -421,7 +411,7 @@ call plug#end()
     \   '%W%f:%l::%tarning: %m'
     \ }
   nnoremap <leader>lo :lopen<CR>
-  nnoremap <leader>lc :lclose<CR>
+  nnoremap <leader>lc :l<CR>
 
 "Deoplete stuff
   set runtimepath+=~/.local/share/nvim/plugged/deoplete.nvim
@@ -439,10 +429,10 @@ call plug#end()
 
 
 "Fugitive plugin keymaps for basic git operations:
-  nnoremap <leader>gs :Gstatus<return>
-  nnoremap <leader>gc :Gcommit<return>
-  nnoremap <leader>gl :Git log --oneline --abbrev-commit --graph --decorate --all<return>
-  nnoremap <leader>gw :Gwrite<return>
+  nnoremap <leader>ls :Gstatus<return>
+  nnoremap <leader>lc :Gcommit<return>
+  nnoremap <leader>ll :Git log --oneline --abbrev-commit --graph --decorate --all<return>
+  nnoremap <leader>lw :Gwrite<return>
 
 "Call :StripWhitespace with <leader>sw
   nnoremap <leader>sw :StripWhitespace<return>
@@ -475,10 +465,6 @@ call plug#end()
   let g:gitgutter_sign_removed = '│'
   let g:gitgutter_sign_removed_first_line = '│'
   let g:gitgutter_sign_modified_removed = '│'
-
-"neoterm
-  nnoremap <leader>nt :TtoggleAll<CR>
-  nnoremap <leader>no :Term<CR>
 
 "vim-test
   let g:test#strategy = 'neovim'
@@ -514,26 +500,17 @@ call plug#end()
   au FileType go nmap <leader>gi <Plug>(go-implements)
   au FileType go nmap <leader>gf <Plug>(go-info)
   au FileType go nmap <leader>gn <Plug>(go-rename)
-  au FileType go nmap <leader>rv <Plug>(go-run-vertical)
+  au FileType go nmap <leader>gv <Plug>(go-run-vertical)
   au FileType go nmap <leader>gt <Plug>(go-test)
   au FileType go nmap <leader>gb <Plug>(go-describe)
   au FileType go nmap <leader>gr <Plug>(go-referrers)
   au FileType go nmap <leader>ge <Plug>(go-whicherrs)
   au FileType go nmap <Leader>gg <Plug>(go-coverage-toggle)
-  au FileType go nmap <silent> <leader>gxf :GoSameIdsClear<cr>
+  nnoremap <leader>gd :GoDeclsDir<CR>
   autocmd Filetype go command! -bang A call go#alternate#Switch(<bang>0, 'edit')
   autocmd Filetype go command! -bang AV call go#alternate#Switch(<bang>0, 'vsplit')
   autocmd Filetype go command! -bang AS call go#alternate#Switch(<bang>0, 'split')
   autocmd Filetype go command! -bang AT call go#alternate#Switch(<bang>0, 'tabe')
-  nnoremap <leader>d :GoDeclsDir<CR>
-
-"Tagbar stuff
-  nmap <F8> :TagbarToggle<CR>
-
-"Vim-javascript
-"  let g:javascript_enable_domhtmlcss=1
-   let g:used_javascript_libs = 'react'
-   let g:jsx_ext_required = 0 " Allow JSX in normal JS files
 
 "Denite
   nnoremap <space>y :Denite neoyank<cr>
@@ -553,4 +530,7 @@ call plug#end()
   let g:UltiSnipsExpandTrigger="<c-j>"
   let g:UltiSnipsJumpForwardTrigger="<c-l>"
   let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+
+  let g:lt_location_list_toggle_map = '<leader>lt'
+  let g:lt_quickfix_list_toggle_map = '<leader>q'
 " }}}
