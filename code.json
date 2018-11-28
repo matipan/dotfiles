@@ -1,0 +1,150 @@
+{
+  "[html]": {
+    "editor.tabSize": 4
+  },
+  "editor.tabSize": 8,
+  "editor.wordWrap": "on",
+  "editor.fontFamily": "SauceCodePro Nerd Font",
+  "editor.minimap.enabled": false,
+  "editor.highlightActiveIndentGuide": false,
+  "editor.renderLineHighlight": "gutter",
+  "editor.insertSpaces": false,
+  "editor.renderWhitespace": "none",
+  "editor.fontWeight": "500",
+  "workbench.colorTheme": "Nord",
+  "workbench.iconTheme": "material-icon-theme",
+  "workbench.sideBar.location": "left",
+  "window.menuBarVisibility": "visible",
+  "window.zoomLevel": 1,
+  "window.titleBarStyle": "custom",
+  "workbench.colorCustomizations": {
+    "titleBar.activeBackground": "#136cbacc",
+    "titleBar.activeForeground": "#ffffff",
+    "activityBar.background": "#136cbacc",
+    "tab.activeBorder": "#136cbacc",
+    "tab.activeBackground": "#136cba00",
+    "statusBar.background": "#136cbacc",
+    "statusBarItem.hoverBackground": "#136cbacc"
+  },
+  "terminal.integrated.shell.linux": "/bin/zsh",
+  "vim.leader": ",",
+  "vim.easymotion": true,
+  "vim.sneak": true,
+  "vim.incsearch": true,
+  "vim.useSystemClipboard": true,
+  "vim.hlsearch": true,
+  "vim.handleKeys": {
+    "<C-b>": false,
+    "<C-f>": false,
+    "<C-j>": false,
+    "<C-h>": false
+  },
+  "vim.normalModeKeyBindingsNonRecursive": [
+    {
+      "before": [
+        "<leader>",
+        "b",
+        "c"
+      ],
+      "commands": [
+        ":close"
+      ]
+    },
+    {
+      "before": [
+        "<leader>",
+        "b",
+        "d"
+      ],
+      "commands": [
+        "workbench.action.closeActiveEditor"
+      ]
+    },
+    {
+      "before": [
+        "<leader>",
+        "o"
+      ],
+      "commands": [
+        ":only"
+      ]
+    },
+    {
+      "before": [
+        "<leader>",
+        "k"
+      ],
+      "commands": [
+        ":noh"
+      ]
+    },
+    {
+      "before": [
+        "<leader>",
+        "t",
+        "n"
+      ],
+      "commands": [
+        "go.test.cursor"
+      ]
+    },
+    {
+      "before": [
+        "<leader>",
+        "t",
+        "f"
+      ],
+      "commands": [
+        "go.test.file"
+      ]
+    },
+    {
+      "before": [
+        "<leader>",
+        "t",
+        "p"
+      ],
+      "commands": [
+        "go.test.package"
+      ]
+    },
+    {
+      "before": [
+        ":"
+      ],
+      "commands": [
+        "workbench.action.showCommands",
+      ]
+    },
+    {
+      "before": [
+        "<leader>",
+        "w",
+        "o"
+      ],
+      "commands": [
+        "go.test.showOutput"
+      ]
+    }
+  ],
+  "go.delveConfig": {
+    "useApiV1": false
+  },
+  "spellright.language": [
+    "en_US"
+  ],
+  "spellright.documentTypes": [
+    "latex",
+    "plaintext",
+    "markdown"
+  ],
+  "githubPullRequests.hosts": [
+    {
+      "host": "https://github.com",
+      "username": "oauth",
+      "token": "system"
+    }
+  ],
+  "breadcrumbs.enabled": false,
+  "editor.renderControlCharacters": false,
+}

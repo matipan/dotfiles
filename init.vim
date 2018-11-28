@@ -20,6 +20,7 @@
 filetype off
 call plug#begin('~/.local/share/nvim/plugged')
 
+Plug 'kaicataldo/material.vim'
 Plug 'Valloric/ListToggle'
 Plug 'KeitaNakamura/neodark.vim'
 Plug 'tpope/vim-fugitive'
@@ -45,6 +46,7 @@ Plug 'terryma/vim-multiple-cursors'
 Plug 'Shougo/neoyank.vim'
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'SirVer/ultisnips'
+Plug 'rhysd/nyaovim-mini-browser'
 Plug 'honza/vim-snippets'
 Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
@@ -89,6 +91,7 @@ call plug#end()
   set scrolljump=20
   set autoread
   set mouse=a
+  set clipboard+=unnamedplus
 
 "Set tab indent, 2 spaces
   set autoindent
@@ -151,8 +154,10 @@ call plug#end()
   if (has("termguicolors"))
     set termguicolors
   endif
-  colorscheme nord
-  let g:deepspace_italics = 1
+  set background=dark
+  colorscheme material
+  let g:material_terminal_italics = 1
+  " let g:deepspace_italics = 1
 
 " }}}
 
@@ -208,6 +213,9 @@ call plug#end()
 
 "Always show statusline
   set laststatus=2
+  if has("gui_running")
+	  set laststatus=0
+  endif
 
 "Airline and neomake global variables setup ------------------ {{{
 "airline configurations
