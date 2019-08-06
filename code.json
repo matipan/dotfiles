@@ -1,150 +1,164 @@
 {
-  "[html]": {
-    "editor.tabSize": 4
-  },
-  "editor.tabSize": 8,
-  "editor.wordWrap": "on",
-  "editor.fontFamily": "SauceCodePro Nerd Font",
-  "editor.minimap.enabled": false,
-  "editor.highlightActiveIndentGuide": false,
-  "editor.renderLineHighlight": "gutter",
-  "editor.insertSpaces": false,
-  "editor.renderWhitespace": "none",
-  "editor.fontWeight": "500",
-  "workbench.colorTheme": "Nord",
-  "workbench.iconTheme": "material-icon-theme",
-  "workbench.sideBar.location": "left",
-  "window.menuBarVisibility": "visible",
-  "window.zoomLevel": 1,
-  "window.titleBarStyle": "custom",
-  "workbench.colorCustomizations": {
-    "titleBar.activeBackground": "#136cbacc",
-    "titleBar.activeForeground": "#ffffff",
-    "activityBar.background": "#136cbacc",
-    "tab.activeBorder": "#136cbacc",
-    "tab.activeBackground": "#136cba00",
-    "statusBar.background": "#136cbacc",
-    "statusBarItem.hoverBackground": "#136cbacc"
-  },
-  "terminal.integrated.shell.linux": "/bin/zsh",
-  "vim.leader": ",",
-  "vim.easymotion": true,
-  "vim.sneak": true,
-  "vim.incsearch": true,
-  "vim.useSystemClipboard": true,
-  "vim.hlsearch": true,
-  "vim.handleKeys": {
-    "<C-b>": false,
-    "<C-f>": false,
-    "<C-j>": false,
-    "<C-h>": false
-  },
-  "vim.normalModeKeyBindingsNonRecursive": [
-    {
-      "before": [
-        "<leader>",
-        "b",
-        "c"
-      ],
-      "commands": [
-        ":close"
-      ]
-    },
-    {
-      "before": [
-        "<leader>",
-        "b",
-        "d"
-      ],
-      "commands": [
-        "workbench.action.closeActiveEditor"
-      ]
-    },
-    {
-      "before": [
-        "<leader>",
-        "o"
-      ],
-      "commands": [
-        ":only"
-      ]
-    },
-    {
-      "before": [
-        "<leader>",
-        "k"
-      ],
-      "commands": [
-        ":noh"
-      ]
-    },
-    {
-      "before": [
-        "<leader>",
-        "t",
-        "n"
-      ],
-      "commands": [
-        "go.test.cursor"
-      ]
-    },
-    {
-      "before": [
-        "<leader>",
-        "t",
-        "f"
-      ],
-      "commands": [
-        "go.test.file"
-      ]
-    },
-    {
-      "before": [
-        "<leader>",
-        "t",
-        "p"
-      ],
-      "commands": [
-        "go.test.package"
-      ]
-    },
-    {
-      "before": [
-        ":"
-      ],
-      "commands": [
-        "workbench.action.showCommands",
-      ]
-    },
-    {
-      "before": [
-        "<leader>",
-        "w",
-        "o"
-      ],
-      "commands": [
-        "go.test.showOutput"
-      ]
-    }
-  ],
-  "go.delveConfig": {
-    "useApiV1": false
-  },
-  "spellright.language": [
-    "en_US"
-  ],
-  "spellright.documentTypes": [
-    "latex",
-    "plaintext",
-    "markdown"
-  ],
-  "githubPullRequests.hosts": [
-    {
-      "host": "https://github.com",
-      "username": "oauth",
-      "token": "system"
-    }
-  ],
-  "breadcrumbs.enabled": false,
-  "editor.renderControlCharacters": false,
+	"workbench.iconTheme": "material-icon-theme",
+	"workbench.colorTheme": "Nord",
+	"[html]": {
+		"editor.tabSize": 4
+	},
+	"editor.tabSize": 8,
+	"editor.wordWrap": "on",
+	"editor.minimap.enabled": false,
+	"editor.highlightActiveIndentGuide": false,
+	"editor.renderLineHighlight": "gutter",
+	"editor.insertSpaces": false,
+	"editor.renderWhitespace": "none",
+	"editor.fontWeight": "500",
+	"editor.formatOnSave": true,
+	"terminal.integrated.rendererType": "canvas",
+	"workbench.colorCustomizations": {
+		"titleBar.activeBackground": "#0f5088cc",
+		"titleBar.activeForeground": "#ffffff",
+		"activityBar.background": "#0f5088cc",
+		"tab.activeBorder": "#0f5088cc",
+		"tab.activeBackground": "#136cba00",
+		"statusBar.background": "#136cbacc",
+		"statusBarItem.hoverBackground": "#136cbacc",
+		"terminal.border": "#ffffff00",
+		"terminal.ansiBlack": "#575757",
+		"terminal.ansiBlue": "#337ce9",
+		"terminal.ansiBrightBlack": "#00000000",
+		"terminal.ansiBrightBlue": "#0084ff",
+		"terminal.ansiBrightCyan": "#00eeff",
+		"terminal.ansiBrightGreen": "#15ff00",
+		"terminal.ansiBrightMagenta": "#ff00ea",
+		"terminal.ansiBrightRed": "#ff0000",
+		"terminal.ansiBrightWhite": "#ffffff",
+		"terminal.ansiBrightYellow": "#d0ff00",
+		"terminal.ansiCyan": "#0675a8",
+		"terminal.ansiGreen": "#1f6902de",
+		"terminal.ansiMagenta": "#8c00ff",
+		"terminal.ansiRed": "#ff0000",
+		"terminal.ansiWhite": "#ffffff",
+		"terminal.ansiYellow": "#f7f200",
+		"terminal.selectionBackground": "#1f51bb",
+		"terminalCursor.foreground": "#d6d6d6"
+	},
+	"vim.leader": ",",
+	"vim.easymotion": true,
+	"vim.sneak": true,
+	"vim.incsearch": true,
+	"vim.useSystemClipboard": true,
+	"vim.hlsearch": true,
+	"vim.handleKeys": {
+		"<C-b>": false,
+		"<C-f>": false,
+		"<C-j>": false,
+		"<C-h>": false
+	},
+	"vim.normalModeKeyBindingsNonRecursive": [
+		{
+			"before": [
+				"<leader>",
+				"b",
+				"c"
+			],
+			"commands": [
+				":close"
+																																																																		    ]
+		},
+		{
+			"before": [
+				"<leader>",
+				"b",
+				"d"
+			],
+			"commands": [
+				"workbench.action.closeActiveEditor"
+			]
+		},
+		{
+			"before": [
+				"<leader>",
+				"o"
+			],
+			"commands": [
+				":only"
+			]
+		},
+		{
+			"before": [
+				"<leader>",
+				"k"
+			],
+			"commands": [
+				":noh"
+			]
+		},
+		{
+			"before": [
+				"<leader>",
+				"t",
+				"n"
+			],
+			"commands": [
+				"go.test.cursor"
+			]
+		},
+		{
+			"before": [
+				"<leader>",
+				"t",
+				"f"
+			],
+			"commands": [
+				"go.test.file"
+			]
+		},
+		{
+			"before": [
+				"<leader>",
+				"t",
+				"p"
+			],
+			"commands": [
+				"go.test.package"
+			]
+		},
+		{
+			"before": [
+				":"
+			],
+			"commands": [
+				"workbench.action.showCommands",
+			]
+		},
+		{
+			"before": [
+				"<leader>",
+				"w",
+				"o"
+			],
+			"commands": [
+				"go.test.showOutput"
+			]
+		}
+	],
+	"go.autocompleteUnimportedPackages": true,
+	"go.useLanguageServer": false,
+	"go.useCodeSnippetsOnFunctionSuggestWithoutType": true,
+	"go.enableCodeLens": {
+		"references": false,
+		"runtest": true
+	},
+	"vs-kubernetes": {
+		"vs-kubernetes.helm-path": "/home/capitan/.vs-kubernetes/tools/helm/linux-amd64/helm",
+		"vs-kubernetes.draft-path": "/home/capitan/.vs-kubernetes/tools/draft/linux-amd64/draft",
+		"vs-kubernetes.minikube-path": "/home/capitan/.vs-kubernetes/tools/minikube/linux-amd64/minikube",
+		"vs-kubernetes.kubectl-path.linux": "/mnt/c/Users/matip/capitan/bin/kubectl"
+	},
+	"yaml.schemas": {
+		"kubernetes": "*.yaml"
+	},
+	// "yaml.completion": true,
+	"terminal.integrated.shell.linux": "/bin/zsh",
+	"vsicons.dontShowNewVersionMessage": true
 }
