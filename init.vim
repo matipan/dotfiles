@@ -13,17 +13,21 @@ Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
 Plug 'vimlab/split-term.vim'
 Plug 'rust-lang/rust.vim'
-Plug 'airblade/vim-gitgutter'
 Plug 'janko/vim-test'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-fugitive'
 Plug 'scrooloose/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'danro/rename.vim'
+Plug 'andrewstuart/vim-kubernetes'
+Plug 'voldikss/vim-floaterm'
+Plug 'ncm2/float-preview.nvim'
 
 call plug#end()
 
 let mapleader = "'"
 
+set pumheight=20
 set laststatus=2
 set number
 set hidden
@@ -49,6 +53,8 @@ filetype on
 filetype plugin indent on
 set incsearch
 set inccommand=split
+
+autocmd! FileType yaml setlocal shiftwidth=2 tabstop=2 expandtab softtabstop=2
 
 colorscheme nord
 
@@ -87,6 +93,8 @@ inoremap <c-u> <Esc>gUiw
 nnoremap <c-u> gUiw
 nnoremap <leader>o :only<cr>
 inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
+nnoremap <silent> <leader>+ :exe "vertical resize +5"<CR>
+nnoremap <silent> <leader>- :exe "vertical resize -5"<CR>
 
 "Plugin configs
 
@@ -121,25 +129,27 @@ let g:LanguageClient_serverCommands = {
        \ 'go': ['gopls'],
        \ 'rust': ['~/.cargo/bin/rustup', 'run', 'stable', 'rls'],
        \ }
-let g:LanguageClient_useVirtualText=1
-let g:LanguageClient_diagnosticsDisplay= {
+let g:LanguageClient_useVirtualText = 'CodeLens'
+let g:LanguageClient_useFloatingHover = 1
+let g:LanguageClient_diagnosticsSignsMax =0
+let g:LanguageClient_diagnosticsDisplay = {
 			\ 1: {
 			\ "name": "Error",
             		\ "texthl": "ALEError",
-            		\ "signText": "✖",
-            		\ "signTexthl": "ALEErrorSign",
+			\ "signText": "✖",
+			\ "signTexthl": "ALEErrorSign",
             		\ "virtualTexthl": "GitGutterDelete",
 			\},
 			\ }
 
 let g:rustfmt_autosave = 1
 
-let g:gitgutter_map_keys = 0
-let g:gitgutter_sign_added = '│'
-let g:gitgutter_sign_modified = '│'
-let g:gitgutter_sign_removed = '│'
-let g:gitgutter_sign_removed_first_line = '│'
-let g:gitgutter_sign_modified_removed = '│'
+"let g:gitgutter_map_keys = 0
+"let g:gitgutter_sign_added = '│'
+"let g:gitgutter_sign_modified = '│'
+"let g:gitgutter_sign_removed = '│'
+"let g:gitgutter_sign_removed_first_line = '│'
+"let g:gitgutter_sign_modified_removed = '│'
 
 let test#strategy = "neovim"
 
@@ -168,7 +178,7 @@ nnoremap <leader>ln :call LanguageClient_textDocument_rename()<cr>
 
 " Leader + f -- FZF
 nnoremap <leader>ff :Files<CR>
-nnoremap <leader>fa :Ag<CR>
+nnoremap <leader>fa :Rg<CR>
 nnoremap <leader>fb :Buffers<CR>
 nnoremap <leader>fc :Commits<CR>
 
@@ -184,4 +194,15 @@ nnoremap <leader>vc :Gcommit<CR>
 nnoremap <leader>vw :Gwrite<CR>
 nnoremap <leader>gl :Git log --oneline --abbrev-commit --graph --decorate --all<CR>
 
-map <F5> :NERDTreeToggle<CR>
+map ,f :NERDTreeToggle<CR>
+
+hi Comment ctermfg=102
+
+"map <silent> ,t :FloatermToggle<CR>
+nnoremap <silent> <c-space> :FloatermToggle<CR>
+tnoremap <silent> <c-space> <c-\><c-n>:FloatermToggle<CR>
+let g:floaterm_position = 'bottomleft'
+let g:floaterm_width = 1.0
+let g:floaterm_height = 0.4
+
+let g:float_preview#docked = 0
