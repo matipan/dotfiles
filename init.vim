@@ -1,5 +1,6 @@
 call plug#begin('~/.local/share/nvim/plugged')
 
+Plug 'ziglang/zig.vim'
 Plug 'arcticicestudio/nord-vim'
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'autozimu/LanguageClient-neovim', {
@@ -19,14 +20,19 @@ Plug 'tpope/vim-fugitive'
 Plug 'scrooloose/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'danro/rename.vim'
-Plug 'andrewstuart/vim-kubernetes'
 Plug 'voldikss/vim-floaterm'
 Plug 'ncm2/float-preview.nvim'
+Plug 'xolox/vim-notes'
+Plug 'xolox/vim-misc'
 
 call plug#end()
 
 let mapleader = "'"
 
+set foldmethod=syntax
+set foldnestmax=1
+set foldlevel=1
+set nofen
 set pumheight=20
 set laststatus=2
 set number
@@ -55,6 +61,10 @@ set incsearch
 set inccommand=split
 
 autocmd! FileType yaml setlocal shiftwidth=2 tabstop=2 expandtab softtabstop=2
+autocmd! FileType json setlocal shiftwidth=2 tabstop=2 expandtab softtabstop=2
+autocmd! FileType javascript setlocal shiftwidth=2 tabstop=2 expandtab softtabstop=2
+autocmd! FileType python setlocal shiftwidth=2 tabstop=2 expandtab softtabstop=2
+autocmd! BufReadPost *dockerfile* set syntax=dockerfile
 
 colorscheme nord
 
@@ -104,7 +114,7 @@ autocmd  FileType fzf set laststatus=0 noshowmode noruler
 
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#max_menu_width = 20
-let g:deoplete#max_list = 100
+call deoplete#custom#option({'max_list': 20})
 
 let g:go_def_mode='gopls'
 let g:go_info_mode='gopls'
@@ -114,7 +124,7 @@ let g:go_fmt_command = "goimports"
 let g:go_term_mode = "split"
 let g:go_term_enabled = 1
 let g:go_test_timout = 40
-let g:go_auto_type_info = 1
+let g:go_auto_type_info = 0
 let g:go_highlight_extra_types = 1
 let g:go_highlight_types = 1
 let g:go_highlight_fields = 1
@@ -128,6 +138,8 @@ let g:go_highlight_function_calls = 1
 let g:LanguageClient_serverCommands = {
        \ 'go': ['gopls'],
        \ 'rust': ['~/.cargo/bin/rustup', 'run', 'stable', 'rls'],
+       \ 'python': ['pyls'],
+       \ 'zig': ['~/code/zls/zig-cache/bin/zls'],
        \ }
 let g:LanguageClient_useVirtualText = 'CodeLens'
 let g:LanguageClient_useFloatingHover = 1
@@ -143,13 +155,6 @@ let g:LanguageClient_diagnosticsDisplay = {
 			\ }
 
 let g:rustfmt_autosave = 1
-
-"let g:gitgutter_map_keys = 0
-"let g:gitgutter_sign_added = '│'
-"let g:gitgutter_sign_modified = '│'
-"let g:gitgutter_sign_removed = '│'
-"let g:gitgutter_sign_removed_first_line = '│'
-"let g:gitgutter_sign_modified_removed = '│'
 
 let test#strategy = "neovim"
 
@@ -197,6 +202,10 @@ nnoremap <leader>gl :Git log --oneline --abbrev-commit --graph --decorate --all<
 map ,f :NERDTreeToggle<CR>
 
 hi Comment ctermfg=102
+hi notesInlineCode ctermfg=6 ctermbg=0 guifg=#88C0D0 guibg=#3B4252
+hi notesCodeStart ctermfg=102
+hi notesCodeEnd ctermfg=102
+
 
 "map <silent> ,t :FloatermToggle<CR>
 nnoremap <silent> <c-space> :FloatermToggle<CR>
@@ -206,3 +215,7 @@ let g:floaterm_width = 1.0
 let g:floaterm_height = 0.4
 
 let g:float_preview#docked = 0
+
+let g:zig_fmt_autosave = 1
+
+let g:notes_directories = ['~/Documents/Notes']
