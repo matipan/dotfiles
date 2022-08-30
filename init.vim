@@ -1,3 +1,17 @@
+autocmd! FileType yaml setlocal shiftwidth=2 tabstop=2 expandtab softtabstop=2
+autocmd! FileType json setlocal shiftwidth=2 tabstop=2 expandtab softtabstop=2
+autocmd! FileType javascript setlocal shiftwidth=2 tabstop=2 expandtab softtabstop=2
+autocmd! FileType python setlocal shiftwidth=2 tabstop=2 expandtab softtabstop=2
+autocmd! FileType vim setlocal shiftwidth=2 tabstop=2 expandtab softtabstop=2
+autocmd! BufReadPost *dockerfile* set syntax=dockerfile
+autocmd! FileType fzf
+autocmd  FileType fzf set laststatus=0 noshowmode noruler
+  \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
+autocmd BufReadPost *
+     \ if line("'\"") > 0 && line("'\"") <= line("$") |
+     \   exe "normal! g`\"" |
+     \ endif
+
 lua << EOF
 local Plug = vim.fn['plug#']
 
@@ -9,9 +23,14 @@ Plug 'hashivim/vim-terraform'
 Plug 'jjo/vim-cue'
 Plug('fatih/vim-go', { ['do'] = ':GoUpdateBinaries' })
 Plug 'neovim/nvim-lspconfig'
-Plug('ms-jpq/coq_nvim', { branch = 'coq' })
-Plug('ms-jpq/coq.artifacts', { branch = 'artifacts' })
-Plug('Shougo/deoplete.nvim', { ['do'] = ':UpdateRemotePlugins' })
+Plug 'hrsh7th/nvim-cmp'
+Plug 'hrsh7th/cmp-nvim-lsp'
+Plug 'hrsh7th/cmp-nvim-lua'
+Plug 'hrsh7th/cmp-buffer'
+Plug 'hrsh7th/cmp-path'
+Plug 'hrsh7th/cmp-cmdline'
+Plug 'hrsh7th/cmp-vsnip'
+Plug 'hrsh7th/vim-vsnip'
 
 -- Search
 Plug 'nvim-lua/plenary.nvim'
@@ -19,8 +38,8 @@ Plug('nvim-telescope/telescope.nvim', {tag = '0.1.0'})
 
 -- Styles
 Plug 'kyazdani42/nvim-web-devicons'
---Plug 'andersevenrud/nordic.nvim'
-Plug 'arcticicestudio/nord-vim'
+Plug 'andersevenrud/nordic.nvim'
+--Plug 'arcticicestudio/nord-vim'
 
 -- File explorer and window configs
 Plug 'voldikss/vim-floaterm'
@@ -29,10 +48,12 @@ Plug 'kyazdani42/nvim-tree.lua'
 vim.call('plug#end')
 
 -- Global configurations
-vim.cmd('colorscheme nord')
+vim.cmd[[
+colorscheme nordic
+set noswapfile
+set nobackup
+]]
 vim.g.mapleader = "'"
-vim.g.nobackup = true
-vim.g.noswapfile = true
 vim.g.filetype = 'on'
 vim.g.hidden = true
 vim.cmd [[
@@ -46,8 +67,11 @@ set.mouse = 'a'
 set.autoread = true
 set.scrolljump = 20
 set.backspace = 'indent,eol,start'
-set.completeopt = 'menu,preview,menuone,noinsert,noselect'
+set.completeopt = 'menu,menuone,noselect'
 set.clipboard = set.clipboard + 'unnamedplus'
+set.incsearch = true
+set.inccommand = 'split'
+set.pumheight = 25
 
 -- Tab configs
 set.autoindent = true
@@ -103,23 +127,12 @@ vim.cmd [[
 inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
 nnoremap <silent> <c-space> :FloatermToggle<CR>
 tnoremap <silent> <c-space> <c-\><c-n>:FloatermToggle<CR>
-]]
-
-vim.cmd [[
-autocmd! FileType yaml setlocal shiftwidth=2 tabstop=2 expandtab softtabstop=2
-autocmd! FileType json setlocal shiftwidth=2 tabstop=2 expandtab softtabstop=2
-autocmd! FileType javascript setlocal shiftwidth=2 tabstop=2 expandtab softtabstop=2
-autocmd! FileType python setlocal shiftwidth=2 tabstop=2 expandtab softtabstop=2
-autocmd! FileType vim setlocal shiftwidth=2 tabstop=2 expandtab softtabstop=2
-autocmd! BufReadPost *dockerfile* set syntax=dockerfile
-
-autocmd! FileType fzf
-autocmd  FileType fzf set laststatus=0 noshowmode noruler
-  \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
+nnoremap <silent> K <cmd>lua vim.lsp.buf.hover()<CR>
 ]]
 
 -- Plugin setups
 vim.g.go_def_mode = 'gopls'
+vim.g.go_doc_keywordprg_enabled = 0
 vim.g.go_info_mode = 'gopls'
 vim.g.go_addtags_transform = 'snakecase'
 vim.g.go_auto_sameids = 0
@@ -155,19 +168,101 @@ vim.g['float_preview#docked'] = 0
 
 vim.g.rustfmt_autosave = 1
 
-vim.g.coq_settings = {
-  auto_start = 'shut-up',
+local has_words_before = function()
+  local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+  return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
+end
+
+local feedkey = function(key, mode)
+  vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(key, true, true, true), mode, true)
+end
+
+local cmp = require'cmp'
+
+cmp.setup({
+	snippet = {
+          expand = function(args)
+	  vim.fn["vsnip#anonymous"](args.body)
+		end,
+	},
+	window = {
+		-- completion = cmp.config.window.bordered(),
+		-- documentation = cmp.config.window.bordered(),
+	},
+	experimental = {
+    native_menu = false,
+    ghost_text = true,
+	},
+	mapping = cmp.mapping.preset.insert({
+		['<C-d>'] = cmp.mapping.scroll_docs(-4),
+		['<C-f>'] = cmp.mapping.scroll_docs(4),
+		['<C-Space>'] = cmp.mapping.complete(),
+		['<C-e>'] = cmp.mapping.abort(),
+		['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+    ["<Tab>"] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.select_next_item()
+      elseif vim.fn["vsnip#available"](1) == 1 then
+        feedkey("<Plug>(vsnip-expand-or-jump)", "")
+      elseif has_words_before() then
+        cmp.complete()
+      else
+        fallback() -- The fallback function sends a already mapped key. In this case, it's probably `<Tab>`.
+      end
+    end, { "i", "s" }),
+
+    ["<S-Tab>"] = cmp.mapping(function()
+      if cmp.visible() then
+        cmp.select_prev_item()
+      elseif vim.fn["vsnip#jumpable"](-1) == 1 then
+        feedkey("<Plug>(vsnip-jump-prev)", "")
+      end
+    end, { "i", "s" }),
+	}),
+	sources = cmp.config.sources({
+		{ name = 'nvim_lsp' },
+	}, {
+		{ name = 'buffer' },
+	})
+})
+
+-- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
+cmp.setup.cmdline('/', {
+	mapping = cmp.mapping.preset.cmdline(),
+	sources = {
+		{ name = 'buffer' }
+	}
+})
+
+-- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
+cmp.setup.cmdline(':', {
+	mapping = cmp.mapping.preset.cmdline(),
+	sources = cmp.config.sources({
+		{ name = 'path' }
+	}, {
+		{ name = 'cmdline' }
+	})
+})
+
+-- Setup lspconfig.
+local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+local lsp = require('lspconfig')
+lsp.gopls.setup{
+	capabilities = capabilities,
+  settings = {
+    gopls = {
+      analyses = {
+        unusedparams = true,
+        shadow = true,
+      },
+      staticcheck = true,
+    },
+  },
 }
 
-local on_attach = function(client, bufnr)
-  vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
-end
-local lsp = require('lspconfig')
-local coq = require('coq')
-lsp.gopls.setup{}
-lsp.gopls.setup(coq.lsp_ensure_capabilities{
-  on_attach = on_attach,
-})
+lsp.rust_analyzer.setup{
+	capabilities = capabilities
+}
 
 require('telescope').setup({
   defaults = {
