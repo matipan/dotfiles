@@ -1,16 +1,17 @@
 autocmd! FileType yaml setlocal shiftwidth=2 tabstop=2 expandtab softtabstop=2
 autocmd! FileType json setlocal shiftwidth=2 tabstop=2 expandtab softtabstop=2
-autocmd! FileType javascript setlocal shiftwidth=2 tabstop=2 expandtab softtabstop=2
-autocmd! FileType python setlocal shiftwidth=2 tabstop=2 expandtab softtabstop=2
-autocmd! FileType vim setlocal shiftwidth=2 tabstop=2 expandtab softtabstop=2
+autocmd! FileType javascript setlocal shiftwidth=4 tabstop=4 expandtab softtabstop=4
+autocmd! FileType python setlocal shiftwidth=4 tabstop=4 expandtab softtabstop=4
+autocmd! FileType vim setlocal shiftwidth=4 tabstop=4 expandtab softtabstop=4
 autocmd! BufReadPost *dockerfile* set syntax=dockerfile
+autocmd! BufReadPost *.kt* set syntax=java
 autocmd! FileType fzf
 autocmd  FileType fzf set laststatus=0 noshowmode noruler
-  \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
+\| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
 autocmd BufReadPost *
-     \ if line("'\"") > 0 && line("'\"") <= line("$") |
-     \   exe "normal! g`\"" |
-     \ endif
+\ if line("'\"") > 0 && line("'\"") <= line("$") |
+\   exe "normal! g`\"" |
+\ endif
 
 lua << EOF
 local Plug = vim.fn['plug#']
@@ -31,6 +32,7 @@ Plug 'hrsh7th/cmp-path'
 Plug 'hrsh7th/cmp-cmdline'
 Plug 'hrsh7th/cmp-vsnip'
 Plug 'hrsh7th/vim-vsnip'
+Plug 'jparise/vim-graphql'
 
 -- Search
 Plug 'nvim-lua/plenary.nvim'
@@ -44,6 +46,7 @@ Plug 'andersevenrud/nordic.nvim'
 -- File explorer and window configs
 Plug 'voldikss/vim-floaterm'
 Plug 'kyazdani42/nvim-tree.lua'
+Plug 'nvim-lualine/lualine.nvim'
 
 vim.call('plug#end')
 
@@ -63,6 +66,7 @@ filetype plugin indent on
 -- Vim options
 local set = vim.opt
 set.number = true
+set.relativenumber = true
 set.mouse = 'a'
 set.autoread = true
 set.scrolljump = 20
@@ -169,127 +173,185 @@ vim.g['float_preview#docked'] = 0
 vim.g.rustfmt_autosave = 1
 
 local has_words_before = function()
-  local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-  return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
+    local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+    return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
 end
 
 local feedkey = function(key, mode)
-  vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(key, true, true, true), mode, true)
+    vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(key, true, true, true), mode, true)
 end
 
 local cmp = require'cmp'
 
 cmp.setup({
-	snippet = {
-          expand = function(args)
-	  vim.fn["vsnip#anonymous"](args.body)
-		end,
-	},
-	window = {
-		-- completion = cmp.config.window.bordered(),
-		-- documentation = cmp.config.window.bordered(),
-	},
-	experimental = {
-    native_menu = false,
-    ghost_text = true,
-	},
-	mapping = cmp.mapping.preset.insert({
-		['<C-d>'] = cmp.mapping.scroll_docs(-4),
-		['<C-f>'] = cmp.mapping.scroll_docs(4),
-		['<C-Space>'] = cmp.mapping.complete(),
-		['<C-e>'] = cmp.mapping.abort(),
-		['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
-    ["<Tab>"] = cmp.mapping(function(fallback)
-      if cmp.visible() then
-        cmp.select_next_item()
-      elseif vim.fn["vsnip#available"](1) == 1 then
-        feedkey("<Plug>(vsnip-expand-or-jump)", "")
-      elseif has_words_before() then
-        cmp.complete()
-      else
-        fallback() -- The fallback function sends a already mapped key. In this case, it's probably `<Tab>`.
-      end
-    end, { "i", "s" }),
+    snippet = {
+        expand = function(args)
+            vim.fn["vsnip#anonymous"](args.body)
+        end,
+    },
+    window = {
+        -- completion = cmp.config.window.bordered(),
+        -- documentation = cmp.config.window.bordered(),
+    },
+    experimental = {
+        native_menu = false,
+        ghost_text = true,
+    },
+    mapping = cmp.mapping.preset.insert({
+        ['<C-d>'] = cmp.mapping.scroll_docs(-4),
+        ['<C-f>'] = cmp.mapping.scroll_docs(4),
+        ['<C-Space>'] = cmp.mapping.complete(),
+        ['<C-e>'] = cmp.mapping.abort(),
+        ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+        ["<Tab>"] = cmp.mapping(function(fallback)
+            if cmp.visible() then
+                cmp.select_next_item()
+            elseif vim.fn["vsnip#available"](1) == 1 then
+                feedkey("<Plug>(vsnip-expand-or-jump)", "")
+            elseif has_words_before() then
+                cmp.complete()
+            else
+                fallback() -- The fallback function sends a already mapped key. In this case, it's probably `<Tab>`.
+            end
+        end, { "i", "s" }),
 
-    ["<S-Tab>"] = cmp.mapping(function()
-      if cmp.visible() then
-        cmp.select_prev_item()
-      elseif vim.fn["vsnip#jumpable"](-1) == 1 then
-        feedkey("<Plug>(vsnip-jump-prev)", "")
-      end
-    end, { "i", "s" }),
-	}),
-	sources = cmp.config.sources({
-		{ name = 'nvim_lsp' },
-	}, {
-		{ name = 'buffer' },
-	})
+        ["<S-Tab>"] = cmp.mapping(function()
+            if cmp.visible() then
+                cmp.select_prev_item()
+            elseif vim.fn["vsnip#jumpable"](-1) == 1 then
+                feedkey("<Plug>(vsnip-jump-prev)", "")
+            end
+        end, { "i", "s" }),
+    }),
+    sources = cmp.config.sources({
+        { name = 'nvim_lsp' },
+    }, {
+        { name = 'buffer' },
+    })
 })
 
 -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
 cmp.setup.cmdline('/', {
-	mapping = cmp.mapping.preset.cmdline(),
-	sources = {
-		{ name = 'buffer' }
-	}
+    mapping = cmp.mapping.preset.cmdline(),
+    sources = {
+        { name = 'buffer' }
+    }
 })
 
 -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
 cmp.setup.cmdline(':', {
-	mapping = cmp.mapping.preset.cmdline(),
-	sources = cmp.config.sources({
-		{ name = 'path' }
-	}, {
-		{ name = 'cmdline' }
-	})
+    mapping = cmp.mapping.preset.cmdline(),
+    sources = cmp.config.sources({
+        { name = 'path' }
+    }, {
+        { name = 'cmdline' }
+    })
 })
 
 -- Setup lspconfig.
 local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
 local lsp = require('lspconfig')
 lsp.gopls.setup{
-	capabilities = capabilities,
-  settings = {
-    gopls = {
-      analyses = {
-        unusedparams = true,
-        shadow = true,
-      },
-      staticcheck = true,
+    capabilities = capabilities,
+    settings = {
+        gopls = {
+            analyses = {
+                unusedparams = true,
+                shadow = true,
+            },
+            staticcheck = true,
+        },
     },
-  },
 }
 
 lsp.rust_analyzer.setup{
-	capabilities = capabilities
+    capabilities = capabilities
 }
 
+lsp.terraformls.setup{
+    capabilities = capabilities
+}
+
+lsp.pyright.setup{
+    capabilities = capabilities
+}
+
+lsp.tsserver.setup{
+    capabilities = capabilities
+}
+
+vim.api.nvim_create_autocmd({"BufWritePre"}, {
+    pattern = {"*.tf", "*.tfvars"},
+    callback = vim.lsp.buf.formatting_sync,
+})
+
 require('telescope').setup({
-  defaults = {
-    layout_config = {
-      vertical = {
-        width = 0.1,
-        height = 0.1,
-      }
+    defaults = {
+        layout_config = {
+            vertical = {
+                width = 0.1,
+                height = 0.1,
+            }
+        },
     },
-  },
 })
 
 require("nvim-tree").setup({
-  sort_by = "case_sensitive",
-  view = {
-    adaptive_size = true,
-    mappings = {
-      list = {
-        { key = "u", action = "dir_up" },
-      },
+    sort_by = "case_sensitive",
+    view = {
+        adaptive_size = true,
+        mappings = {
+            list = {
+                { key = "u", action = "dir_up" },
+            },
+        },
     },
-  },
-  renderer = {
-    group_empty = true,
-  },
-  filters = {
-    dotfiles = true,
-  },
+    renderer = {
+        group_empty = true,
+    },
+    filters = {
+        dotfiles = true,
+    },
 })
+
+require('lualine').setup {
+  options = {
+    icons_enabled = true,
+    theme = 'auto',
+    component_separators = { left = '', right = ''},
+    section_separators = { left = '', right = ''},
+    disabled_filetypes = {
+      statusline = {},
+      winbar = {},
+    },
+    ignore_focus = {},
+    always_divide_middle = true,
+    globalstatus = false,
+    refresh = {
+      statusline = 1000,
+      tabline = 1000,
+      winbar = 1000,
+    }
+  },
+  sections = {
+    lualine_a = {'mode'},
+    lualine_b = {'branch', 'diff', 'diagnostics'},
+    lualine_c = {'filename'},
+    lualine_x = {'encoding', 'fileformat', 'filetype'},
+    lualine_y = {'progress'},
+    lualine_z = {'location'}
+  },
+  inactive_sections = {
+    lualine_a = {},
+    lualine_b = {},
+    lualine_c = {'filename'},
+    lualine_x = {'location'},
+    lualine_y = {},
+    lualine_z = {}
+  },
+  tabline = {},
+  winbar = {},
+  inactive_winbar = {},
+  extensions = {}
+}
 EOF
