@@ -8,7 +8,7 @@ Plug 'hashivim/vim-terraform'
 Plug 'jjo/vim-cue'
 Plug 'LnL7/vim-nix'
 Plug 'tomlion/vim-solidity'
-Plug('fatih/vim-go', { ['do'] = ':GoUpdateBinaries' })
+--Plug('fatih/vim-go', { ['do'] = ':GoUpdateBinaries' })
 Plug 'neovim/nvim-lspconfig'
 Plug 'nvim-treesitter/nvim-treesitter'
 Plug 'hrsh7th/nvim-cmp'

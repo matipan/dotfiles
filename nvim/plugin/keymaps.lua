@@ -34,6 +34,8 @@ vim.keymap.set('n', '<C-j>', '<C-w>j', { desc = 'Move to bottom window with C-j'
 vim.keymap.set('n', '<C-k>', '<C-w>k', { desc = 'Move to top window with C-k' })
 vim.keymap.set('n', '<C-l>', '<C-w>l', { desc = 'Move to right window with C-l' })
 vim.keymap.set('n', '<C-h>', '<C-w>h', { desc = 'Move to left window with C-h' })
+vim.keymap.set('n', '<C-d>', '<C-d>zz', { desc = 'Scroll down and center the screen' })
+vim.keymap.set('n', '<C-u>', '<C-u>zz', { desc = 'Scroll up and center the screen' })
 
 -- Window and tab navigations
 vim.keymap.set('n', '}t', ':tabn<cr>')
@@ -53,8 +55,6 @@ vim.keymap.set('n', '<Down>', 'ddp')
 vim.keymap.set('n', '<Up>', 'ddkP')
 vim.keymap.set('n', '<Left>', '<<<esc>')
 vim.keymap.set('n', '<Right>', '>><esc>')
-vim.keymap.set('i', '<c-u>', '<Esc>gUiw')
-vim.keymap.set('n', '<c-u>', 'gUiw')
 vim.keymap.set('n', '<leader>o', ':only<cr>')
 vim.keymap.set('n', ',f', ':NvimTreeToggle<CR>')
 
