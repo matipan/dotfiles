@@ -8,7 +8,7 @@ For now I'm keeping all my "old" dotfiles (such as .zshrc and .tmux.conf) just i
 To install Nix I simply followed [this guide](https://nixos.org/download.html) and used the multi-user installation.
 
 ## Setup home-manager
-Home-manager was installed following [this guide](https://nix-community.github.io/home-manager/index.html#sec-install-standalone). I installed based on nixpks 22.05.
+Home-manager was installed following [this guide](https://nix-community.github.io/home-manager/index.html#sec-install-standalone). I installed based on nixpkgs 22.05.
 
 Once installed you can simply:
 ```sh
