@@ -23,6 +23,7 @@
     pkgs.go
     pkgs.gopls
     pkgs.python311
+    pkgs.rustup
   ];
 
   # Programs
