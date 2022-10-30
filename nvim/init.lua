@@ -6,6 +6,8 @@ vim.call('plug#begin', '~/.local/share/nvim/plugged')
 Plug 'rust-lang/rust.vim'
 Plug 'hashivim/vim-terraform'
 Plug 'jjo/vim-cue'
+Plug 'LnL7/vim-nix'
+Plug 'tomlion/vim-solidity'
 Plug('fatih/vim-go', { ['do'] = ':GoUpdateBinaries' })
 Plug 'neovim/nvim-lspconfig'
 Plug 'nvim-treesitter/nvim-treesitter'
@@ -28,15 +30,16 @@ Plug 'ThePrimeagen/harpoon'
 Plug 'nvim-telescope/telescope-ui-select.nvim'
 Plug 'RishabhRD/popfix'
 Plug 'RishabhRD/nvim-cheat.sh'
+Plug 'junegunn/fzf.vim'
 
 -- Styles
 Plug 'kyazdani42/nvim-web-devicons'
 Plug 'arcticicestudio/nord-vim'
+Plug 'andersevenrud/nordic.nvim'
 
 -- File explorer and window configs
 Plug 'voldikss/vim-floaterm'
 Plug 'kyazdani42/nvim-tree.lua'
---Plug 'nvim-lualine/lualine.nvim'
 Plug 'tjdevries/express_line.nvim'
 
 -- Misc
@@ -48,7 +51,6 @@ vim.call('plug#end')
 
 -- Global configurations
 vim.cmd[[
-colorscheme nord
 set noswapfile
 set nobackup
 ]]
@@ -72,15 +74,14 @@ set.clipboard = set.clipboard + 'unnamedplus'
 set.incsearch = true
 set.inccommand = 'split'
 set.pumheight = 25
-set.guicursor = ""
 
 -- Tab configs
 set.autoindent = true
 set.smartindent = true
 set.smarttab = true
 set.softtabstop = 0
-set.tabstop = 8
-set.shiftwidth = 8
+set.tabstop = 4
+set.shiftwidth = 4
 set.smarttab = true
 set.laststatus = 2
 
@@ -89,9 +90,10 @@ autocmd! FileType yaml setlocal shiftwidth=2 tabstop=2 expandtab softtabstop=2
 autocmd! FileType json setlocal shiftwidth=2 tabstop=2 expandtab softtabstop=2
 autocmd! FileType javascript setlocal shiftwidth=4 tabstop=4 expandtab softtabstop=4
 autocmd! FileType python setlocal shiftwidth=4 tabstop=4 expandtab softtabstop=4
-autocmd! FileType vim setlocal shiftwidth=4 tabstop=4 expandtab softtabstop=4
-autocmd! FileType lua setlocal shiftwidth=4 tabstop=4 expandtab softtabstop=4
-autocmd! FileType dockerfile setlocal shiftwidth=4 tabstop=4 expandtab softtabstop=4
+autocmd! FileType vim setlocal shiftwidth=4 tabstop=4 softtabstop=4
+autocmd! FileType lua setlocal shiftwidth=4 tabstop=4 softtabstop=4
+autocmd! FileType go setlocal shiftwidth=8 tabstop=8 softtabstop=8
+autocmd! FileType dockerfile setlocal shiftwidth=4 tabstop=4 softtabstop=4
 autocmd! BufReadPost *dockerfile* set syntax=dockerfile
 autocmd! BufReadPost *.kt* set syntax=java
 autocmd! FileType fzf

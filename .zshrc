@@ -3,7 +3,7 @@ export TERM=xterm
 
 plugins=(git)
 
-ZSH_THEME="matipanv3"
+ZSH_THEME="matipan"
 COMPLETION_WAITING_DOTS="true"
 
 export GOPATH=/home/matipan
@@ -47,3 +47,22 @@ eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 export TERM="xterm-256color"
 export PATH=$HOME/bin:$PATH
 export PATH="/home/linuxbrew/.linuxbrew/opt/openjdk@11/bin:$PATH"
+
+aws_stg() {
+	export AWS_PROFILE=stg
+	export AWS_REGION=us-east-1
+}
+
+aws_prod_legacy() {
+	export AWS_PROFILE=admin
+	export AWS_REGION=us-east-1
+}
+
+aws_prod_legacy() {
+	export AWS_PROFILE=admin
+	export AWS_REGION=sa-east-1
+}
+
+bindkey -s ^f "tmux-sessionizer\n"
+
+eval "$(direnv hook zsh)"

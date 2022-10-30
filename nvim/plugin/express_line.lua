@@ -3,11 +3,6 @@ local extensions = require "el.extensions"
 local sections = require "el.sections"
 local subscribe = require "el.subscribe"
 
-vim.cmd[[
-hi StatusLine ctermfg=8 ctermbg=6 guibg=#88C0D0 guifg=#4C566A
-]]
---hi StatusLine guifg=#88c0d0 guibg=#4c566a
-
 if false then
     -- Disappearing statusline for commands
     vim.opt.cmdheight = 0

@@ -7,16 +7,19 @@ vim.keymap.set('n', '<leader>lw', '<cmd>Telescope lsp_workspace_symbols<cr>')
 vim.keymap.set('n', '<leader>li', '<cmd>Telescope lsp_incoming_calls<cr>')
 vim.keymap.set('n', '<leader>lo', '<cmd>Telescope lsp_outgoing_calls<cr>')
 vim.keymap.set('n', '<leader>ld', '<cmd>Telescope diagnostics<cr>')
+vim.keymap.set('n', '<C-f>', '<cmd>silent !tmux neww tmux-sessionizer<CR>')
 
 vim.keymap.set("n", "K", ":lua vim.lsp.buf.hover()<CR>", { silent = true, noremap = true})
 vim.keymap.set("i", "<expr><tab>", "pumvisible() ? \"<c-n>\" : \"<tab>\"", { noremap = true })
 
 -- Telescope - Files and
 vim.keymap.set('n', '<leader>ff', '<cmd>Telescope find_files<cr>')
+vim.keymap.set('n', '<leader>fa', '<cmd>Telescope find_files cwd=$HOME/code<cr>')
+vim.keymap.set('n', '<leader>fl', '<cmd>Telescope find_files cwd=$HOME/lemon<cr>')
 vim.keymap.set('n', '<leader>fg', '<cmd>Telescope live_grep<cr>')
 vim.keymap.set('n', '<leader>fb', '<cmd>Telescope buffers<cr>')
 vim.keymap.set('n', '<leader>fh', '<cmd>Telescope help_tags<cr>')
-vim.keymap.set('n', '<C-P>', '<cmd>Telescope find_files<cr>')
+vim.keymap.set('n', '<C-P>', '<cmd>Telescope git_files<cr>')
 
 vim.keymap.set('n', '<leader>vc', '<cmd>Telescope git_commits<cr>')
 vim.keymap.set('n', '<leader>vb', '<cmd>Telescope git_branches<cr>')
