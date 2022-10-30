@@ -29,8 +29,13 @@
 
   programs.git = {
     enable = true;
-    userName = "matipan";
+    userName = "Matias Pan";
     userEmail = "matipan@hey.com";
+    extraConfig = {
+      color.ui = true;
+      gihub.user = "matipan";
+      init.defaultBranch = "main";
+    };
   };
 
   # Manual stuff

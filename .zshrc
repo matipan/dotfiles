@@ -18,6 +18,7 @@ export PATH=$PATH:$HOME/.local/bin
 export PATH=$PATH:$HOME/lemon/lemi/bin
 export PATH=$PATH:$HOME/.cargo/bin
 export PATH=~/.npm-global/bin:$PATH
+export NIX_PATH=$HOME/.nix-defexpr/channels:/nix/var/nix/profiles/per-user/root/channels${NIX_PATH:+:$NIX_PATH}
 export AWS_PROFILE=admin
 export AWS_REGION=sa-east-1
 export GITHUB_TOKEN="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"
