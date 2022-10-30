@@ -10,12 +10,14 @@
     # shell
     pkgs.zsh
     pkgs.fzf
+    pkgs.tmux
 
     # tools
     pkgs.htop
     pkgs.git
     pkgs.bat
     pkgs.tree
+    pkgs.neovim # for now I'll only manage the install not the config
 
     # langs
     pkgs.go
@@ -56,7 +58,7 @@
       GOSUMDB = "sum.golang.org";
       GIT_EDITOR = "nvim";
       EDITOR = "nvim";
-      PATH = "$PATH:$HOME/bin/nvim-linux64/bin:$HOME/.local/bin:$HOME/lemon/lemi/bin:$HOME/.cargo/bin:$HOME/.npm-global/bin";
+      PATH = "$PATH:$HOME/bin/nvim-linux64/bin:$HOME/.local/bin:$HOME/lemon/lemi/bin:$HOME/.cargo/bin:$HOME/.npm-global/bin:$HOME/code/dotfiles/bin";
       AWS_PROFILE = "admin";
       AWS_REGION = "sa-east-1";
     };
@@ -107,38 +109,48 @@
         export AWS_REGION=sa-east-1
       }
 
-      tmux_sessionizer() {
-        if [[ $# -eq 1 ]]; then
-            selected=$1
-        else
-            selected=$(find ~/code ~/lemon ~/ -mindepth 1 -maxdepth 1 -type d | fzf)
-        fi
+      bindkey -s ^f "tmux-sessionizer\n"
+    '';
+  };
 
-        if [[ -z $selected ]]; then
-            exit 0
-        fi
+  programs.tmux = {
+    enable = true;
 
-        selected_name=$(basename "$selected" | tr . _)
-        tmux_running=$(pgrep tmux)
+    clock24 = true;
+    escapeTime = 1;
+    historyLimit = 1000000;
+    resizeAmount = 5;
+    sensibleOnTop = true;
+    prefix = "C-b";
+    terminal = "xterm-256color";
 
-        if [[ -z $TMUX ]] && [[ -z $tmux_running ]]; then
-            tmux new-session -s $selected_name -c $selected
-            exit 0
-        fi
-
-        if ! tmux has-session -t=$selected_name 2> /dev/null; then
-            tmux new-session -ds $selected_name -c $selected
-        fi
-
-        if [[ -z $TMUX ]] && [[ ! -z $tmux_running ]]; then
-            tmux attach -t $selected_name
-            exit 0
-        fi
-
-        tmux switch-client -t $selected_name
+    plugins = with pkgs; [
+      tmuxPlugins.yank
+      {
+        plugin = tmuxPlugins.nord;
+        extraConfig = "set -g @nord_tmux_no_patched_font '1'";
       }
+    ];
 
-      bindkey -s ^f "tmux_sessionizer\n"
+    extraConfig = ''
+      set -g mouse on
+      set -g escape-time 1
+      set-option -ga terminal-overrides ",xterm-256color:Tc"
+
+      bind \\ split-window -h -c "#{pane_current_path}"
+      bind - split-window -v -c "#{pane_current_path}"
+      bind o new-window -c "#{pane_current_path}"
+      bind h select-pane -L
+      bind j select-pane -D
+      bind k select-pane -U
+      bind l select-pane -R
+      bind m resize-pane -Z
+      bind -r H resize-pane -L 5
+      bind -r J resize-pane -D 5
+      bind -r K resize-pane -U 5
+      bind -r L resize-pane -R 5
+      bind r source-file ~/.tmux.conf \; display-message "~/.tmux.conf reloaded"
+      bind M split-window -h "nvim ~/.tmux.conf"
     '';
   };
 
