@@ -22,6 +22,7 @@
     # langs
     pkgs.go
     pkgs.gopls
+    pkgs.python311
   ];
 
   # Programs
