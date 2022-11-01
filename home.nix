@@ -18,6 +18,7 @@
     pkgs.bat
     pkgs.tree
     pkgs.neovim # for now I'll only manage the install not the config
+    pkgs.jq
 
     # langs
     pkgs.go
@@ -101,7 +102,7 @@
         export AWS_REGION=us-east-1
       }
 
-      aws_prod_legacy() {
+      aws_prod() {
         export AWS_PROFILE=admin
         export AWS_REGION=us-east-1
       }
