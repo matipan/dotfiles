@@ -19,6 +19,7 @@
     pkgs.tree
     pkgs.neovim # for now I'll only manage the install not the config
     pkgs.jq
+    pkgs.awscli2
 
     # langs
     pkgs.go
