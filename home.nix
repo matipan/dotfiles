@@ -84,6 +84,7 @@
       loginaws = "aws sso login --profile admin";
       code = "code --disable-gpu";
       gw = "git worktree";
+      pbcopy = ''xclip -sel "clip"'';
     };
 
     oh-my-zsh = {
