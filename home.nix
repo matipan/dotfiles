@@ -11,6 +11,7 @@
     pkgs.zsh
     pkgs.fzf
     pkgs.tmux
+    pkgs.direnv
 
     # tools
     pkgs.htop
@@ -27,6 +28,7 @@
     pkgs.gopls
     pkgs.python311
     pkgs.rustup
+    pkgs.nodejs-18_x
   ];
 
   # Programs
