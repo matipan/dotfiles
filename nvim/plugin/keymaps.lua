@@ -29,6 +29,9 @@ vim.keymap.set('n', '<leader>wl', '<cmd>lua require("telescope").extensions.git_
 
 -- Key mappings
 vim.keymap.set('n', '*', '*zz', { desc = 'Search and center screen' })
+-- I constantly save files so I would reather keep the `;` keymap. Lets mappings
+-- it before loosing this map.
+vim.keymap.set('n', '<C-.>', ';', { desc = 'Move forward in find with Control dot'})
 vim.keymap.set('n', ';', ':', { desc = 'Map ; to :'})
 vim.keymap.set('n', '<C-j>', '<C-w>j', { desc = 'Move to bottom window with C-j' })
 vim.keymap.set('n', '<C-k>', '<C-w>k', { desc = 'Move to top window with C-k' })

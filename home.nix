@@ -23,10 +23,14 @@
     pkgs.awscli2
     pkgs.docker
 
+    # GUIs
+    pkgs.brave
+
     # langs
     pkgs.go
     pkgs.gopls
     pkgs.python311
+    pkgs.virtualenv
     pkgs.rustup
     pkgs.nodejs-18_x
   ];
