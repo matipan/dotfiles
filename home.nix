@@ -33,6 +33,8 @@
     pkgs.virtualenv
     pkgs.rustup
     pkgs.nodejs-18_x
+    pkgs.yarn
+    pkgs.coursier
   ];
 
   # Programs
@@ -69,7 +71,7 @@
       GOSUMDB = "sum.golang.org";
       GIT_EDITOR = "nvim";
       EDITOR = "nvim";
-      PATH = "$PATH:$HOME/bin/nvim-linux64/bin:$HOME/.local/bin:$HOME/lemon/lemi/bin:$HOME/.cargo/bin:$HOME/.npm-global/bin:$HOME/code/dotfiles/bin";
+      PATH = "$PATH:$HOME/bin/nvim-linux64/bin:$HOME/.local/bin:$HOME/lemon/lemi/bin:$HOME/.cargo/bin:$HOME/.npm-global/bin:$HOME/code/dotfiles/bin:$HOME/code/go/bin";
       AWS_PROFILE = "admin";
       AWS_REGION = "sa-east-1";
     };
