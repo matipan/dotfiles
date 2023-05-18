@@ -1,6 +1,11 @@
 -- LSP keymaps, actions and search
 vim.keymap.set("n", "<leader>lf", ":lua vim.diagnostic.open_float()<CR>", { silent = true, noremap = true })
 vim.keymap.set("n", "<leader>la", ":lua vim.lsp.buf.code_action()<CR>", { silent = true, noremap = true })
+vim.keymap.set("n", "<leader>ln", ":lua vim.lsp.buf.rename()<CR>", { silent = true, noremap = true })
+vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
+vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
+vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
+vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
 vim.keymap.set('n', '<leader>lr', '<cmd>Telescope lsp_references<cr>')
 vim.keymap.set('n', '<leader>ls', '<cmd>Telescope lsp_document_symbols<cr>')
 vim.keymap.set('n', '<leader>lw', '<cmd>Telescope lsp_workspace_symbols<cr>')
@@ -10,12 +15,10 @@ vim.keymap.set('n', '<leader>ld', '<cmd>Telescope diagnostics<cr>')
 vim.keymap.set('n', '<C-f>', '<cmd>silent !tmux neww tmux-sessionizer<CR>')
 
 vim.keymap.set("n", "K", ":lua vim.lsp.buf.hover()<CR>", { silent = true, noremap = true})
-vim.keymap.set("i", "<expr><tab>", "pumvisible() ? \"<c-n>\" : \"<tab>\"", { noremap = true })
 
 -- Telescope - Files and
-vim.keymap.set('n', '<leader>ff', '<cmd>Telescope find_files<cr>')
+vim.keymap.set('n', '<leader>ff', '<cmd>Telescope find_files hidden=true<cr>')
 vim.keymap.set('n', '<leader>fa', '<cmd>Telescope find_files cwd=$HOME/code<cr>')
-vim.keymap.set('n', '<leader>fl', '<cmd>Telescope find_files cwd=$HOME/lemon<cr>')
 vim.keymap.set('n', '<leader>fg', '<cmd>Telescope live_grep<cr>')
 vim.keymap.set('n', '<leader>fb', '<cmd>Telescope buffers<cr>')
 vim.keymap.set('n', '<leader>fh', '<cmd>Telescope help_tags<cr>')
@@ -29,6 +32,8 @@ vim.keymap.set('n', '<leader>wl', '<cmd>lua require("telescope").extensions.git_
 
 -- Key mappings
 vim.keymap.set('n', '*', '*zz', { desc = 'Search and center screen' })
+vim.keymap.set('n', '<C-i>', 'gg=G', { desc = 'Format the entire file' })
+
 -- I constantly save files so I would reather keep the `;` keymap. Lets mappings
 -- it before loosing this map.
 vim.keymap.set('n', '<C-.>', ';', { desc = 'Move forward in find with Control dot'})

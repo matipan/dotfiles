@@ -15,13 +15,12 @@
 
     # tools
     pkgs.htop
-    pkgs.git
     pkgs.bat
     pkgs.tree
     pkgs.neovim # for now I'll only manage the install not the config
     pkgs.jq
     pkgs.awscli2
-    pkgs.docker
+    pkgs.libuuid
 
     # GUIs
     pkgs.brave
@@ -31,30 +30,30 @@
     pkgs.gopls
     pkgs.python311
     pkgs.virtualenv
-    pkgs.rustup
     pkgs.nodejs-18_x
     pkgs.yarn
     pkgs.coursier
+    pkgs.gcc
   ];
 
   # Programs
   programs.home-manager.enable = true;
 
+  programs.neovim = {
+    extraConfig = ''
+      lua <<EOF
+        local status, ts_install = pcall(require, "nvim-treesitter.install")
+        if(status) then
+          ts_install.compilers = { "${pkgs.gcc}/bin/gcc" }
+        end
+      EOF
+    '';
+  };
+
   programs.go = {
     enable = true;
     goPath = "code/go";
     goPrivate = [ "github.com/lemonatio" ];
-  };
-
-  programs.git = {
-    enable = true;
-    userName = "Matias Pan";
-    userEmail = "matipan@hey.com";
-    extraConfig = {
-      color.ui = true;
-      gihub.user = "matipan";
-      init.defaultBranch = "main";
-    };
   };
 
   programs.zsh = {
@@ -71,9 +70,12 @@
       GOSUMDB = "sum.golang.org";
       GIT_EDITOR = "nvim";
       EDITOR = "nvim";
-      PATH = "$PATH:$HOME/bin/nvim-linux64/bin:$HOME/.local/bin:$HOME/lemon/lemi/bin:$HOME/.cargo/bin:$HOME/.npm-global/bin:$HOME/code/dotfiles/bin:$HOME/code/go/bin";
+      PATH = "$PATH:$HOME/.local/bin/lua-language-server/bin:$HOME/bin/nvim-linux64/bin:$HOME/.local/bin:$HOME/lemon/lemi/bin:$HOME/.cargo/bin:$HOME/.npm-global/bin:$HOME/code/dotfiles/bin:$HOME/code/go/bin:$HOME/.npm-packages/bin:$HOME/.nube/bin";
       AWS_PROFILE = "admin";
       AWS_REGION = "sa-east-1";
+      NUBE_TIENDANUBE_ROOT="/home/matipan/code/tiendanube/core";
+      DOCKER_CLIENT_TIMEOUT="300";
+      COMPOSE_HTTP_TIMEOUT="300";
     };
 
     history = {

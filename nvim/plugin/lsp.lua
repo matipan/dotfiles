@@ -16,8 +16,8 @@ cmp.setup({
         end,
     },
     window = {
-        -- completion = cmp.config.window.bordered(),
-        -- documentation = cmp.config.window.bordered(),
+        completion = cmp.config.window.bordered(),
+        documentation = cmp.config.window.bordered(),
     },
     experimental = {
         native_menu = false,
@@ -25,32 +25,14 @@ cmp.setup({
     },
     mapping = cmp.mapping.preset.insert({
         ['<C-d>'] = cmp.mapping.scroll_docs(-4),
-        ['<C-f>'] = cmp.mapping.scroll_docs(4),
+        ['<C-a>'] = cmp.mapping.scroll_docs(4),
         ['<C-Space>'] = cmp.mapping.complete(),
         ['<C-e>'] = cmp.mapping.abort(),
         ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
-        ["<Tab>"] = cmp.mapping(function(fallback)
-            if cmp.visible() then
-                cmp.select_next_item()
-            elseif vim.fn["vsnip#available"](1) == 1 then
-                feedkey("<Plug>(vsnip-expand-or-jump)", "")
-            elseif has_words_before() then
-                cmp.complete()
-            else
-                fallback() -- The fallback function sends a already mapped key. In this case, it's probably `<Tab>`.
-            end
-        end, { "i", "s" }),
-
-        ["<S-Tab>"] = cmp.mapping(function()
-            if cmp.visible() then
-                cmp.select_prev_item()
-            elseif vim.fn["vsnip#jumpable"](-1) == 1 then
-                feedkey("<Plug>(vsnip-jump-prev)", "")
-            end
-        end, { "i", "s" }),
     }),
     sources = cmp.config.sources({
         { name = 'nvim_lsp' },
+        { name = 'nvim_lsp_signature_help' },
     }, {
         { name = 'buffer' },
     })
@@ -76,6 +58,8 @@ cmp.setup.cmdline(':', {
 
 -- Setup lspconfig.
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
+capabilities.textDocument.completion.completionItem.snippetSupport = true
+
 local lsp = require('lspconfig')
 lsp.gopls.setup{
     capabilities = capabilities,
@@ -106,7 +90,7 @@ lsp.tsserver.setup{
     capabilities = capabilities
 }
 
-lsp.sumneko_lua.setup {
+lsp.lua_ls.setup {
     capabilities = capabilities,
     settings = {
         Lua = {
@@ -126,6 +110,14 @@ lsp.sumneko_lua.setup {
     },
 }
 
+lsp.phpactor.setup{
+    capabilities = capabilities,
+    init_options = {
+        ["language_server_phpstan.enabled"] = false,
+        ["language_server_psalm.enabled"] = false,
+    }
+}
+
 local metals_config = require("metals").bare_config()
 -- Example of settings
 metals_config.settings = {
@@ -140,4 +132,21 @@ vim.api.nvim_create_autocmd("FileType", {
 		require("metals").initialize_or_attach({})
 	end,
 	group = nvim_metals_group,
+})
+
+lsp.html.setup{
+	capabilities = capabilities
+}
+
+
+lsp.svelte.setup{
+	capabilities = capabilities
+}
+
+vim.diagnostic.config{
+  float={border="rounded"}
+}
+
+vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
+  border = "rounded",
 })

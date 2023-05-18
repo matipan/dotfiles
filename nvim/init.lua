@@ -9,10 +9,11 @@ Plug 'jjo/vim-cue'
 Plug 'LnL7/vim-nix'
 Plug 'tomlion/vim-solidity'
 Plug 'scalameta/nvim-metals'
---Plug('fatih/vim-go', { ['do'] = ':GoUpdateBinaries' })
+Plug 'evanleck/vim-svelte'
 Plug 'neovim/nvim-lspconfig'
 Plug 'nvim-treesitter/nvim-treesitter'
 Plug 'hrsh7th/nvim-cmp'
+Plug 'hrsh7th/cmp-nvim-lsp-signature-help'
 Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'hrsh7th/cmp-nvim-lua'
 Plug 'hrsh7th/cmp-buffer'
@@ -22,6 +23,7 @@ Plug 'hrsh7th/cmp-vsnip'
 Plug 'hrsh7th/vim-vsnip'
 Plug 'jparise/vim-graphql'
 Plug 'euclidianAce/BetterLua.vim'
+Plug 'github/copilot.vim'
 
 -- Search
 Plug 'nvim-lua/plenary.nvim'
@@ -37,6 +39,7 @@ Plug 'junegunn/fzf.vim'
 Plug 'kyazdani42/nvim-web-devicons'
 Plug 'arcticicestudio/nord-vim'
 Plug 'andersevenrud/nordic.nvim'
+Plug 'folke/tokyonight.nvim'
 
 -- File explorer and window configs
 Plug 'voldikss/vim-floaterm'
@@ -60,6 +63,7 @@ vim.g.filetype = 'on'
 vim.g.hidden = true
 vim.cmd [[
 filetype plugin indent on
+syntax on
 ]]
 
 -- Vim options
@@ -92,9 +96,12 @@ autocmd! FileType json setlocal shiftwidth=2 tabstop=2 expandtab softtabstop=2
 autocmd! FileType javascript setlocal shiftwidth=4 tabstop=4 expandtab softtabstop=4
 autocmd! FileType python setlocal shiftwidth=4 tabstop=4 expandtab softtabstop=4
 autocmd! FileType vim setlocal shiftwidth=4 tabstop=4 softtabstop=4
+autocmd! FileType scala setlocal shiftwidth=4 tabstop=4 softtabstop=4
 autocmd! FileType lua setlocal shiftwidth=4 tabstop=4 softtabstop=4
 autocmd! FileType go setlocal shiftwidth=8 tabstop=8 softtabstop=8
 autocmd! FileType dockerfile setlocal shiftwidth=4 tabstop=4 softtabstop=4
+autocmd! FileType scala setlocal shiftwidth=2 tabstop=2 softtabstop=2 expandtab
+autocmd! FileType sbt setlocal shiftwidth=2 tabstop=2 softtabstop=2 expandtab
 autocmd! BufReadPost *dockerfile* set syntax=dockerfile
 autocmd! BufReadPost *.kt* set syntax=java
 autocmd! FileType fzf
