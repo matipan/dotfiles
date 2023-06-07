@@ -6,29 +6,27 @@ vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
 vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
 vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
 vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
-vim.keymap.set('n', '<leader>lr', '<cmd>Telescope lsp_references<cr>')
-vim.keymap.set('n', '<leader>ls', '<cmd>Telescope lsp_document_symbols<cr>')
-vim.keymap.set('n', '<leader>lw', '<cmd>Telescope lsp_workspace_symbols<cr>')
-vim.keymap.set('n', '<leader>li', '<cmd>Telescope lsp_incoming_calls<cr>')
-vim.keymap.set('n', '<leader>lo', '<cmd>Telescope lsp_outgoing_calls<cr>')
-vim.keymap.set('n', '<leader>ld', '<cmd>Telescope diagnostics<cr>')
+vim.keymap.set('n', '<leader>lr', '<cmd>Telescope lsp_references theme=ivy<cr>')
+vim.keymap.set('n', '<leader>ls', '<cmd>Telescope lsp_document_symbols theme=ivy<cr>')
+vim.keymap.set('n', '<leader>lw', '<cmd>Telescope lsp_workspace_symbols theme=ivy<cr>')
+vim.keymap.set('n', '<leader>li', '<cmd>Telescope lsp_incoming_calls theme=ivy<cr>')
+vim.keymap.set('n', '<leader>lo', '<cmd>Telescope lsp_outgoing_calls theme=ivy<cr>')
+vim.keymap.set('n', '<leader>ld', '<cmd>Telescope diagnostics theme=ivy<cr>')
 vim.keymap.set('n', '<C-f>', '<cmd>silent !tmux neww tmux-sessionizer<CR>')
 
 vim.keymap.set("n", "K", ":lua vim.lsp.buf.hover()<CR>", { silent = true, noremap = true})
 
 -- Telescope - Files and
-vim.keymap.set('n', '<leader>ff', '<cmd>Telescope find_files hidden=true<cr>')
+vim.keymap.set('n', '<leader>ff', '<cmd>Telescope find_files hidden=true theme=ivy<cr>')
 vim.keymap.set('n', '<leader>fa', '<cmd>Telescope find_files cwd=$HOME/code<cr>')
 vim.keymap.set('n', '<leader>fg', '<cmd>Telescope live_grep<cr>')
-vim.keymap.set('n', '<leader>fb', '<cmd>Telescope buffers<cr>')
+vim.keymap.set('n', '<leader>fb', '<cmd>Telescope buffers theme=ivy<cr>')
 vim.keymap.set('n', '<leader>fh', '<cmd>Telescope help_tags<cr>')
-vim.keymap.set('n', '<C-P>', '<cmd>Telescope git_files<cr>')
+vim.keymap.set('n', '<C-P>', '<cmd>Telescope git_files theme=ivy<cr>')
 
 vim.keymap.set('n', '<leader>vc', '<cmd>Telescope git_commits<cr>')
 vim.keymap.set('n', '<leader>vb', '<cmd>Telescope git_branches<cr>')
 vim.keymap.set('n', '<leader>vs', '<cmd>Telescope git_status<cr>')
-vim.keymap.set('n', '<leader>wa', '<cmd>lua require("telescope").extensions.git_worktree.create_git_worktree()<CR>')
-vim.keymap.set('n', '<leader>wl', '<cmd>lua require("telescope").extensions.git_worktree.git_worktrees()<CR>')
 
 -- Key mappings
 vim.keymap.set('n', '*', '*zz', { desc = 'Search and center screen' })
@@ -71,7 +69,5 @@ nnoremap <silent> <c-space> :FloatermToggle<CR>
 tnoremap <silent> <c-space> <c-\><c-n>:FloatermToggle<CR>
 ]]
 
-
 vim.keymap.set('n', '<c-s>', '<cmd>Cheat<cr>')
-
 vim.keymap.set('v', '<leader>d', '"_d')

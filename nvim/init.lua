@@ -34,10 +34,12 @@ Plug 'nvim-telescope/telescope-ui-select.nvim'
 Plug 'RishabhRD/popfix'
 Plug 'RishabhRD/nvim-cheat.sh'
 Plug 'junegunn/fzf.vim'
+Plug 'stevearc/dressing.nvim'
 
 -- Styles
 Plug 'kyazdani42/nvim-web-devicons'
-Plug 'arcticicestudio/nord-vim'
+--Plug 'arcticicestudio/nord-vim'
+Plug 'shaunsingh/nord.nvim'
 Plug 'andersevenrud/nordic.nvim'
 Plug 'folke/tokyonight.nvim'
 
@@ -48,8 +50,7 @@ Plug 'tjdevries/express_line.nvim'
 
 -- Misc
 Plug 'mbbill/undotree'
-Plug 'TimUntersberger/neogit'
-Plug 'ThePrimeagen/git-worktree.nvim'
+Plug 'tpope/vim-fugitive'
 
 vim.call('plug#end')
 
@@ -116,8 +117,3 @@ autocmd BufReadPost *
 vim.g['float_preview#docked'] = 0
 
 vim.g.rustfmt_autosave = 1
-
-vim.api.nvim_create_autocmd({"BufWritePre"}, {
-    pattern = {"*.tf", "*.tfvars"},
-    callback = vim.lsp.buf.formatting_sync,
-})

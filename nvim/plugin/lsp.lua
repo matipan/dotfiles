@@ -82,8 +82,18 @@ lsp.terraformls.setup{
     capabilities = capabilities
 }
 
-lsp.pyright.setup{
-    capabilities = capabilities
+lsp.pylsp.setup{
+	capabilities = capabilities,
+	settings = {
+		pylsp = {
+			plugins = {
+				pycodestyle = {
+					ignore = {'W391'},
+					maxLineLength = 100
+				}
+			}
+		}
+	}
 }
 
 lsp.tsserver.setup{

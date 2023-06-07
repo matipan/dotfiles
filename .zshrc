@@ -1,7 +1,7 @@
 export ZSH="/home/matipan/.oh-my-zsh"
 export TERM=xterm
 
-plugins=(git)
+plugins=(git zsh-autosuggestions zsh-syntax-highlighting fast-syntax-highlighting)
 
 ZSH_THEME="matipan"
 COMPLETION_WAITING_DOTS="true"
@@ -11,53 +11,37 @@ export GOPROXY=https://proxy.golang.org
 export GOSUMDB=sum.golang.org
 export GIT_EDITOR=nvim
 export EDITOR=nvim
+export PATH=$PATH:$HOME/go/bin
 export PATH=$PATH:$HOME/bin/nvim-linux64/bin
 export PATH=$PATH:$HOME/.local/bin
-export PATH=$PATH:$HOME/lemon/lemi/bin
 export PATH=$PATH:$HOME/.cargo/bin
 export PATH=~/.npm-global/bin:$PATH
-export NIX_PATH=$HOME/.nix-defexpr/channels:/nix/var/nix/profiles/per-user/root/channels${NIX_PATH:+:$NIX_PATH}
-export AWS_PROFILE=admin
-export AWS_REGION=sa-east-1
-export GITHUB_TOKEN="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"
+export PATH=$PATH:/usr/local/go/bin
+export PATH=$PATH:/home/linuxbrew/.linuxbrew/bin 
 
 alias sz="source $HOME/.zshrc"
 alias c="clear"
 alias k="kubectl"
 alias vim=nvim
-alias loginaws="aws sso login --profile admin"
-alias code="code --disable-gpu"
-alias stg="aws --profile stg"
-alias prod="aws --profile admin"
-alias gw="git worktree"
+alias pbcopy='xclip -sel "clip"';
+alias docker-compose="docker compose";
 
 source $ZSH/oh-my-zsh.sh
 
-#[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-export SDKMAN_DIR="$HOME/.sdkman"
-[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
-
-#eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 export TERM="xterm-256color"
 export PATH=$HOME/bin:$PATH
-export PATH="/home/linuxbrew/.linuxbrew/opt/openjdk@11/bin:$PATH"
-
-aws_stg() {
-	export AWS_PROFILE=stg
-	export AWS_REGION=us-east-1
-}
-
-aws_prod_legacy() {
-	export AWS_PROFILE=admin
-	export AWS_REGION=us-east-1
-}
-
-aws_prod_legacy() {
-	export AWS_PROFILE=admin
-	export AWS_REGION=sa-east-1
-}
+export PATH=$HOME/code/dotfiles/bin:$PATH
 
 bindkey -s ^f "tmux-sessionizer\n"
 
-eval "$(direnv hook zsh)"
+### Added by nube
+export NUBE_TIENDANUBE_ROOT="/home/matipan/code/tiendanube/core"
+eval "$(/home/matipan/.nube/bin/nube init -)"
+export DOCKER_CLIENT_TIMEOUT=300
+export COMPOSE_HTTP_TIMEOUT=300
+
+### nube autocomplete fix for zsh
+autoload -U +X bashcompinit && bashcompinit
+autoload -U +X compinit && compinit
