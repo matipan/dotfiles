@@ -51,6 +51,7 @@ Plug 'tjdevries/express_line.nvim'
 -- Misc
 Plug 'mbbill/undotree'
 Plug 'tpope/vim-fugitive'
+Plug 'pwntester/octo.nvim'
 
 vim.call('plug#end')
 
@@ -96,6 +97,7 @@ autocmd! FileType yaml setlocal shiftwidth=2 tabstop=2 expandtab softtabstop=2
 autocmd! FileType json setlocal shiftwidth=2 tabstop=2 expandtab softtabstop=2
 autocmd! FileType javascript setlocal shiftwidth=4 tabstop=4 expandtab softtabstop=4
 autocmd! FileType python setlocal shiftwidth=4 tabstop=4 expandtab softtabstop=4
+autocmd! FileType php setlocal shiftwidth=4 tabstop=4 expandtab softtabstop=4
 autocmd! FileType vim setlocal shiftwidth=4 tabstop=4 softtabstop=4
 autocmd! FileType scala setlocal shiftwidth=4 tabstop=4 softtabstop=4
 autocmd! FileType lua setlocal shiftwidth=4 tabstop=4 softtabstop=4
