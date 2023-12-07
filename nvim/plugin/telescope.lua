@@ -1,5 +1,27 @@
 local telescope = require('telescope')
 telescope.setup({
+	pickers = {
+		find_files = {
+			find_command = {
+				"rg",
+				"--files",
+				"--hidden",
+				"--with-filename",
+				"--line-number",
+				"--column",
+				"--glob=!**/.git/*",
+				"--glob=!**/.idea/*",
+				"--glob=!**/.vscode/*",
+				"--glob=!**/build/*",
+				"--glob=!**/dist/*",
+				"--glob=!**/yarn.lock",
+				"--glob=!**/package-lock.json",
+				"--glob=!**/target/*",
+				"--glob=!**/.gradle/*",
+				"--glob=!**/.project/*",
+			}
+		},
+	},
     defaults = {
         layout_config = {
             vertical = {
@@ -10,9 +32,8 @@ telescope.setup({
     },
 	extensions = {
 		["ui-select"] = {
-			require("telescope.themes").get_cursor {
-			}
-		}  
+			require("telescope.themes").get_cursor {}
+		}
 	}
 })
 

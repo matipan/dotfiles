@@ -17,16 +17,25 @@ vim.keymap.set('n', '<C-f>', '<cmd>silent !tmux neww tmux-sessionizer<CR>')
 vim.keymap.set("n", "K", ":lua vim.lsp.buf.hover()<CR>", { silent = true, noremap = true})
 
 -- Telescope - Files and
-vim.keymap.set('n', '<leader>ff', '<cmd>Telescope find_files hidden=true theme=ivy<cr>')
+vim.keymap.set('n', '<leader>ff', '<cmd>Telescope git_files hidden=true theme=ivy<cr>')
 vim.keymap.set('n', '<leader>fa', '<cmd>Telescope find_files cwd=$HOME/code<cr>')
 vim.keymap.set('n', '<leader>fg', '<cmd>Telescope live_grep<cr>')
 vim.keymap.set('n', '<leader>fb', '<cmd>Telescope buffers theme=ivy<cr>')
-vim.keymap.set('n', '<leader>fh', '<cmd>Telescope help_tags<cr>')
-vim.keymap.set('n', '<C-P>', '<cmd>Telescope git_files theme=ivy<cr>')
-
+vim.keymap.set('n', '<leader>fh', '<cmd>Telescope harpoon marks theme=ivy<cr>')
+vim.keymap.set('n', '<C-P>', '<cmd>Telescope find_files theme=ivy hidden=true<cr>')
 vim.keymap.set('n', '<leader>vc', '<cmd>Telescope git_commits<cr>')
 vim.keymap.set('n', '<leader>vb', '<cmd>Telescope git_branches<cr>')
 vim.keymap.set('n', '<leader>vs', '<cmd>Telescope git_status<cr>')
+vim.keymap.set('n', '<leader>hm', ':lua require("harpoon.mark").add_file()<CR>', { noremap = true, silent = true })
+vim.keymap.set('n', '<leader>ht', ':lua require("harpoon.ui").toggle_quick_menu()<CR>', { noremap = true, silent = true })
+vim.keymap.set('n', '<leader>h1', ':lua require("harpoon.ui").nav_file(1)<CR>', { noremap = true, silent = true })
+vim.keymap.set('n', '<leader>h2', ':lua require("harpoon.ui").nav_file(2)<CR>', { noremap = true, silent = true })
+vim.keymap.set('n', '<leader>h3', ':lua require("harpoon.ui").nav_file(3)<CR>', { noremap = true, silent = true })
+vim.keymap.set('n', '<leader>h4', ':lua require("harpoon.ui").nav_file(4)<CR>', { noremap = true, silent = true })
+
+-- Git signs
+vim.keymap.set('n', '<leader>gp', '<cmd>Gitsigns preview_hunk<cr>')
+vim.keymap.set('n', '<leader>gs', '<cmd>Gitsigns stage_hunk<cr>')
 
 -- Key mappings
 vim.keymap.set('n', '*', '*zz', { desc = 'Search and center screen' })
@@ -51,7 +60,10 @@ vim.keymap.set('n', '{b', ':bp<cr>')
 vim.keymap.set('n', ',v', ':b#<CR><cr>')
 vim.keymap.set('n', '<leader>bd', ':bd!<cr>')
 vim.keymap.set('n', '<leader>bc', ':close<cr>')
-
+vim.keymap.set('n', ',+', ':exe "resize " . (winheight(0) * 3/2)<CR>', {silent = true})
+vim.keymap.set('n', ',-', ':exe "resize " . (winheight(0) * 2/3)<CR>', {silent = true})
+vim.keymap.set('n', '<leader>+', ':exe "vertical resize " . (winheight(0) * 3/2)<CR>', {silent = true})
+vim.keymap.set('n', '<leader>-', ':exe "vertical resize " . (winheight(0) * 2/3)<CR>', {silent = true})
 vim.keymap.set('n',  '<esc>k', ':noh<cr>', { silent = true })
 vim.keymap.set('i', '<Down>', '<NOP>')
 vim.keymap.set('i', '<Up>', '<NOP>')
@@ -62,7 +74,7 @@ vim.keymap.set('n', '<Up>', 'ddkP')
 vim.keymap.set('n', '<Left>', '<<<esc>')
 vim.keymap.set('n', '<Right>', '>><esc>')
 vim.keymap.set('n', '<leader>o', ':only<cr>')
-vim.keymap.set('n', ',f', ':NvimTreeToggle<CR>')
+vim.keymap.set('n', ',f', ':Oil --float<CR>')
 
 vim.cmd [[
 nnoremap <silent> <c-space> :FloatermToggle<CR>
