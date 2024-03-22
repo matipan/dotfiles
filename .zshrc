@@ -11,7 +11,7 @@ export SPACESHIP_PROMPT_SEPARATE_LINE=true
 export SPACESHIP_RPROMPT_ADD_NEWLINE=true
 export SPACESHIP_PROMPT_ASYNC=true
 export SPACESHIP_USER_SHOW=always
-export SPACESHIP_KUBECTL_SHOW=false
+export SPACESHIP_KUBECTL_SHOW=true
 export SPACESHIP_PROMPT_ORDER=(
   user
   dir            # Current directory section
@@ -40,19 +40,21 @@ export PATH=$PATH:$HOME/.local/bin
 export PATH=$PATH:$HOME/.cargo/bin
 export PATH=~/.npm-global/bin:$PATH
 export PATH=$PATH:/usr/local/go/bin
+export PATH=$PATH:/usr/local/zig/
 export PATH=$PATH:/home/linuxbrew/.linuxbrew/bin 
 export PATH=$PATH:$HOME/.gradle/gradle-8.3/bin 
 export PATH=$PATH:$HOME/bin/jdt/bin 
 export PATH=$PATH:/usr/lib/jvm/jdk-21/bin/
 
-alias nstyle='docker-compose -f docker-compose.cli.yml run --rm php-cs-fixer fix --verbose --show-progress=estimating'
-alias ntest='docker-compose -f docker-compose.yml -f docker-compose.override.dist.yml run --rm php-cli /application/vendor/phpunit/phpunit/phpunit --configuration /application/phpunit.xml'
+alias gw="git worktree"
+alias myip=' dig +short myip.opendns.com @resolver1.opendns.com'
 alias sz="source $HOME/.zshrc"
 alias c="clear"
 alias k="kubectl"
 alias vim=nvim
 alias pbcopy='xclip -sel "clip"';
 alias docker-compose="docker compose";
+alias gc="git commit -s"
 
 source $ZSH/oh-my-zsh.sh
 
@@ -64,31 +66,36 @@ export PATH=$HOME/code/dotfiles/bin:$PATH
 
 bindkey -s ^f "tmux-sessionizer\n"
 
-### Added by nube
-export NUBE_TIENDANUBE_ROOT="/home/matipan/code/tiendanube/core"
-eval "$(/home/matipan/.nube/bin/nube init -)"
-export DOCKER_CLIENT_TIMEOUT=300
-export COMPOSE_HTTP_TIMEOUT=300
-
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
-function fix_git_php_files() {
-  git status --porcelain | awk '/^M/ && /\.php$/ {print $2}' | while read -r file; do
-    nstyle "$file"
-  done
-}
 
 # add Pulumi to the PATH
 export PATH=$PATH:$HOME/.pulumi/bin
 
 eval $(thefuck --alias)
 
-function uberwatch {
-    # call: uberwatch <interval> <command>
-    while true; do
-        "${@:2}";
-        sleep $1;
-    done
+# completion
+source $HOME/.completion/eksctl
+complete -C '/usr/local/bin/aws_completer' aws
+
+function awsp() {
+	export AWS_PROFILE=$1
 }
+
+
+
+
+_direnv_hook() {
+  trap -- '' SIGINT;
+  eval "$("/home/linuxbrew/.linuxbrew/Cellar/direnv/2.33.0/bin/direnv" export zsh)";
+  trap - SIGINT;
+}
+typeset -ag precmd_functions;
+if [[ -z "${precmd_functions[(r)_direnv_hook]+1}" ]]; then
+  precmd_functions=( _direnv_hook ${precmd_functions[@]} )
+fi
+typeset -ag chpwd_functions;
+if [[ -z "${chpwd_functions[(r)_direnv_hook]+1}" ]]; then
+  chpwd_functions=( _direnv_hook ${chpwd_functions[@]} )
+fi
