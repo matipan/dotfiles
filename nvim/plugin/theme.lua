@@ -20,6 +20,7 @@ hi ElVisualBlock gui=bold ctermfg=8 ctermbg=6 guibg=#41a6b5 guifg=#2e2c2c
 hi Pmenu guibg=NONE
 hi NormalFloat guibg=NONE
 hi FloatBorder guibg=NONE
+hi ColorColumn guibg=#292e42
 "hi MyFunction gui=italic guifg=#88c0d0
 "hi MyBuiltin guifg=#8FBCBB
 "hi MyFunc guifg=#88c0d0

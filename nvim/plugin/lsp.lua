@@ -71,6 +71,7 @@ local capabilities = require('cmp_nvim_lsp').default_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 
 local lsp = require('lspconfig')
+
 lsp.opts = {
 	inlay_hints = { enabled = true },
 }
@@ -135,6 +136,18 @@ lsp.lua_ls.setup {
     },
 }
 
+lsp.zls.setup {
+	capabilities = capabilities,
+	settings = {
+		zls = {
+			semantic_tokens = 'none',
+			enable_inlay_hints = true,
+			inlay_hints_show_variable_type_hints = true,
+			inlay_hints_show_parameter_name = true
+		}
+	}
+}
+
 lsp.phpactor.setup{
     capabilities = capabilities,
     init_options = {
@@ -179,4 +192,3 @@ vim.diagnostic.config{
 vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
   border = "rounded",
 })
-

@@ -3,7 +3,7 @@ vim.cmd[[
 set noswapfile
 set nobackup
 ]]
-vim.g.mapleader = "'"
+vim.g.mapleader = ","
 vim.g.filetype = 'on'
 vim.g.hidden = true
 vim.cmd [[
@@ -24,6 +24,7 @@ set.clipboard = set.clipboard + 'unnamedplus'
 set.incsearch = true
 set.inccommand = 'split'
 set.pumheight = 25
+set.colorcolumn = '80'
 
 -- Tab configs
 set.autoindent = true
@@ -36,6 +37,10 @@ set.smarttab = true
 set.laststatus = 2
 
 vim.cmd[[
+augroup highlight_yank
+    au TextYankPost * silent! lua vim.highlight.on_yank { higroup='IncSearch', timeout=200 }
+augroup END
+
 autocmd! FileType yaml setlocal shiftwidth=2 tabstop=2 expandtab softtabstop=2
 autocmd! FileType json setlocal shiftwidth=2 tabstop=2 expandtab softtabstop=2
 autocmd! FileType java setlocal shiftwidth=2 tabstop=2 expandtab softtabstop=2
@@ -45,7 +50,7 @@ autocmd! FileType php setlocal shiftwidth=4 tabstop=4 expandtab softtabstop=4
 autocmd! FileType vim setlocal shiftwidth=4 tabstop=4 softtabstop=4
 autocmd! FileType scala setlocal shiftwidth=4 tabstop=4 softtabstop=4
 autocmd! FileType lua setlocal shiftwidth=4 tabstop=4 softtabstop=4
-autocmd! FileType go setlocal shiftwidth=8 tabstop=8 softtabstop=8
+autocmd! FileType go setlocal shiftwidth=4 tabstop=4 softtabstop=4
 autocmd! FileType dockerfile setlocal shiftwidth=4 tabstop=4 softtabstop=4
 autocmd! FileType scala setlocal shiftwidth=2 tabstop=2 softtabstop=2 expandtab
 autocmd! FileType sbt setlocal shiftwidth=2 tabstop=2 softtabstop=2 expandtab
@@ -79,8 +84,54 @@ vim.opt.rtp:prepend(lazypath)
 
 local plugins = {
 	{ "nvim-lua/plenary.nvim", lazy = false },
+	{ 'ThePrimeagen/git-worktree.nvim', lazy = false },
+	{ "smithbm2316/centerpad.nvim", lazy = false },
 	{ "neovim/nvim-lspconfig", lazy = false },
-	{ "nvim-treesitter/nvim-treesitter", lazy = false},
+	{
+		"nvim-treesitter/nvim-treesitter",
+		lazy = false,
+	},
+	{
+		"nvim-treesitter/nvim-treesitter-textobjects",
+		lazy = false,
+		config = function()
+			require('nvim-treesitter.configs').setup({
+				textobjects = {
+					select = {
+						enable = true,
+						-- Automatically jump forward to textobj, similar to targets.vim
+						lookahead = true,
+						keymaps = {
+							-- You can use the capture groups defined in textobjects.scm
+							["af"] = { query = "@function.outer", desc = "Select outer function" },
+							["if"] = { query = "@function.inner", desc = "Select inner function" },
+							["ac"] = { query = "@class.outer", desc = "Select outer class" },
+							-- You can optionally set descriptions to the mappings (used in the desc parameter of
+							-- nvim_buf_set_keymap) which plugins like which-key display
+							["ic"] = { query = "@class.inner", desc = "Select inner part of a class region" },
+							-- You can also use captures from other query groups like `locals.scm`
+							["as"] = { query = "@scope", query_group = "locals", desc = "Select language scope" },
+						},
+						-- You can choose the select mode (default is charwise 'v')
+						--
+						-- Can also be a function which gets passed a table with the keys
+						-- * query_string: eg '@function.inner'
+						-- * method: eg 'v' or 'o'
+						-- and should return the mode ('v', 'V', or '<c-v>') or a table
+						-- mapping query_strings to modes.
+						selection_modes = {
+							['@parameter.outer'] = 'v', -- charwise
+							['@function.outer'] = 'V', -- linewise
+							['@class.outer'] = '<c-v>', -- blockwise
+						},
+						include_surrounding_whitespace = true,
+					},
+				},
+			})
+		end
+	},
+	{ "RishabhRD/popfix", lazy = false },
+	{ "RishabhRD/nvim-cheat.sh", lazy = false },
 	{
 		"lukas-reineke/indent-blankline.nvim",
 		main = "ibl",
@@ -266,15 +317,16 @@ local plugins = {
 			})
 		end,
 	},
-	{ "RishabhRD/popfix", lazy = true },
-	{ "RishabhRD/nvim-cheat.sh", lazy = true },
 	{ "junegunn/fzf.vim", lazy = true },
+	{
+		"folke/trouble.nvim",
+		dependencies = { "nvim-tree/nvim-web-devicons" }
+	},
 
 	-- Languages
 	{ "rust-lang/rust.vim", lazy = true, ft = "rust" },
 	{ "hashivim/vim-terraform", lazy = true, ft = "terraform" },
 	{ "jjo/vim-cue", lazy = true, ft = "cue" },
-	{ "tomlion/vim-solidity", lazy = true, ft = "solidity" },
 	{ "scalameta/nvim-metals", lazy = true },
 	{ "evanleck/vim-svelte", lazy = true, ft = "javascript" },
 	{ "euclidianAce/BetterLua.vim", lazy = true, ft = "lua" },
@@ -284,40 +336,47 @@ local plugins = {
 	{ "tjdevries/express_line.nvim", lazy = false },
 	{ "mbbill/undotree", lazy = false },
 	{ "tpope/vim-fugitive", lazy = false },
-	{
-		"nvim-neotest/neotest",
-		dependencies = {
-			"nvim-lua/plenary.nvim",
-			"antoinemadec/FixCursorHold.nvim",
-			"nvim-neotest/neotest-go",
-		},
-		config = function()
-			require("neotest").setup({
-				adapters = {
-					require("neotest-go")({
-						experimental = {
-							test_table = true,
-						},
-						args = { "-count=1", "-timeout=60s" }
-					})
-				}
-			})
-		end,
-	},
-	{
-		"mfussenegger/nvim-jdtls",
-		lazy = true,
-		ft = "java",
-		config = function()
-			local config = {
-				cmd = {'/home/matipan/bin/jdt/bin/jdtls'},
-				root_dir = vim.fs.dirname(vim.fs.find({'gradlew', '.git', 'mvnw'}, { upward = true })[1]),
-			}
-			require('jdtls').start_or_attach(config)
 
-			vim.diagnostic.disable()
+	{ -- Useful plugin to show you pending keybinds.
+		'folke/which-key.nvim',
+		event = 'VimEnter', -- Sets the loading event to 'VimEnter'
+		init = function()
+			vim.o.timeout = true
+			vim.o.timeoutlen = 300
+		end,
+		config = function() -- This is the function that runs, AFTER loading
+			require('which-key').setup({
+				plugins = {
+					marks = true,
+				},
+				triggers_nowait = {
+					-- marks
+					"`",
+					"'",
+					"g`",
+					"g'",
+					-- registers
+					'"',
+					"<c-r>",
+					-- spelling
+					"z=",
+				},
+			})
+
+			-- Document existing key chains
+			require('which-key').register {
+				['<leader>l'] = { name = '[L]SP', _ = 'which_key_ignore' },
+				['<leader>f'] = { name = '[F]ind', _ = 'which_key_ignore' },
+				['<leader>g'] = { name = '[G]it', _ = 'which_key_ignore' },
+				['<leader>e'] = { name = '[E]rrors (trouble)', _ = 'which_key_ignore' },
+			}
 		end,
 	},
+	{
+		"folke/todo-comments.nvim",
+		dependencies = { "nvim-lua/plenary.nvim" },
+		opts = {}
+	}
 }
 
 require("lazy").setup(plugins)
