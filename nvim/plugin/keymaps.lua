@@ -12,7 +12,7 @@ vim.keymap.set("n", "<leader>ln", ":lua vim.lsp.buf.rename()<CR>", { silent = tr
 vim.keymap.set('n', '<leader>lr', '<cmd>Telescope lsp_references theme=ivy<cr>', { desc = 'Search references' })
 vim.keymap.set('n', '<leader>ls', '<cmd>Telescope lsp_document_symbols theme=ivy<cr>', { desc = 'Search document symbols' })
 vim.keymap.set('n', '<leader>lw', '<cmd>Telescope lsp_workspace_symbols theme=ivy<cr>', { desc = 'Search workspace symbols' })
-vim.keymap.set('n', '<leader>li', '<cmd>Telescope lsp_incoming_calls theme=ivy<cr>', { desc = 'Search incoming calls' })
+vim.keymap.set('n', '<leader>li', '<cmd>Telescope lsp_implementations theme=ivy<cr>', { desc = 'Search implementations' })
 vim.keymap.set('n', '<leader>lo', '<cmd>Telescope lsp_outgoing_calls theme=ivy<cr>', { desc = 'Search outgoing calls' })
 vim.keymap.set('n', '<leader>ld', '<cmd>Telescope diagnostics theme=ivy<cr>', { desc = 'Search diagnostics' })
 
@@ -40,11 +40,12 @@ vim.keymap.set('n', '<leader>h4', ':lua require("harpoon.ui").nav_file(4)<CR>', 
 
 -- <leader>g - Git stuff
 vim.keymap.set('n', '<leader>gp', '<cmd>Gitsigns preview_hunk<cr>', { desc = 'Preview hunk under cursor' })
-vim.keymap.set('n', '<leader>gs', '<cmd>Gitsigns stage_hunk<cr>', { desc = 'Stage hunk under cursor' })
+vim.keymap.set('n', '<leader>gh', '<cmd>Gitsigns stage_hunk<cr>', { desc = 'Stage hunk under cursor' })
 vim.keymap.set('n', '<leader>gw', ":lua require('telescope').extensions.git_worktree.create_git_worktree()", { desc = 'Create worktree' })
 vim.keymap.set('n', '<leader>gc', '<cmd>Telescope git_commits<cr>', { desc = 'Search git commits' })
 vim.keymap.set('n', '<leader>gb', '<cmd>Telescope git_branches<cr>', { desc = 'Search git branches' })
 vim.keymap.set('n', '<leader>gs', '<cmd>Telescope git_status<cr>', { desc = 'Show git status' })
+vim.keymap.set('n', '<leader>gn', '<cmd>Neogit kind=split_above<cr>', { desc = 'Open Neogit as a buffer in a top split' })
 
 -- Key mappings
 vim.keymap.set('n', '*', '*zz', { desc = 'Search and center screen' })

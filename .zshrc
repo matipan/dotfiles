@@ -1,5 +1,5 @@
 export ZSH="/home/matipan/.oh-my-zsh"
-export TERM=xterm
+export TERM="xterm-256color"
 
 plugins=(git zsh-autosuggestions zsh-syntax-highlighting fast-syntax-highlighting)
 
@@ -11,15 +11,13 @@ export SPACESHIP_PROMPT_SEPARATE_LINE=true
 export SPACESHIP_RPROMPT_ADD_NEWLINE=true
 export SPACESHIP_PROMPT_ASYNC=true
 export SPACESHIP_USER_SHOW=always
-export SPACESHIP_KUBECTL_SHOW=true
+export SPACESHIP_KUBECTL_SHOW=false
 export SPACESHIP_PROMPT_ORDER=(
-  user
   dir            # Current directory section
   host
   git            # Git section (git_branch + git_status)
   kubectl        # Kubectl context section
   aws            # Amazon Web Services section
-  venv           # virtualenv section
   java
   exec_time      # Execution time
   line_sep       # Line break
@@ -45,6 +43,9 @@ export PATH=$PATH:/home/linuxbrew/.linuxbrew/bin
 export PATH=$PATH:$HOME/.gradle/gradle-8.3/bin 
 export PATH=$PATH:$HOME/bin/jdt/bin 
 export PATH=$PATH:/usr/lib/jvm/jdk-21/bin/
+export PATH=$HOME/bin:$PATH
+export PATH=$HOME/code/dotfiles/bin:$PATH
+export PATH=$PATH:$HOME/.pulumi/bin
 
 alias gw="git worktree"
 alias myip=' dig +short myip.opendns.com @resolver1.opendns.com'
@@ -60,9 +61,6 @@ source $ZSH/oh-my-zsh.sh
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-export TERM="xterm-256color"
-export PATH=$HOME/bin:$PATH
-export PATH=$HOME/code/dotfiles/bin:$PATH
 
 bindkey -s ^f "tmux-sessionizer\n"
 
@@ -70,10 +68,9 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-# add Pulumi to the PATH
-export PATH=$PATH:$HOME/.pulumi/bin
-
 eval $(thefuck --alias)
+
+eval "$(zoxide init zsh)"
 
 # completion
 source $HOME/.completion/eksctl
@@ -83,8 +80,14 @@ function awsp() {
 	export AWS_PROFILE=$1
 }
 
-
-
+function use() {
+	case "$1" in
+		fierro)
+			export DOCKER_HOST="ssh://fierro@100.101.249.36";;
+		local)
+			unset DOCKER_HOST;;
+	esac
+}
 
 _direnv_hook() {
   trap -- '' SIGINT;
@@ -99,3 +102,13 @@ typeset -ag chpwd_functions;
 if [[ -z "${chpwd_functions[(r)_direnv_hook]+1}" ]]; then
   chpwd_functions=( _direnv_hook ${chpwd_functions[@]} )
 fi
+
+# nube autocomplete fix for zsh
+autoload -U +X bashcompinit && bashcompinit
+autoload -U +X compinit && compinit
+
+### Added by nube
+export NUBE_TIENDANUBE_ROOT="/home/matipan/tiendanube/core"
+eval "$(/home/matipan/.nube/bin/nube init -)"
+export DOCKER_CLIENT_TIMEOUT=300
+export COMPOSE_HTTP_TIMEOUT=300

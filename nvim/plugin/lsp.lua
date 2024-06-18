@@ -1,52 +1,50 @@
-local has_words_before = function()
-    local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-    return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
-end
+local lspkind = require "lspkind"
 
-local feedkey = function(key, mode)
-    vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(key, true, true, true), mode, true)
-end
+local cmp = require "cmp"
 
-local cmp = require'cmp'
-
-cmp.setup({
+cmp.setup {
+	sources = cmp.config.sources({
+		{ name = "nvim_lsp" },
+		{ name = "nvim_lsp_signature_help" },
+		{ name = "path" },
+	}, {
+		{ name = "buffer" },
+	}),
+	mapping = cmp.mapping.preset.insert({
+		["<C-d>"] = cmp.mapping.scroll_docs(-4),
+		["<C-a>"] = cmp.mapping.scroll_docs(4),
+		["<C-n>"] = cmp.mapping.select_next_item { behavior = cmp.SelectBehavior.Insert },
+		["<C-p>"] = cmp.mapping.select_prev_item { behavior = cmp.SelectBehavior.Insert },
+		["<C-y>"] = cmp.mapping(
+			cmp.mapping.confirm {
+				behavior = cmp.ConfirmBehavior.Insert,
+				select = true
+			},
+			{ "i", "c" }
+		),
+	}),
 	snippet = {
 		expand = function(args)
-			require('luasnip').lsp_expand(args.body)
+			require("luasnip").lsp_expand(args.body)
 		end,
 	},
 	window = {
 		completion = cmp.config.window.bordered(),
 		documentation = cmp.config.window.bordered(),
 	},
+	formatting = {
+		format = lspkind.cmp_format({
+			mode = 'symbol_text',
+			maxwidth = 50,
+			ellipsis_char = '...',
+			show_labelDetails = true,
+		})
+	},
 	experimental = {
 		native_menu = false,
 		ghost_text = true,
 	},
-	mapping = cmp.mapping.preset.insert({
-		['<C-d>'] = cmp.mapping.scroll_docs(-4),
-		['<C-a>'] = cmp.mapping.scroll_docs(4),
-		['<C-Space>'] = cmp.mapping.complete(),
-		['<C-e>'] = cmp.mapping.abort(),
-		['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
-	}),
-	sources = cmp.config.sources({
-		{ name = 'nvim_lsp' },
-		{ name = 'nvim_lsp_signature_help' },
-		{ name = 'luasnip' },
-	}, {
-		{ name = 'buffer' },
-	})
-})
-
--- Set configuration for specific filetype.
-cmp.setup.filetype('gitcommit', {
-	sources = cmp.config.sources({
-		{ name = 'git' }, -- You can specify the `git` source if [you were installed it](https://github.com/petertriho/cmp-git).
-	}, {
-		{ name = 'buffer' },
-	})
-})
+}
 
 -- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
 cmp.setup.cmdline({ '/', '?' }, {
@@ -65,6 +63,24 @@ cmp.setup.cmdline(':', {
 		{ name = 'cmdline' }
 	})
 })
+
+local ls = require "luasnip"
+ls.config.set_config {
+	history = false,
+	updateevents = "TextChanged,TextChangedI",
+}
+
+vim.keymap.set({"i", "s"}, "<c-k>", function()
+	if ls.expand_or_jumpable() then
+		ls.expand_or_jump()
+	end
+end, { silent = true })
+
+vim.keymap.set({"i", "s"}, "<c-j>", function()
+	if ls.jumpable(-1) then
+		ls.jump(-1)
+	end
+end, { silent = true })
 
 -- Setup lspconfig.
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
@@ -148,6 +164,13 @@ lsp.zls.setup {
 	}
 }
 
+vim.api.nvim_create_autocmd({"BufEnter", "BufWinEnter"}, {
+	pattern = {"*.php"},
+	callback = function(ev)
+		vim.diagnostic.disable()
+	end
+})
+
 lsp.phpactor.setup{
     capabilities = capabilities,
     init_options = {
@@ -155,22 +178,6 @@ lsp.phpactor.setup{
         ["language_server_psalm.enabled"] = false,
     }
 }
-
-local metals_config = require("metals").bare_config()
--- Example of settings
-metals_config.settings = {
-  showImplicitArguments = true,
-}
-metals_config.capabilities = capabilities
-
-local nvim_metals_group = vim.api.nvim_create_augroup("nvim-metals", { clear = true })
-vim.api.nvim_create_autocmd("FileType", {
-	pattern = { "scala", "sbt" },
-	callback = function()
-		require("metals").initialize_or_attach({})
-	end,
-	group = nvim_metals_group,
-})
 
 lsp.html.setup{
 	capabilities = capabilities
@@ -180,10 +187,6 @@ lsp.html.setup{
 lsp.svelte.setup{
 	capabilities = capabilities
 }
-
--- lsp.jedi_language_server.setup{
--- 	capabilities = capabilities
--- }
 
 vim.diagnostic.config{
   float={border="rounded"}

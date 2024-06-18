@@ -25,6 +25,7 @@ set.incsearch = true
 set.inccommand = 'split'
 set.pumheight = 25
 set.colorcolumn = '80'
+set.cursorline = true
 
 -- Tab configs
 set.autoindent = true
@@ -242,16 +243,16 @@ local plugins = {
 		dependencies = {
 			"hrsh7th/cmp-nvim-lsp-signature-help",
 			"hrsh7th/cmp-nvim-lsp",
-			"hrsh7th/cmp-nvim-lua",
 			"hrsh7th/cmp-buffer",
 			"hrsh7th/cmp-path",
 			"hrsh7th/cmp-cmdline",
-			"petertriho/cmp-git",
+			"onsails/lspkind.nvim",
 			"L3MON4D3/LuaSnip",
 			"saadparwaiz1/cmp_luasnip",
 		},
 	},
-	{ "github/copilot.vim", event = "InsertEnter" },
+	-- disable copilot for a bit
+	--{ "github/copilot.vim", event = "InsertEnter" },
 
 	-- UI stuff
 	{ "nvim-tree/nvim-web-devicons", lazy = true },
@@ -334,8 +335,19 @@ local plugins = {
 	-- utils
 	{ "voldikss/vim-floaterm", lazy = false },
 	{ "tjdevries/express_line.nvim", lazy = false },
-	{ "mbbill/undotree", lazy = false },
+	--{ "mbbill/undotree", lazy = false },
 	{ "tpope/vim-fugitive", lazy = false },
+	{
+		"NeogitOrg/neogit",
+		dependencies = {
+			"nvim-lua/plenary.nvim",         -- required
+			"sindrets/diffview.nvim",        -- optional - Diff integration
+
+			-- Only one of these is needed, not both.
+			"nvim-telescope/telescope.nvim", -- optional
+		},
+		config = true
+	},
 
 	{ -- Useful plugin to show you pending keybinds.
 		'folke/which-key.nvim',
@@ -375,8 +387,127 @@ local plugins = {
 	{
 		"folke/todo-comments.nvim",
 		dependencies = { "nvim-lua/plenary.nvim" },
-		opts = {}
+		opts = {},
+		config = function()
+			require("codesnap").setup({
+				mac_window_bar = false,
+				bg_color = "#535c68",
+				watermark = "",
+				has_breadcrumbs = true,
+				has_line_number = true,
+				breadcrumbs_separator = "/"
+			})
+		end,
+	},
+	{ "mistricky/codesnap.nvim", build = "make" },
+	{
+		"Bryley/neoai.nvim",
+		dependencies = {
+			"MunifTanjim/nui.nvim",
+		},
+		cmd = {
+			"NeoAI",
+			"NeoAIOpen",
+			"NeoAIClose",
+			"NeoAIToggle",
+			"NeoAIContext",
+			"NeoAIContextOpen",
+			"NeoAIContextClose",
+			"NeoAIInject",
+			"NeoAIInjectCode",
+			"NeoAIInjectContext",
+			"NeoAIInjectContextCode",
+		},
+		keys = {
+			{ "<leader>as", desc = "summarize text" },
+			{ "<leader>ag", desc = "generate git message" },
+		},
+		config = function()
+			require("neoai").setup({
+				-- Below are the default options, feel free to override what you would like changed
+				ui = {
+					output_popup_text = "NeoAI",
+					input_popup_text = "Prompt",
+					width = 30, -- As percentage eg. 30%
+					output_popup_height = 80, -- As percentage eg. 80%
+					submit = "<Enter>", -- Key binding to submit the prompt
+				},
+				models = {
+					{
+						name = "openai",
+						model = "gpt-4-turbo-preview",
+						params = nil,
+					},
+				},
+				register_output = {
+					["g"] = function(output)
+						return output
+					end,
+					["c"] = require("neoai.utils").extract_code_snippets,
+				},
+				inject = {
+					cutoff_width = 75,
+				},
+				prompts = {
+					context_prompt = function(context)
+						return "Hey, I'd like to provide some context for future "
+						.. "messages. Here is the code/text that I want to refer "
+						.. "to in our upcoming conversations:\n\n"
+						.. context
+					end,
+				},
+				mappings = {
+					["select_up"] = "<C-k>",
+					["select_down"] = "<C-j>",
+				},
+				open_ai = {
+					api_key = {
+						get = function()
+							local filepath = "/home/matipan/.open_ai_key"
+							local file = io.open(filepath, "r")
+							if not file then
+								print("could not read open ai key from" .. filepath)
+								return nil
+							end
+							local content = file:read("*all")
+							file:close()
+							return string.gsub(content, "\n", "")
+						end,
+					},
+				},
+				shortcuts = {
+					{
+						name = "textify",
+						key = "<leader>as",
+						desc = "fix text with AI",
+						use_context = true,
+						prompt = [[
+						Please rewrite the text to make it more readable, clear,
+						concise, and fix any grammatical, punctuation, or spelling
+						errors
+						]],
+						modes = { "v" },
+						strip_function = nil,
+					},
+					{
+						name = "gitcommit",
+						key = "<leader>ag",
+						desc = "generate git commit message",
+						use_context = false,
+						prompt = function()
+							return [[
+							Using the following git diff generate a consise and
+							clear git commit message, with a short title summary
+							that is 75 characters or less:
+							]] .. vim.fn.system("git diff --cached")
+						end,
+						modes = { "n" },
+						strip_function = nil,
+					},
+				},
+				})
+			end,
+		}
 	}
-}
 
-require("lazy").setup(plugins)
+	require("lazy").setup(plugins)
