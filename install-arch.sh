@@ -7,7 +7,7 @@ sudo pacman -Sy --noconfirm font-manager git base-devel wofi ttf-jetbrains-mono-
 git clone https://aur.archlinux.org/yay.git && cd yay && makepkg -si
 
 echo "Installing developer tools"
-sudo pacman -Sy --noconfirm direnv stow tmux docker neovim zsh thefuck zoxide ripgrep
+sudo pacman -Sy --noconfirm direnv stow tmux docker neovim zsh thefuck zoxide ripgrep bat btop
 
 echo "Installing languages"
 sudo pacman -Sy --noconfirm go zig rust python
