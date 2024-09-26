@@ -1,0 +1,105 @@
+* {
+    all: unset;
+    font-family: "JetBrainsMono Nerd Font", sans-serif;
+}
+
+.notification {
+    background-color: rgba(26, 27, 38, 0.95);
+    border-radius: 8px;
+    border: 1px solid #7aa2f7;
+    margin: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+.notification-content {
+    background: transparent;
+    padding: 10px;
+}
+
+.summary {
+    font-size: 16px;
+    font-weight: bold;
+    color: #7aa2f7;
+    margin-bottom: 5px;
+}
+
+.body {
+    font-size: 14px;
+    color: #c0caf5;
+}
+
+.close-button {
+    background: #f7768e;
+    color: #1a1b26;
+    border-radius: 50%;
+    margin: 5px;
+    padding: 0;
+    min-width: 24px;
+    min-height: 24px;
+}
+
+.close-button:hover {
+    background: #ff7a93;
+}
+
+.notification-default-action,
+.notification-action {
+    padding: 4px;
+    margin-top: 5px;
+    border-radius: 5px;
+    background: #24283b;
+    border: 1px solid #7aa2f7;
+    color: #7dcfff;
+    transition: all 0.2s ease;
+}
+
+.notification-default-action:hover,
+.notification-action:hover {
+    background: #2f3549;  /* Slightly lighter than the default background */
+    color: #9ece6a;  /* A subtle green for contrast */
+    border-color: #9ece6a;  /* Matching border color */
+}
+
+/* Rest of the styles remain unchanged */
+
+.floating-notifications {
+    background: transparent;
+}
+
+.notification-row {
+    margin: 0;
+}
+
+.notification > box {
+    padding: 0;
+}
+
+progressbar {
+    background-color: #1a1b26;
+    border-radius: 4px;
+    margin-top: 5px;
+}
+
+progressbar > trough {
+    background-color: #1a1b26;
+    border-radius: 4px;
+}
+
+progressbar > trough > progress {
+    background-color: #bb9af7;
+    border-radius: 4px;
+}
+
+.time {
+    color: #9ece6a;
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+.icon-large {
+    margin-right: 10px;
+}
+
+.notification image {
+    margin-top: 5px;
+}
