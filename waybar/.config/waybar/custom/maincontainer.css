@@ -3,7 +3,7 @@
 #backlight,
 #pulseaudio,
 #custom-pacman-update {
-  font-size: 13px;
+  font-size: 15px;
   color: @primary;
 }
 
@@ -12,7 +12,7 @@
 #backlight.text,
 #pulseaudio.text,
 #custom-pacman-update.text {
-  font-size: 12px;
+  font-size: 15px;
   font-weight: 800;
   color: @on-secondary-container;
 }

@@ -25,7 +25,7 @@ box#system-container {
 #backlight,
 #pulseaudio,
 #custom-pacman-update {
-    font-size: 13px;
+    font-size: 15px;
     color: @primary;
 }
 
@@ -34,7 +34,7 @@ box#system-container {
 #backlight.text,
 #pulseaudio.text,
 #custom-pacman-update.text {
-    font-size: 12px;
+    font-size: 15px;
     font-weight: 800;
     margin-left: 3px;
     margin-right: 3px;
