@@ -43,9 +43,10 @@ export PATH=$PATH:/home/linuxbrew/.linuxbrew/bin
 export PATH=$PATH:$HOME/.gradle/gradle-8.3/bin 
 export PATH=$PATH:$HOME/bin/jdt/bin 
 export PATH=$PATH:/usr/lib/jvm/jdk-21/bin/
-export PATH=$HOME/bin:$PATH
 export PATH=$HOME/dotfiles/bin:$PATH
-export PATH=$PATH:$HOME/.pulumi/bin
+export PATH=$HOME/bin:$PATH
+# Set 1password SSH integration and let 1Password manage keys
+export SSH_AUTH_SOCK=~/.1password/agent.sock
 
 alias gw="git worktree"
 alias myip=' dig +short myip.opendns.com @resolver1.opendns.com'
