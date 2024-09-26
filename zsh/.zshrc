@@ -1,7 +1,7 @@
 export ZSH="/home/matipan/.oh-my-zsh"
 export TERM="xterm-256color"
 
-plugins=(git zsh-autosuggestions zsh-syntax-highlighting fast-syntax-highlighting)
+plugins=(git zsh-autosuggestions zsh-syntax-highlighting)
 
 ZSH_THEME="spaceship"
 COMPLETION_WAITING_DOTS="true"
@@ -44,7 +44,7 @@ export PATH=$PATH:$HOME/.gradle/gradle-8.3/bin
 export PATH=$PATH:$HOME/bin/jdt/bin 
 export PATH=$PATH:/usr/lib/jvm/jdk-21/bin/
 export PATH=$HOME/bin:$PATH
-export PATH=$HOME/code/dotfiles/bin:$PATH
+export PATH=$HOME/dotfiles/bin:$PATH
 export PATH=$PATH:$HOME/.pulumi/bin
 
 alias gw="git worktree"
@@ -72,26 +72,13 @@ eval $(thefuck --alias)
 
 eval "$(zoxide init zsh)"
 
-# completion
-source $HOME/.completion/eksctl
-complete -C '/usr/local/bin/aws_completer' aws
-
 function awsp() {
 	export AWS_PROFILE=$1
 }
 
-function use() {
-	case "$1" in
-		fierro)
-			export DOCKER_HOST="ssh://fierro@100.101.249.36";;
-		local)
-			unset DOCKER_HOST;;
-	esac
-}
-
 _direnv_hook() {
   trap -- '' SIGINT;
-  eval "$("/home/linuxbrew/.linuxbrew/Cellar/direnv/2.33.0/bin/direnv" export zsh)";
+  eval "$("/usr/bin/direnv" export zsh)";
   trap - SIGINT;
 }
 typeset -ag precmd_functions;
@@ -102,13 +89,3 @@ typeset -ag chpwd_functions;
 if [[ -z "${chpwd_functions[(r)_direnv_hook]+1}" ]]; then
   chpwd_functions=( _direnv_hook ${chpwd_functions[@]} )
 fi
-
-# nube autocomplete fix for zsh
-autoload -U +X bashcompinit && bashcompinit
-autoload -U +X compinit && compinit
-
-### Added by nube
-export NUBE_TIENDANUBE_ROOT="/home/matipan/tiendanube/core"
-eval "$(/home/matipan/.nube/bin/nube init -)"
-export DOCKER_CLIENT_TIMEOUT=300
-export COMPOSE_HTTP_TIMEOUT=300

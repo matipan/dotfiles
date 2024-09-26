@@ -1,0 +1,16 @@
+{
+  "include": [
+    "~/.config/waybar/configs/custom_modules/modules"
+  ],
+  "group/privacy-container": {
+    "orientation": "horizontal",
+    "modules": [
+      "clock"
+    ]
+  },
+  "clock": {
+    "format": "󪥶 <b>{:%I:%M %p}</b>",
+    "format-alt": "󪥶 <b>{:%a.%d,%b}</b>",
+    "tooltip-format": "<big>{:%B %Y}</big>\n<tt><small>{calendar}</small></tt>"
+  }
+}
