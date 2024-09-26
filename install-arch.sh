@@ -26,8 +26,14 @@ ln -s "$ZSH_CUSTOM/themes/spaceship-prompt/spaceship.zsh-theme" "$ZSH_CUSTOM/the
 
 # setup tpm to then install tmux plugins manager
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-mkdir code
-cd code
-git clone https://github.com/matipan/dotfiles
+
+rm $HOME/matipan/.zshrc
+stow zsh
+stow nvim
+stow tmux
 
 echo "Setting up DE"
+cd $HOME/matipan/dotfiles
+stow hypr
+stow wofi
+stow waybar
