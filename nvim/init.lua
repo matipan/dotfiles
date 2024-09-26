@@ -401,113 +401,64 @@ local plugins = {
 	},
 	{ "mistricky/codesnap.nvim", build = "make" },
 	{
-		"Bryley/neoai.nvim",
+		"yetone/avante.nvim",
+		event = "VeryLazy",
+		lazy = false,
+		version = false, -- set this if you want to always pull the latest change
+		opts = {
+			provider = "claude",
+			claude = {
+				endpoint = "https://api.anthropic.com",
+				model = "claude-3-5-sonnet-20240620",
+				temperature = 0,
+				max_tokens = 4096,
+			},
+			behaviour = {
+				auto_suggestions = false, -- Experimental stage
+				auto_set_highlight_group = true,
+				auto_set_keymaps = true,
+				auto_apply_diff_after_generation = false,
+				support_paste_from_clipboard = false,
+			},
+			hints = { enabled = false },
+			-- add any opts here
+		},
+		-- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
+		build = "make",
+		-- build = "powershell -ExecutionPolicy Bypass -File Build.ps1 -BuildFromSource false" -- for windows
 		dependencies = {
+			"nvim-treesitter/nvim-treesitter",
+			"stevearc/dressing.nvim",
+			"nvim-lua/plenary.nvim",
 			"MunifTanjim/nui.nvim",
+			--- The below dependencies are optional,
+			{
+				-- support for image pasting
+				"HakonHarnes/img-clip.nvim",
+				event = "VeryLazy",
+				opts = {
+					-- recommended settings
+					default = {
+						embed_image_as_base64 = false,
+						prompt_for_file_name = false,
+						drag_and_drop = {
+							insert_mode = true,
+						},
+						-- required for Windows users
+						use_absolute_path = true,
+					},
+				},
+			},
+			{
+				-- Make sure to set this up properly if you have lazy=true
+				'MeanderingProgrammer/render-markdown.nvim',
+				opts = {
+					file_types = { "markdown", "Avante" },
+				},
+				ft = { "markdown", "Avante" },
+			},
 		},
-		cmd = {
-			"NeoAI",
-			"NeoAIOpen",
-			"NeoAIClose",
-			"NeoAIToggle",
-			"NeoAIContext",
-			"NeoAIContextOpen",
-			"NeoAIContextClose",
-			"NeoAIInject",
-			"NeoAIInjectCode",
-			"NeoAIInjectContext",
-			"NeoAIInjectContextCode",
-		},
-		keys = {
-			{ "<leader>as", desc = "summarize text" },
-			{ "<leader>ag", desc = "generate git message" },
-		},
-		config = function()
-			require("neoai").setup({
-				-- Below are the default options, feel free to override what you would like changed
-				ui = {
-					output_popup_text = "NeoAI",
-					input_popup_text = "Prompt",
-					width = 30, -- As percentage eg. 30%
-					output_popup_height = 80, -- As percentage eg. 80%
-					submit = "<Enter>", -- Key binding to submit the prompt
-				},
-				models = {
-					{
-						name = "openai",
-						model = "gpt-4-turbo-preview",
-						params = nil,
-					},
-				},
-				register_output = {
-					["g"] = function(output)
-						return output
-					end,
-					["c"] = require("neoai.utils").extract_code_snippets,
-				},
-				inject = {
-					cutoff_width = 75,
-				},
-				prompts = {
-					context_prompt = function(context)
-						return "Hey, I'd like to provide some context for future "
-						.. "messages. Here is the code/text that I want to refer "
-						.. "to in our upcoming conversations:\n\n"
-						.. context
-					end,
-				},
-				mappings = {
-					["select_up"] = "<C-k>",
-					["select_down"] = "<C-j>",
-				},
-				open_ai = {
-					api_key = {
-						get = function()
-							local filepath = "/home/matipan/.open_ai_key"
-							local file = io.open(filepath, "r")
-							if not file then
-								print("could not read open ai key from" .. filepath)
-								return nil
-							end
-							local content = file:read("*all")
-							file:close()
-							return string.gsub(content, "\n", "")
-						end,
-					},
-				},
-				shortcuts = {
-					{
-						name = "textify",
-						key = "<leader>as",
-						desc = "fix text with AI",
-						use_context = true,
-						prompt = [[
-						Please rewrite the text to make it more readable, clear,
-						concise, and fix any grammatical, punctuation, or spelling
-						errors
-						]],
-						modes = { "v" },
-						strip_function = nil,
-					},
-					{
-						name = "gitcommit",
-						key = "<leader>ag",
-						desc = "generate git commit message",
-						use_context = false,
-						prompt = function()
-							return [[
-							Using the following git diff generate a consise and
-							clear git commit message, with a short title summary
-							that is 75 characters or less:
-							]] .. vim.fn.system("git diff --cached")
-						end,
-						modes = { "n" },
-						strip_function = nil,
-					},
-				},
-				})
-			end,
-		}
 	}
+}
 
-	require("lazy").setup(plugins)
+require("lazy").setup(plugins)
