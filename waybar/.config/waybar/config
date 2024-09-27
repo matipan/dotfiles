@@ -1,111 +1,110 @@
 {
-	"include": [
-		"~/.config/waybar/configs/custom_modules/launcher",
-		"~/.config/waybar/configs/custom_modules/modules",
-		"~/.config/waybar/configs/custom_modules/privacy_container",
-		"~/.config/waybar/configs/custom_modules/system_container",
-		"~/.config/waybar/configs/custom_modules/app_title"
-	],
-	"layer": "top",
-	"height": 26,
-	"margin-top": 0,
-	"margin-left": 0,
-	"margin-bottom": 0,
-	"margin-right": 0,
-	"spacing": 0,
-	"modules-left": [
-		"hyprland/workspaces",
-	"custom/arrow-dec",
-	"group/app-title-container"
-	],
-	"modules-center": [
+  "include": [
+    "~/.config/waybar/configs/custom_modules/launcher",
+    "~/.config/waybar/configs/custom_modules/modules",
+    "~/.config/waybar/configs/custom_modules/privacy_container",
+    "~/.config/waybar/configs/custom_modules/system_container",
+    "~/.config/waybar/configs/custom_modules/app_title"
+  ],
+  "layer": "top",
+  "height": 26,
+  "margin-top": 0,
+  "margin-left": 0,
+  "margin-bottom": 0,
+  "margin-right": 0,
+  "spacing": 0,
+  "modules-left": [
+    "hyprland/workspaces",
+    "custom/arrow-dec",
+    "group/app-title-container"
+  ],
+  "modules-center": [
+    "group/privacy-container"
+  ],
+  "modules-right": [
+    "cpu",
+    "custom/dot",
+    "memory",
+    "custom/dot",
+    "temperature#cpu",
+    "custom/dot",
+    "custom/gpu-temp",
+    "custom/dot",
+    "network",
+    "custom/left-arrw",
+    "group/system-container",
+    "custom/dot-alt",
+    "group/launcher"
+  ],
+  "hyprland/workspaces": {
+    "all-outputs": false,
+    "active-only": "false",
+    "on-click": "activate",
+    "format": "<big>{icon}</big><span color = '#98ff98'> 󪤖 </span>{windows}",
+    "format-window-separator": " ",
+    "window-rewrite-default": "",
+    "window-rewrite": {
+      "title<.*youtube.*>": "",
+      "class<firefox>": "",
+      "class<firefox> title<.*github.*>": "",
+      "wezterm": "󪥌",
+      "code": "󪤋",
+      "android": "󪥰",
+      "kitty": "󪤍",
+      "chrome": "󪤕",
+      "zen-alpha": "󪥲",
+      "spotify": "󪤏",
+      "vesktop": "󪤡"
+    },
+    "on-scroll-up": "hyprctl dispatch workspace e+1",
+    "on-scroll-down": "hyprctl dispatch workspace e-1"
+  },
+  "hyprland/window": {
+    "format": "{}",
+    "icon": true,
+    "separate-outputs": true,
+    "max-length": 70
+  },
+  "tray": {
+    "icon-size": 28,
+    "spacing": 8
+  },
 
-	],
-	"modules-right": [
-		"cpu",
-	"custom/dot",
-	"memory",
-	"custom/dot",
-	"temperature#cpu",
-	"custom/dot",
-	"custom/gpu-temp",
-	"custom/dot",
-	"network",
-	"custom/left-arrw",
-	"group/system-container",
-	"custom/dot-alt",
-	"group/privacy-container",
-	"group/launcher"
-	],
-	"hyprland/workspaces": {
-		"all-outputs": false,
-		"active-only": "false",
-		"on-click": "activate",
-		"format": "<big>{icon}</big><span color = '#98ff98'> 󪤖 </span>{windows}",
-		"format-window-separator": " ",
-		"window-rewrite-default": "",
-		"window-rewrite": {
-			"title<.*youtube.*>": "",
-			"class<firefox>": "",
-			"class<firefox> title<.*github.*>": "",
-			"wezterm": "󪥌",
-			"code": "󪤋",
-			"android": "󪥰",
-			"kitty": "󪤍",
-			"chrome": "󪤕",
-			"zen-alpha": "󪥲",
-			"spotify": "󪤏",
-			"vesktop": "󪤡"
-		},
-		"on-scroll-up": "hyprctl dispatch workspace e+1",
-		"on-scroll-down": "hyprctl dispatch workspace e-1"
-	},
-	"hyprland/window": {
-		"format": "{}",
-		"icon": true,
-		"separate-outputs": true,
-		"max-length": 70
-	},
-	"tray": {
-		"icon-size": 28,
-		"spacing": 8
-	},
+  "cpu": {
+    "interval": 2,
+    "format": "󪥋 <b>{usage}%</b>",
+    "max-length": 10,
+    "on-click": "",
+    "tooltip": false
+  },
+  "memory": {
+    "interval": 60,
+    "format": "󪤲 <b>{used}G</b>",
+    "max-length": 10,
+    "tooltip": false
+  },
 
-	"cpu": {
-		"interval": 2,
-		"format": "󪥋 <b>{usage}%</b>",
-		"max-length": 10,
-		"on-click": "",
-		"tooltip": false
-	},
-	"memory": {
-		"interval": 60,
-		"format": "󪤲 <b>{used}G</b>",
-		"max-length": 10,
-		"tooltip": false
-	},
+  "temperature#cpu": {
+    "thermal-zone": 0,
+    "hwmon-path": "/sys/class/hwmon/hwmon3/temp1_input",
+    "critical-threshold": 80,
+    "format": "󪥃 <b>{temperatureC}°C</b>",
+    "interval": 2
+  },
 
-	"temperature#cpu": {
-		"thermal-zone": 0,
-		"hwmon-path": "/sys/class/hwmon/hwmon3/temp1_input",
-		"critical-threshold": 80,
-		"format": "󪥃 <b>{temperatureC}°C</b>",
-		"interval": 2
-	},
+  "custom/gpu-temp": {
+    "exec": "nvidia-smi --query-gpu=temperature.gpu --format=csv,noheader,nounits",
+    "format": "󪥗 <b>{}°C</b>",
+    "interval": 2,
+    "tooltip": false,
+    "on-click": "nvidia-settings"
+  },
 
-	"custom/gpu-temp": {
-		"exec": "nvidia-smi --query-gpu=temperature.gpu --format=csv,noheader,nounits",
-		"format": "󪥗 <b>{}°C</b>",
-		"interval": 2,
-		"tooltip": false,
-		"on-click": "nvidia-settings"
-	},
-
-	"network": {
-		"format-wifi": "󪤀 <b>{essid}</b>",
-		"format-ethernet": "󪥈 <b>Ethernet</b>",
-		"tooltip": true,
-		"format-disconnected": "󪤓"
-	}
+  "network": {
+    "format-wifi": "󪤀 <b>{essid}</b>",
+    "format-ethernet": "󪥈 <b>Ethernet</b>",
+    "tooltip": true,
+    "format-disconnected": "󪤓"
+  }
 
 }
