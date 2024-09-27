@@ -84,6 +84,27 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 local plugins = {
+	{
+		"williamboman/mason.nvim",
+		dependencies = {
+			"williamboman/mason-lspconfig.nvim",
+			"neovim/nvim-lspconfig",
+		},
+		config = function()
+			require("mason").setup()
+			require("mason-lspconfig").setup({
+				ensure_installed = {
+					-- Add the language servers you want to install here
+					"gopls",
+					"pyright",
+					"typescript-language-server",
+					-- Add more as needed
+				},
+				automatic_installation = true,
+			})
+
+		end,
+	},
 	{ "nvim-lua/plenary.nvim", lazy = false },
 	{ 'ThePrimeagen/git-worktree.nvim', lazy = false },
 	{ "smithbm2316/centerpad.nvim", lazy = false },

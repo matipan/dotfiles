@@ -184,10 +184,6 @@ lsp.html.setup{
 }
 
 
-lsp.svelte.setup{
-	capabilities = capabilities
-}
-
 vim.diagnostic.config{
   float={border="rounded"}
 }
