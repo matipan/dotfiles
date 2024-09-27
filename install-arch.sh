@@ -3,7 +3,6 @@
 echo "Installing base dependencies"
 sudo pacman -Sy --noconfirm font-manager git base-devel wofi ttf-jetbrains-mono-nerd ttf-font-awesome pavucontrol xclip bluez bluez-utils blueman lxqt-policykit pambase pam gnome-keyring
 
-# setup way
 git clone https://aur.archlinux.org/yay.git && cd yay && makepkg -si
 
 echo "Installing developer tools"
@@ -28,6 +27,7 @@ git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
 echo "Configuring tools"
 rm $HOME/matipan/.zshrc
+rm $HOME/matipan/.tmux.conf
 cd $HOME/matipan/dotfiles
 stow zsh
 stow nvim
