@@ -1,7 +1,7 @@
 #!/bin/sh
 
 echo "Installing base dependencies"
-sudo pacman -Sy --noconfirm font-manager git base-devel wofi ttf-jetbrains-mono-nerd ttf-font-awesome pavucontrol xclip bluez bluez-utils blueman 
+sudo pacman -Sy --noconfirm font-manager git base-devel wofi ttf-jetbrains-mono-nerd ttf-font-awesome pavucontrol xclip bluez bluez-utils blueman lxqt-policykit pambase pam gnome-keyring
 
 # setup way
 git clone https://aur.archlinux.org/yay.git && cd yay && makepkg -si
