@@ -60,7 +60,7 @@ alias gc="git commit -s"
 
 source $ZSH/oh-my-zsh.sh
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+source <(fzf --zsh)
 
 
 bindkey -s ^f "tmux-sessionizer\n"
@@ -90,3 +90,4 @@ typeset -ag chpwd_functions;
 if [[ -z "${chpwd_functions[(r)_direnv_hook]+1}" ]]; then
   chpwd_functions=( _direnv_hook ${chpwd_functions[@]} )
 fi
+source /usr/share/nvm/init-nvm.sh
