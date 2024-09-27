@@ -71,8 +71,6 @@ export NVM_DIR="$HOME/.nvm"
 
 eval $(thefuck --alias)
 
-eval "$(zoxide init zsh)"
-
 function awsp() {
 	export AWS_PROFILE=$1
 }
@@ -90,4 +88,3 @@ typeset -ag chpwd_functions;
 if [[ -z "${chpwd_functions[(r)_direnv_hook]+1}" ]]; then
   chpwd_functions=( _direnv_hook ${chpwd_functions[@]} )
 fi
-source /usr/share/nvm/init-nvm.sh

@@ -93,13 +93,6 @@ local plugins = {
 		config = function()
 			require("mason").setup()
 			require("mason-lspconfig").setup({
-				ensure_installed = {
-					-- Add the language servers you want to install here
-					"gopls",
-					"pyright",
-					"typescript-language-server",
-					-- Add more as needed
-				},
 				automatic_installation = true,
 			})
 
