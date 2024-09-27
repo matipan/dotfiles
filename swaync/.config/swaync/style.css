@@ -1,6 +1,104 @@
 * {
     all: unset;
-    font-family: "JetBrainsMono Nerd Font", sans-serif;
+    font-family: "JetBrainsMono Nerd Font";
+}
+
+/* Main container for the notification center */
+.control-center {
+    background-color: rgba(26, 27, 38, 0.95);
+    border-radius: 12px;
+    border: 2px solid #7aa2f7;
+    padding: 10px;
+}
+
+/* Header of the notification center */
+.control-center-list-header {
+    background-color: rgba(41, 46, 66, 0.7);
+    border-radius: 8px;
+    padding: 5px;
+    margin-bottom: 10px;
+}
+
+/* Title in the header */
+.control-center-list-header-label {
+    font-weight: bold;
+    color: #c0caf5;
+    font-size: 16px;
+}
+
+/* Container for notifications in the panel */
+.control-center-list-placeholder {
+    background-color: rgba(41, 46, 66, 0.5);
+    border-radius: 8px;
+    padding: 5px;
+}
+
+/* Style for individual notifications in the panel */
+.control-center-list-item {
+    background-color: rgba(41, 46, 66, 0.3);
+    border-radius: 6px;
+    margin-bottom: 5px;
+    padding: 5px;
+}
+
+/* "Clear All" button */
+.control-center-clear-all-button {
+    background-color: #7aa2f7;
+    color: #1a1b26;
+    border-radius: 6px;
+    padding: 5px 10px;
+    margin-top: 10px;
+}
+
+.control-center-clear-all-button:hover {
+    background-color: #9ece6a;
+}
+
+/* Style the entire DND widget */
+.widget-dnd {
+  color: #c0caf5;  /* Tokyo Night text color */
+  margin: 8px;
+  font-size: 1.1rem;
+}
+
+.widget-dnd > switch {
+  font-size: initial;
+  border-radius: 12px;
+  background: #1a1b26;  /* Tokyo Night background color */
+  border: 1px solid #414868;  /* Tokyo Night border color */
+  box-shadow: none;
+}
+
+.widget-dnd > switch:checked {
+  background: #7aa2f7;  /* Tokyo Night blue for selected state */
+}
+
+.widget-dnd > switch slider {
+  background: #24283b;  /* Tokyo Night lighter background for contrast */
+  border-radius: 12px;
+}
+
+/* Optional: Add hover effects */
+.widget-dnd > switch:hover {
+  background: #414868;  /* Slightly lighter when hovered */
+}
+
+.widget-dnd > switch:checked:hover {
+  background: #89b4fa;  /* Slightly lighter blue when checked and hovered */
+}
+
+/* If you have any widgets, you can style them too */
+.widget-title {
+    font-weight: bold;
+    color: #7dcfff;
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+.widget-content {
+    background-color: rgba(41, 46, 66, 0.3);
+    border-radius: 6px;
+    padding: 5px;
 }
 
 .notification {
@@ -12,19 +110,22 @@
 }
 
 .notification-content {
+    margin-left: 10px;
     background: transparent;
     padding: 10px;
 }
 
 .summary {
-    font-size: 16px;
+	font-family: "Cantarell";
+    font-size: 18px;
     font-weight: bold;
     color: #7aa2f7;
     margin-bottom: 5px;
 }
 
 .body {
-    font-size: 14px;
+    font-size: 16px;
+	font-family: "Cantarell";
     color: #c0caf5;
 }
 
@@ -102,4 +203,8 @@ progressbar > trough > progress {
 
 .notification image {
     margin-top: 5px;
+    margin-right: 10px;
+    border-radius: 8px;
+    /*box-shadow: 0 0 0 2px #7aa2f7, 0 4px 8px rgba(0, 0, 0, 0.3);*/
 }
+
