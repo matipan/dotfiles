@@ -3,6 +3,8 @@
 label#cpu,
 label#disk,
 label#temperature,
+label#temperature.cpu,
+label#custom-gpu-temp,
 label#memory
 label#network {
   background-color: @background;
@@ -10,6 +12,8 @@ label#network {
 
 #memory,
 #cpu,
+#temperature.cpu,
+#custom-gpu-temp,
 #disk,
 #temperature,
 #network,
@@ -36,6 +40,11 @@ label#network {
 
 #memory {
   color: @primary;
+}
+
+#temperature.cpu,
+#custom-gpu-temp {
+	color: @tertiary;
 }
 
 #network {

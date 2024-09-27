@@ -3,10 +3,8 @@
     "group/system-container": {
         "orientation": "horizontal",
         "modules": [
-            "group/battery-grp",
             "group/pacman-grp",
-            "group/pulseaudio-grp",
-            "group/backlight-grp"
+            "group/pulseaudio-grp"
         ]
     },
 
@@ -38,8 +36,6 @@
             "backlight#text"
         ]
     },
-
-
 
     "custom/pacman-update": {
         "format": "󪥔",

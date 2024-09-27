@@ -2,6 +2,7 @@
 
 #backlight,
 #pulseaudio,
+#temperature,
 #custom-pacman-update {
   font-size: 15px;
   color: @primary;
