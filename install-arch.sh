@@ -7,14 +7,13 @@ sudo pacman -Sy --noconfirm font-manager git base-devel wofi ttf-jetbrains-mono-
 git clone https://aur.archlinux.org/yay.git && cd yay && makepkg -si
 
 echo "Installing developer tools"
-sudo pacman -Sy --noconfirm direnv stow tmux docker neovim zsh thefuck zoxide ripgrep bat btop
+yay -Sy --noconfirm direnv stow tmux docker neovim zsh thefuck zoxide ripgrep bat btop fzf github-cli
 
 echo "Installing languages"
-sudo pacman -Sy --noconfirm go zig rust python
-yay -Sy --noconfirm nvm
+yay -Sy --noconfirm go zig rustup python3 python-pip nvm
 
-echo "Installing common desktop applications"
-yay -Sy --noconfirm zen-browser-bin zoom vesktop 1password 1password-cli wofi-wifi-menu-git wofi-emoji wezterm-git shutter-git
+echo "Installing common desktop applications and utilities"
+yay -Sy --noconfirm zen-browser-bin zoom vesktop 1password 1password-cli wofi-emoji wezterm-git shutter-git aws-cli-v2 hyprshot grim slurp swappy
 
 echo "Setting up developer tools"
 chsh -s $(which zsh)
@@ -27,13 +26,15 @@ ln -s "$ZSH_CUSTOM/themes/spaceship-prompt/spaceship.zsh-theme" "$ZSH_CUSTOM/the
 # setup tpm to then install tmux plugins manager
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
+echo "Configuring tools"
 rm $HOME/matipan/.zshrc
+cd $HOME/matipan/dotfiles
 stow zsh
 stow nvim
 stow tmux
-
-echo "Setting up DE"
-cd $HOME/matipan/dotfiles
 stow hypr
 stow wofi
 stow waybar
+stow wezterm
+stow swaync
+stow kitty
