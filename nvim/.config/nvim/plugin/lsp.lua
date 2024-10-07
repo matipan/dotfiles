@@ -3,6 +3,15 @@ local lspkind = require "lspkind"
 local cmp = require "cmp"
 
 cmp.setup {
+	enabled = function()
+		-- Disable completion in markdown files
+		local buftype = vim.api.nvim_buf_get_option(0, 'buftype')
+		local filetype = vim.api.nvim_buf_get_option(0, 'filetype')
+		if filetype == 'markdown' then
+			return false
+		end
+		return buftype ~= 'prompt'
+	end,
 	sources = cmp.config.sources({
 		{ name = "nvim_lsp" },
 		{ name = "nvim_lsp_signature_help" },

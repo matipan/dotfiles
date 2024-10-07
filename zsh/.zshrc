@@ -6,6 +6,8 @@ plugins=(git zsh-autosuggestions zsh-syntax-highlighting)
 ZSH_THEME="spaceship"
 COMPLETION_WAITING_DOTS="true"
 
+export SSH_AUTH_SOCK=~/.1password/agent.sock
+
 export SPACESHIP_PROMPT_ADD_NEWLINE=false
 export SPACESHIP_PROMPT_SEPARATE_LINE=true
 export SPACESHIP_RPROMPT_ADD_NEWLINE=true
@@ -77,7 +79,7 @@ function awsp() {
 
 _direnv_hook() {
   trap -- '' SIGINT;
-  eval "$("/usr/bin/direnv" export zsh)";
+  eval "$(direnv export zsh)";
   trap - SIGINT;
 }
 typeset -ag precmd_functions;

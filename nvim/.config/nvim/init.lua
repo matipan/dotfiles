@@ -400,8 +400,13 @@ local plugins = {
 	},
 	{
 		"folke/todo-comments.nvim",
+		lazy = false,
 		dependencies = { "nvim-lua/plenary.nvim" },
 		opts = {},
+	},
+	{
+		"mistricky/codesnap.nvim",
+		build = "make",
 		config = function()
 			require("codesnap").setup({
 				mac_window_bar = false,
@@ -413,7 +418,6 @@ local plugins = {
 			})
 		end,
 	},
-	{ "mistricky/codesnap.nvim", build = "make" },
 	{
 		"yetone/avante.nvim",
 		event = "VeryLazy",
