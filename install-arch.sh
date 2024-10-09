@@ -12,7 +12,7 @@ echo "Installing languages"
 yay -Sy --noconfirm go zig rustup python3 python-pip nvm
 
 echo "Installing common desktop applications and utilities"
-yay -Sy --noconfirm zen-browser-bin zoom vesktop 1password 1password-cli wofi-emoji wezterm-git shutter-git aws-cli-v2 hyprshot grim slurp swappy pritunl-client-bin
+yay -Sy --noconfirm zen-browser-bin zoom vesktop 1password 1password-cli wofi-emoji wezterm-git shutter-git aws-cli-v2 hyprshot grim slurp swappy pritunl-client-bin obsidian
 
 echo "Setting up developer tools"
 chsh -s $(which zsh)

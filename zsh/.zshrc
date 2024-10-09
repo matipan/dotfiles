@@ -51,7 +51,7 @@ export PATH=$HOME/bin:$PATH
 export SSH_AUTH_SOCK=~/.1password/agent.sock
 
 alias gw="git worktree"
-alias myip=' dig +short myip.opendns.com @resolver1.opendns.com'
+alias myip='dig +short myip.opendns.com @resolver1.opendns.com'
 alias sz="source $HOME/.zshrc"
 alias c="clear"
 alias k="kubectl"
