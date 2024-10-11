@@ -17,7 +17,6 @@ set.number = true
 set.relativenumber = true
 set.mouse = 'a'
 set.autoread = true
-set.scrolljump = 20
 set.backspace = 'indent,eol,start'
 set.completeopt = 'menu,menuone,noselect'
 set.clipboard = set.clipboard + 'unnamedplus'
@@ -349,7 +348,7 @@ local plugins = {
 	-- utils
 	{ "voldikss/vim-floaterm", lazy = false },
 	{ "tjdevries/express_line.nvim", lazy = false },
-	--{ "mbbill/undotree", lazy = false },
+	{ "mbbill/undotree", lazy = false },
 	{ "tpope/vim-fugitive", lazy = false },
 	{
 		"NeogitOrg/neogit",

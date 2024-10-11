@@ -56,7 +56,7 @@ alias sz="source $HOME/.zshrc"
 alias c="clear"
 alias k="kubectl"
 alias vim=nvim
-alias pbcopy='xclip -sel "clip"';
+alias pbcopy='wl-copy';
 alias docker-compose="docker compose";
 alias gc="git commit -s"
 
