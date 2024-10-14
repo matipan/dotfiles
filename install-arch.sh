@@ -1,12 +1,12 @@
 #!/bin/sh
 
 echo "Installing base dependencies"
-sudo pacman -Sy --noconfirm font-manager git base-devel wofi ttf-jetbrains-mono-nerd ttf-font-awesome pavucontrol xclip bluez bluez-utils blueman lxqt-policykit pambase pam gnome-keyring bind cliphist xorg-xhost inotify-tools
+sudo pacman -Sy --noconfirm font-manager git base-devel wofi ttf-jetbrains-mono-nerd ttf-font-awesome pavucontrol xclip bluez bluez-utils blueman lxqt-policykit pambase pam gnome-keyring bind cliphist xorg-xhost inotify-tools waybar swaync hyprpaper
 
 cd $HOME && git clone https://aur.archlinux.org/yay.git && cd yay && makepkg -si
 
 echo "Installing developer tools"
-yay -Sy --noconfirm direnv stow tmux docker neovim zsh thefuck zoxide ripgrep bat btop fzf github-cli kubectl aws-cli-v2 
+yay -Sy --noconfirm direnv stow tmux docker neovim zsh thefuck zoxide ripgrep bat btop fzf github-cli kubectl aws-cli-v2 ripgrep
 
 echo "Installing languages"
 yay -Sy --noconfirm go zig rustup python3 python-pip nvm
