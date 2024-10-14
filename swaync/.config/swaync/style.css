@@ -208,3 +208,48 @@ progressbar > trough > progress {
     /*box-shadow: 0 0 0 2px #7aa2f7, 0 4px 8px rgba(0, 0, 0, 0.3);*/
 }
 
+.widget-mpris {
+    background-color: rgba(26, 27, 38, 0.9);
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 10px;
+}
+
+.widget-mpris-player {
+    padding: 8px;
+    margin: 4px;
+}
+
+.widget-mpris-title {
+    font-weight: bold;
+    color: #c0caf5;
+    font-size: 1.1em;
+}
+
+.widget-mpris-subtitle {
+    color: #a9b1d6;
+    font-size: 0.9em;
+}
+
+.widget-mpris-button {
+    background-color: #414868;
+    color: #c0caf5;
+    border-radius: 100%;
+    padding: 5px;
+    margin: 0 3px;
+}
+
+.widget-mpris-button:hover {
+    background-color: #7aa2f7;
+    color: #1a1b26;
+}
+
+.widget-mpris-button.play-pause {
+    background-color: #7aa2f7;
+    color: #1a1b26;
+}
+
+.widget-mpris > box > button {
+    border: none;
+    background: transparent;
+}

@@ -17,3 +17,20 @@
   font-family: JetBrainsMono Nerd Font;
   font-size: 14px;
 }
+
+#mpris {
+    background-color: #1a1b26;
+    color: #c0caf5;
+    padding: 0 10px;
+    margin: 0 5px;
+    border-radius: 10px;
+}
+
+#mpris.playing {
+    background-color: #7aa2f7;
+    color: #1a1b26;
+}
+
+#mpris.paused {
+    background-color: #414868;
+}

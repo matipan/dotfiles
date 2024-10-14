@@ -27,7 +27,7 @@
     "custom/power": {
         "format": "󪦓",
         "tooltip": false,
-        "on-click": "shutdown now"
+        "on-click": "shutdown -P now"
     },
     "custom/launcher": {
         "format": "󪥴",
