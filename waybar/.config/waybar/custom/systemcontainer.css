@@ -14,6 +14,7 @@ box#system-container {
 #backlight,
 #pulseaudio,
 #custom-pacman-update,
+#custom-recording,
 #battery {
     margin-left: 2px;
     margin-right: 2px;
@@ -29,6 +30,27 @@ box#system-container {
     color: @primary;
 }
 
+#custom-recording {
+    font-size: 15px;
+    font-weight: 800;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+#custom-recording.recording-off {
+	color: @primary;
+}
+
+#custom-recording.recording {
+    color: @error;
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+    50% {
+        opacity: 0.5;
+    }
+}
 
 #battery.text,
 #backlight.text,

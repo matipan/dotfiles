@@ -1,0 +1,24 @@
+#custom-screen-recording {
+  margin-top: 6px;
+  margin-bottom: 6px;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+
+#custom-screen-recording.recording-on {
+    color: #ffffff;
+    background-color: #ff0000;
+    animation: blink 1s infinite;
+}
+
+#custom-screen-recording.recording-on {
+    color: #ffff00;
+    background-color: #ff0000;
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+    50% {
+        opacity: 0.5;
+    }
+}

@@ -105,7 +105,8 @@
     "format-wifi": "󪤀 <b>{essid}</b>",
     "format-ethernet": "󪥈 <b>Ethernet</b>",
     "tooltip": true,
-    "format-disconnected": "󪤓"
+    "format-disconnected": "󪤓",
+	"on-click": "~/.config/waybar/scripts/launch-wofi-wifi.sh"
   }
 
 }

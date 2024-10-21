@@ -3,6 +3,7 @@
     "group/system-container": {
         "orientation": "horizontal",
         "modules": [
+            "custom/recording",
             "group/pacman-grp",
             "group/pulseaudio-grp"
         ]
@@ -36,6 +37,13 @@
             "backlight#text"
         ]
     },
+	"custom/recording": {
+		"exec": "pgrep -x wf-recorder >/dev/null && echo '{\"text\": \"󪤧\", \"class\": \"recording\"}' || echo '{\"text\": \"󪤧\", \"class\": \"recording-off\"}'",
+		"return-type": "json",
+		"interval": 1,
+		"format": "{}",
+		"on-click": "~/.config/waybar/scripts/record.sh"
+	},
 
     "custom/pacman-update": {
         "format": "󪥔",
