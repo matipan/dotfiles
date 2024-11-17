@@ -13,4 +13,3 @@ yay -Sy --noconfirm go zig rustup python3 python-pip nvm php
 
 echo "Installing common desktop applications and utilities"
 yay -Sy --noconfirm zen-browser-bin zoom vesktop 1password 1password-cli wofi-emoji wezterm-git hyprshot grim slurp swappy obsidian vlc obs-studio brave-browser timeshift timeshift-autosnap grub-btrfs wf-recorder jq whois spotify
-

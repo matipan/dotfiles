@@ -17,7 +17,7 @@ local function has_nvidia_gpu()
 end
 
 -- Determine the font size based on NVIDIA presence
-config.font_size = has_nvidia_gpu() and 14 or 12
+config.font_size = has_nvidia_gpu() and 13 or 12
 
 -- This is where you actually apply your config choices
 config.color_scheme = 'Tokyo Night Storm'

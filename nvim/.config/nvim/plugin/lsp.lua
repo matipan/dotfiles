@@ -47,6 +47,7 @@ cmp.setup {
 			maxwidth = 50,
 			ellipsis_char = '...',
 			show_labelDetails = true,
+			before = require("tailwind-tools.cmp").lspkind_format,
 		})
 	},
 	experimental = {
@@ -192,6 +193,66 @@ lsp.html.setup{
 	capabilities = capabilities
 }
 
+lsp.tailwindcss.setup({
+    capabilities = capabilities,
+    filetypes = { "go", "templ", "html" },
+    init_options = {
+        userLanguages = {
+            go = "html"
+        }
+    },
+    settings = {
+        tailwindCSS = {
+            includeLanguages = {
+                go = "html",
+            },
+            experimental = {
+                classRegex = {
+                    -- Class() method patterns
+                    'Class\\(["\'`]([^"\'`]*)["\'`]?\\)?',     -- Matches both Class("something") and Class("
+                    'Class\\(["\'`]([^"\'`]*)',                -- Matches just Class("
+                    -- Simple assignment patterns (with optional spaces)
+                    'class\\s*=\\s*["\'`]([^"\'`]*)["\'`]',    -- Matches class = "..."
+                    'class\\s*=\\s*["\'`]([^"\'`]*)',          -- Matches incomplete class = "
+                    -- Short declaration patterns
+                    'class\\s*:=\\s*["\'`]([^"\'`]*)["\'`]',   -- Matches class := "..."
+                    'class\\s*:=\\s*["\'`]([^"\'`]*)',         -- Matches incomplete class := "
+                    -- Concatenation patterns
+                    'class\\s*\\+=\\s*["\'`]([^"\'`]*)["\'`]', -- Matches class += "..."
+                    'class\\s*\\+=\\s*["\'`]([^"\'`]*)',       -- Matches incomplete class += "
+                    -- Generic class-related variable patterns
+                    '[cC]lass\\w*\\s*=\\s*["\'`]([^"\'`]*)["\'`]',    -- any assignment
+                    '[cC]lass\\w*\\s*:=\\s*["\'`]([^"\'`]*)["\'`]',   -- any declaration
+                    '[cC]lass\\w*\\s*\\+=\\s*["\'`]([^"\'`]*)["\'`]', -- any concatenation
+                    -- Incomplete versions of generic patterns
+                    '[cC]lass\\w*\\s*=\\s*["\'`]([^"\'`]*)',
+                    '[cC]lass\\w*\\s*:=\\s*["\'`]([^"\'`]*)',
+                    '[cC]lass\\w*\\s*\\+=\\s*["\'`]([^"\'`]*)',
+                    -- String slice/array patterns
+                    'Classes:\\s*\\[\\]string\\{[^}]*["\'`]([^"\'`]*)["\'`]',  -- Matches complete strings in Classes slice
+                    'Classes:\\s*\\[\\]string\\{[^}]*["\'`]([^"\'`]*)',        -- Matches incomplete strings in Classes slice
+                    '["\'`]([^"\'`]*)["\'`]\\s*,\\s*(?://.*)?\n',             -- Matches individual strings in multi-line array
+                    '["\'`]([^"\'`]*)',                                        -- Matches incomplete strings in array context
+                }
+            },
+            validate = true,
+            trace = { server = "verbose" }, -- Enable detailed logging
+        }
+    },
+    -- Add root patterns to help LSP find your project root
+    root_dir = require('lspconfig').util.root_pattern(
+        'tailwind.config.js',
+        'tailwind.config.cjs',
+        'tailwind.config.mjs',
+        'tailwind.config.ts',
+        'postcss.config.js',
+        'postcss.config.cjs',
+        'postcss.config.mjs',
+        'postcss.config.ts',
+        'package.json',
+        'go.mod'
+    )
+})
 
 vim.diagnostic.config{
   float={border="rounded"}

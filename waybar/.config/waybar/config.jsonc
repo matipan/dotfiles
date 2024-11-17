@@ -45,14 +45,15 @@
     "window-rewrite-default": "󪥴",
     "window-rewrite": {
       "title<.*youtube.*>": "",
+      "title<.*github.*>": "",
       "class<firefox>": "",
-      "class<firefox> title<.*github.*>": "",
       "wezterm": "󪥌",
       "code": "󪤋",
       "android": "󪥰",
       "kitty": "󪤍",
       "chrome": "󪤕",
-      "zen-alpha": "󪥲",
+      "brave": "󪤕",
+      "zen-alpha": "",
       "spotify": "󪥵",
       "vesktop": "󪤡",
       "pritunl": "󪤀"
