@@ -92,3 +92,10 @@ if [[ -z "${chpwd_functions[(r)_direnv_hook]+1}" ]]; then
 fi
 
 source ~/.env
+
+# bun completions
+[ -s "/home/matipan/.bun/_bun" ] && source "/home/matipan/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
