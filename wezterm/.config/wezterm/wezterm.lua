@@ -20,7 +20,7 @@ end
 config.font_size = has_nvidia_gpu() and 13 or 12
 
 -- This is where you actually apply your config choices
-config.color_scheme = 'Tokyo Night Storm'
+config.color_scheme = 'Tokyo Night Moon'
 config.font = wezterm.font 'JetBrainsMono Nerd Font'
 config.hide_tab_bar_if_only_one_tab = true
 return config
