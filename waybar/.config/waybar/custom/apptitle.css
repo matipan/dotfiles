@@ -1,5 +1,6 @@
 @import "../colors-waybar.css";
 
+@define-color blue-tk #7aa2f7;
 
 #custom-arrow-dec {
   margin-left: 2px;
@@ -9,7 +10,8 @@
 
 #custom-app-title-icon {
   font-size: 15px;
-  color: alpha(@on-secondary-container,0.75);
+  /*color: alpha(@on-secondary-container,0.75)*/;
+  color: alpha(@blue-tk,0.75);
   background-color: alpha(@secondary-container, 0.55);
   border-radius: 6px;
   padding-left: 7px;

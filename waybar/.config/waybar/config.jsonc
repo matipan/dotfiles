@@ -40,7 +40,8 @@
     "all-outputs": false,
     "active-only": "false",
     "on-click": "activate",
-    "format": "<big>{icon}</big><span color = '#98ff98'> 󪤖 </span>{windows}",
+    "format": "<big>{icon}</big>",
+    //"format": "<big>{icon}</big><span color = '#98ff98'> 󪤖 </span>{windows}",
     "format-window-separator": " ",
     "window-rewrite-default": "󪥴",
     "window-rewrite": {

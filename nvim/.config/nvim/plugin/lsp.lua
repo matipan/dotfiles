@@ -2,6 +2,13 @@ local lspkind = require "lspkind"
 
 local cmp = require "cmp"
 
+vim.api.nvim_create_autocmd({"BufEnter", "BufWinEnter"}, {
+	pattern = {"*"},
+	callback = function(ev)
+		vim.lsp.inlay_hint.enable(true)
+	end
+})
+
 cmp.setup {
 	enabled = function()
 		-- Disable completion in markdown files
@@ -111,6 +118,15 @@ lsp.gopls.setup{
                 shadow = true,
             },
             staticcheck = true,
+			hints = {
+				rangeVariableTypes = true,
+				parameterNames = true,
+				constantValues = true,
+				assignVariableTypes = true,
+				compositeLiteralFields = true,
+				compositeLiteralTypes = true,
+				functionTypeParameters = true,
+			},
         },
     },
 }
