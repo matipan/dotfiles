@@ -122,7 +122,7 @@ lsp.gopls.setup{
 				rangeVariableTypes = true,
 				parameterNames = true,
 				constantValues = true,
-				assignVariableTypes = true,
+				assignVariableTypes = false,
 				compositeLiteralFields = true,
 				compositeLiteralTypes = true,
 				functionTypeParameters = true,
