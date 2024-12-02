@@ -2,12 +2,12 @@ local lspkind = require "lspkind"
 
 local cmp = require "cmp"
 
-vim.api.nvim_create_autocmd({"BufEnter", "BufWinEnter"}, {
-	pattern = {"*"},
-	callback = function(ev)
-		vim.lsp.inlay_hint.enable(true)
-	end
-})
+-- vim.api.nvim_create_autocmd({"BufEnter", "BufWinEnter"}, {
+-- 	pattern = {"*"},
+-- 	callback = function(ev)
+-- 		vim.lsp.inlay_hint.enable(true)
+-- 	end
+-- })
 
 cmp.setup {
 	enabled = function()
