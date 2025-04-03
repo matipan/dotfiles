@@ -55,6 +55,7 @@ autocmd! FileType dockerfile setlocal shiftwidth=4 tabstop=4 softtabstop=4
 autocmd! FileType scala setlocal shiftwidth=2 tabstop=2 softtabstop=2 expandtab
 autocmd! FileType sbt setlocal shiftwidth=2 tabstop=2 softtabstop=2 expandtab
 autocmd! BufReadPost *dockerfile* set syntax=dockerfile
+autocmd! BufReadPost *.graphqls* set shiftwidth=2 tabstop=2 expandtab softtabstop=2
 autocmd! BufReadPost *.kt* set syntax=java
 autocmd! BufReadPost *.hurl* set filetype=hurl
 autocmd! FileType fzf
@@ -264,9 +265,28 @@ local plugins = {
 			"saadparwaiz1/cmp_luasnip",
 		},
 	},
-	-- disable copilot for a bit
-	--{ "github/copilot.vim", event = "InsertEnter" },
-
+	{ "github/copilot.vim", event = "InsertEnter" },
+	{
+		"nvim-treesitter/nvim-treesitter-context",
+		lazy = false,
+		config = function()
+			require'treesitter-context'.setup{
+				enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
+				multiwindow = false, -- Enable multiwindow support.
+				max_lines = 0, -- How many lines the window should span. Values <= 0 mean no limit.
+				min_window_height = 0, -- Minimum editor window height to enable context. Values <= 0 mean no limit.
+				line_numbers = true,
+				multiline_threshold = 20, -- Maximum number of lines to show for a single context
+				trim_scope = 'outer', -- Which context lines to discard if `max_lines` is exceeded. Choices: 'inner', 'outer'
+				mode = 'cursor',  -- Line used to calculate context. Choices: 'cursor', 'topline'
+				-- Separator between context and content. Should be a single character string, like '-'.
+				-- When separator is set, the context will only show up when there are at least 2 lines above cursorline.
+				separator = nil,
+				zindex = 20, -- The Z-index of the context window
+				on_attach = nil, -- (fun(buf: integer): boolean) return false to disable attaching
+			}
+		end
+	},
 	-- UI stuff
 	{ "nvim-tree/nvim-web-devicons", lazy = true },
 	{
@@ -374,26 +394,14 @@ local plugins = {
 				plugins = {
 					marks = true,
 				},
-				triggers_nowait = {
-					-- marks
-					"`",
-					"'",
-					"g`",
-					"g'",
-					-- registers
-					'"',
-					"<c-r>",
-					-- spelling
-					"z=",
-				},
 			})
 
 			-- Document existing key chains
-			require('which-key').register {
-				['<leader>l'] = { name = '[L]SP', _ = 'which_key_ignore' },
-				['<leader>f'] = { name = '[F]ind', _ = 'which_key_ignore' },
-				['<leader>g'] = { name = '[G]it', _ = 'which_key_ignore' },
-				['<leader>e'] = { name = '[E]rrors (trouble)', _ = 'which_key_ignore' },
+			require('which-key').add {
+				{'<leader>l', desc = '[L]SP',},
+				{'<leader>f', desc = '[F]ind'},
+				{'<leader>g', desc = '[G]it'},
+				{'<leader>e', desc = '[E]rrors (trouble)'},
 			}
 		end,
 	},

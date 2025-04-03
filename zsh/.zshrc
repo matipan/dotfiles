@@ -60,6 +60,8 @@ alias vim=nvim
 alias pbcopy='wl-copy';
 alias docker-compose="docker compose";
 alias gc="git commit -s"
+# Who the fuck cares about ghostscript?
+alias gs="git status -sb"
 
 source $ZSH/oh-my-zsh.sh
 

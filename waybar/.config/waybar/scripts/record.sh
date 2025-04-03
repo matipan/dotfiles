@@ -12,7 +12,6 @@ else
     GEOMETRY=$(slurp)
     if [ -n "$GEOMETRY" ]; then
         wf-recorder -g "$GEOMETRY" -f "$OUTPUT_FILE" &
-        notify-send "Screen Recording" "Recording started"
     else
         notify-send "Screen Recording" "Selection cancelled"
     fi

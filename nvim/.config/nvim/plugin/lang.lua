@@ -16,6 +16,5 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 
 vim.cmd[[
 autocmd BufWritePre *.go :silent! lua vim.lsp.buf.code_action({ context = { only = { "source.organizeImports" } }, apply = true })
-autocmd BufReadPost *.zig :silent! Copilot disable
 autocmd BufWritePre *.zig :silent! lua vim.lsp.buf.format()
 ]]
