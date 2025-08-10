@@ -4,6 +4,7 @@ set noswapfile
 set nobackup
 ]]
 vim.g.mapleader = ","
+vim.g.maplocalleader = ","
 vim.g.filetype = 'on'
 vim.g.hidden = true
 vim.cmd [[
@@ -44,7 +45,7 @@ augroup END
 autocmd! FileType yaml setlocal shiftwidth=2 tabstop=2 expandtab softtabstop=2
 autocmd! FileType json setlocal shiftwidth=2 tabstop=2 expandtab softtabstop=2
 autocmd! FileType java setlocal shiftwidth=2 tabstop=2 expandtab softtabstop=2
-autocmd! FileType javascript setlocal shiftwidth=4 tabstop=4 expandtab softtabstop=4
+autocmd! FileType javascript setlocal shiftwidth=2 tabstop=2 expandtab softtabstop=2
 autocmd! FileType python setlocal shiftwidth=4 tabstop=4 expandtab softtabstop=4
 autocmd! FileType php setlocal shiftwidth=4 tabstop=4 expandtab softtabstop=4
 autocmd! FileType vim setlocal shiftwidth=4 tabstop=4 softtabstop=4
@@ -94,6 +95,7 @@ local plugins = {
 			require("mason").setup()
 			require("mason-lspconfig").setup({
 				automatic_installation = true,
+				automatic_enable = false,
 			})
 
 		end,
@@ -431,12 +433,15 @@ local plugins = {
 		lazy = false,
 		version = false, -- set this if you want to always pull the latest change
 		opts = {
-			provider = "claude",
-			claude = {
-				endpoint = "https://api.anthropic.com",
-				model = "claude-3-5-sonnet-20241022",
-				temperature = 0,
-				max_tokens = 4096,
+			providers = {
+				claude = {
+					endpoint = "https://api.anthropic.com",
+					model = "claude-3-5-sonnet-20241022",
+					extra_request_body = {
+						temperature = 0,
+						max_tokens = 4096,
+					},
+				},
 			},
 			behaviour = {
 				auto_suggestions = false, -- Experimental stage
@@ -494,6 +499,29 @@ local plugins = {
 			"neovim/nvim-lspconfig", -- optional
 		},
 		opts = {} -- your configuration
+	},
+	{
+		'pwntester/octo.nvim',
+		dependencies = {
+			'nvim-lua/plenary.nvim',
+			'nvim-telescope/telescope.nvim',
+			'nvim-tree/nvim-web-devicons',
+		},
+		config = function ()
+			require"octo".setup()
+		end
+	},
+	{
+		"julienvincent/hunk.nvim",
+		cmd = { "DiffEditor" },
+		config = function()
+			require("hunk").setup()
+		end,
+	},
+	{
+		"rafikdraoui/jj-diffconflicts",
+		lazy = false,
+
 	},
 }
 

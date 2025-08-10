@@ -48,6 +48,7 @@ export PATH=$PATH:$HOME/bin/jdt/bin
 export PATH=$PATH:/usr/lib/jvm/jdk-21/bin/
 export PATH=$HOME/dotfiles/bin:$PATH
 export PATH=$HOME/bin:$PATH
+export PATH=$PATH:$HOME/.claude/local
 # Set 1password SSH integration and let 1Password manage keys
 export SSH_AUTH_SOCK=~/.1password/agent.sock
 
@@ -66,7 +67,7 @@ alias gs="git status -sb"
 source $ZSH/oh-my-zsh.sh
 
 source <(fzf --zsh)
-
+source <(COMPLETE=zsh jj)
 
 bindkey -s ^f "tmux-sessionizer\n"
 
@@ -75,6 +76,8 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 eval $(thefuck --alias)
+
+eval $(just --completions zsh)
 
 function awsp() {
 	export AWS_PROFILE=$1
@@ -102,3 +105,5 @@ source ~/.env
 # bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
+
+alias claude="/home/matipan/.claude/local/claude"

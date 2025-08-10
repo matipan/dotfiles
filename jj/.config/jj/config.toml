@@ -1,0 +1,47 @@
+"$schema" = "https://jj-vcs.github.io/jj/latest/config-schema.json"
+
+[user]
+name = "Matias Pan"
+email = "matias@dagger.io"
+
+[ui]
+default-command = "log"
+pager = ":builtin"
+diff-editor = ["nvim", "-c", "DiffEditor $left $right $output"]
+diff-formatter = ["difft", "--color=always", "$left", "$right"]
+
+[signing]
+behavior = "own"
+backend = "ssh"
+key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJpN4EBn4Do5DcA115XI6bArVIBBZYhlaAzVJ0u16I+7"
+backends.ssh.allowed-signers = "~/.ssh/allowed_signers"
+
+[merge-tools.diffconflicts]
+program = "nvim"
+merge-args = [
+    "-c", "let g:jj_diffconflicts_marker_length=$marker_length",
+    "-c", "JJDiffConflicts!", "$output", "$base", "$left", "$right",
+]
+merge-tool-edits-conflict-markers = true
+
+[aliases]
+heads = ["log", "-r", "heads(all())"]
+pushb = ["util", "exec", "--", "bash", "-c", """
+jj b set $1
+jj git push -b $1
+""", ""]
+# show all the revisions in the current context all the way up to the commit
+# that we branched off of
+l = ["log", "-r", "(main..@):: | (main..@)-"]
+# show all ongoing work
+work = ["log", "-r", "@ | ancestors(remote_bookmarks().., 2) | trunk()"]
+# catchup the parent revision of the current working copy with the latest
+# changes from main
+catchup = ["rebase", "-s", "all:roots(main..@)", "-d", "main"]
+# rebase on top of main every single revision that is currently outdated
+catchup-all = ["rebase", "-s", "all:heads(all()) ~ ancestors(main) ~ remote_bookmarks()", "-d", "main"]
+# give me all revisions that are no longer connected to the main branch
+# useful to know which are pending a rebase
+old = ["log", "-r", "heads(all()) ~ ancestors(main) ~ remote_bookmarks()"]
+# bring me all revisions that are up to date with the main branch
+fresh = ["log", "-r", "connected(main::)"]
