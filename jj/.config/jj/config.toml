@@ -5,10 +5,10 @@ name = "Matias Pan"
 email = "matias@dagger.io"
 
 [ui]
+diff-formatter = ["difft", "--color=always", "$left", "$right"]
 default-command = "log"
 pager = ":builtin"
 diff-editor = ["nvim", "-c", "DiffEditor $left $right $output"]
-diff-formatter = ["difft", "--color=always", "$left", "$right"]
 
 [signing]
 behavior = "own"
@@ -25,8 +25,12 @@ merge-args = [
 merge-tool-edits-conflict-markers = true
 
 [aliases]
+dt = ["diff", "--tool", "difft"]
+gf = ["util", "exec", "--", "bash", "-c", """
+jj git fetch -b $1
+""", ""]
 heads = ["log", "-r", "heads(all())"]
-pushb = ["util", "exec", "--", "bash", "-c", """
+gp = ["util", "exec", "--", "bash", "-c", """
 jj b set $1
 jj git push -b $1
 """, ""]
@@ -34,7 +38,7 @@ jj git push -b $1
 # that we branched off of
 l = ["log", "-r", "(main..@):: | (main..@)-"]
 # show all ongoing work
-work = ["log", "-r", "@ | ancestors(remote_bookmarks().., 2) | trunk()"]
+work = ["log", "-r", "@ | ancestors(remote_bookmarks().., 2) | ancestors(bookmarks(), 2)| trunk()"]
 # catchup the parent revision of the current working copy with the latest
 # changes from main
 catchup = ["rebase", "-s", "all:roots(main..@)", "-d", "main"]
@@ -45,3 +49,6 @@ catchup-all = ["rebase", "-s", "all:heads(all()) ~ ancestors(main) ~ remote_book
 old = ["log", "-r", "heads(all()) ~ ancestors(main) ~ remote_bookmarks()"]
 # bring me all revisions that are up to date with the main branch
 fresh = ["log", "-r", "connected(main::)"]
+
+[git]
+push-new-bookmark = true

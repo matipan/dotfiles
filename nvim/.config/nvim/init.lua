@@ -523,6 +523,11 @@ local plugins = {
 		lazy = false,
 
 	},
+	{
+		"davidmh/mdx.nvim",
+		config = true,
+		dependencies = {"nvim-treesitter/nvim-treesitter"}
+	}
 }
 
 require("lazy").setup(plugins)
