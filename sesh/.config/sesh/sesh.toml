@@ -1,0 +1,23 @@
+blacklist = ["avante.nvim"]
+
+[[session]]
+name = "dagger_io 🚀"
+path = "~/dagger/dagger.io"
+
+[[session]]
+name = "dagger 🗡️"
+path = "~/dagger/dagger"
+
+[[session]]
+name = "dotfiles 🖥️"
+path = "~/dotfiles"
+startup_command = "nvim -c ':Telescope find_files'"
+
+[[session]]
+name = "facetrack 👤"
+path = "~/code/gofacetrack"
+
+[[session]]
+name = "code 🧑‍💻"
+path = "~/code"
+startup_command = "ls"

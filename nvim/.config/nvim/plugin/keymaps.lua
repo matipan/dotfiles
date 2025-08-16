@@ -3,7 +3,7 @@ vim.keymap.set('n', 'gd', vim.lsp.buf.definition)
 vim.keymap.set('n', 'K', vim.lsp.buf.hover)
 vim.keymap.set('n', 'gi', vim.lsp.buf.implementation)
 vim.keymap.set("n", "K", ":lua vim.lsp.buf.hover()<CR>", { silent = true, noremap = true})
-vim.keymap.set('n', '<C-f>', '<cmd>silent !tmux neww tmux-sessionizer<CR>')
+vim.keymap.set('n', '<C-f>', '<cmd>silent !tmux neww tsesh<CR>')
 
 -- <leader>l - LSP
 vim.keymap.set("n", "<leader>lf", ":lua vim.diagnostic.open_float()<CR>", { silent = true, noremap = true, desc = 'Open float' })

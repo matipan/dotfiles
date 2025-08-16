@@ -1,0 +1,61 @@
+#!/usr/bin/env bash
+
+sesh connect $(sesh list -i | gum filter \
+	--limit 1 --no-sort --fuzzy --placeholder 'Pick a sesh' --height 50 --prompt='⚡')
+	#--indicator.foreground "#bb9af7" \
+	#--selected-indicator.foreground "#bb9af7" \
+	#--unselected-prefix.foreground "#565f89" \
+	#--header.foreground "#7aa2f7" \
+	#--match.foreground "#e0af68" \
+	#--prompt.foreground "#7aa2f7" \
+	#--text.foreground "#c0caf5" \
+	#--cursor-text.foreground "#c0caf5" \
+	#--cursor-text.background "#292e42" \
+
+#find_dirs() {
+#    local base_dir="$1"
+#    # Find non-hidden directories, including those ending with .worktree
+#    find "$base_dir" -mindepth 1 -maxdepth 1 -type d ! -name ".*" ! -name "Documents" ! -name "Pictures" ! -name "Videos" ! -name "Downloads" ! -name "Music" ! -name "Public" ! -name "Desktop"
+#    # Find directories ending with .worktree and list their subdirectories
+#    find "$base_dir" -mindepth 1 -maxdepth 1 -type d -name "*.worktree" -print0 | 
+#        xargs -0 -I {} find {} -mindepth 1 -maxdepth 1 -type d ! -name ".*"
+#}
+#
+#if [[ $# -eq 1 ]]; then
+#	selected=$1
+#else
+#	selected=$(
+#	{
+#		find_dirs ~/
+#		find_dirs ~/code
+#		find_dirs ~/dagger
+#		find_dirs ~/tiendanube
+#	} | sort -u | fzf-tmux
+#)
+#fi
+#
+#if [[ -z $selected ]]; then
+#	exit 0
+#fi
+#
+#selected_name=$(basename "$selected" | tr . _)
+#tmux_running=$(pgrep tmux)
+#
+#if [[ -z $TMUX ]] && [[ -z $tmux_running ]]; then
+#	tmux new-session -s $selected_name -c $selected
+#	exit 0
+#fi
+#
+#if ! tmux has-session -t=$selected_name 2> /dev/null; then
+#	tmux new-session -ds $selected_name -c $selected
+#fi
+#
+## if tmux is running but we are not on an active session
+## then we have to attach instead of switch
+#if [[ -z $TMUX ]] && [[ ! -z $tmux_running ]]; then
+#	tmux attach -t $selected_name
+#	exit 0
+#fi
+#
+## if we reach here then we are on a session so we switch the client
+#tmux switch-client -t $selected_name

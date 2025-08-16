@@ -69,15 +69,13 @@ source $ZSH/oh-my-zsh.sh
 source <(fzf --zsh)
 source <(COMPLETE=zsh jj)
 
-bindkey -s ^f "tmux-sessionizer\n"
+bindkey -s ^f "tsesh\n"
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 eval $(thefuck --alias)
-
-eval $(just --completions zsh)
+eval "$(zoxide init zsh)"
 
 function awsp() {
 	export AWS_PROFILE=$1
@@ -97,8 +95,6 @@ if [[ -z "${chpwd_functions[(r)_direnv_hook]+1}" ]]; then
   chpwd_functions=( _direnv_hook ${chpwd_functions[@]} )
 fi
 
-source ~/.env
-
 # bun completions
 [ -s "/home/matipan/.bun/_bun" ] && source "/home/matipan/.bun/_bun"
 
@@ -107,3 +103,8 @@ export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 
 alias claude="/home/matipan/.claude/local/claude"
+alias claude-d="CLAUDE_CONFIG_DIR=/home/matipan/.claude claude"
+alias claude-m="CLAUDE_CONFIG_DIR=/home/matipan/.claude-matipan claude"
+
+alias sudo='sudo -E env "PATH=$PATH"'
+alias jd='just -f ~/dagger/justfile'
